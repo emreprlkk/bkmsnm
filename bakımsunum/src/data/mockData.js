@@ -148,13 +148,13 @@ export const regionalSales = {
 };
 
 export const presentationSlides = [
-    { id: 1, title: 'SEVİYE-3 PROJE KAPSAMLARI', type: 'chart_line' },
-    { id: 2, title: 'SEVYE-3 PROJE TUTARLARI', type: 'chart_pie' },
-    { id: 3, title: 'SÖZLEŞME BİLGLERİ', type: 'chart_bar' },
-    { id: 4, title: 'YÜKLENİCİ BİLGİLERİ', type: 'table' },
-    { id: 5, group: 'Fotoğraflar', title: 'AG Sahası Öncesi Sonrası', titleShort: 'AG', type: 'photo_ag' },
-    { id: 6, group: 'Fotoğraflar', title: 'YG Sahası Öncesi Sonrası', titleShort: 'YG', type: 'photo_yg' },
-    { id: 7, title: 'S1-S2 ANALİZİ', type: 'chart_s1_s2' }
+    // { id: 1, title: 'SEVİYE-3 PROJE KAPSAMLARI', type: 'chart_line' },
+    { id: 1, title: 'SEVYE-3 PROJE TUTARLARI', type: 'chart_pie' },
+    //  { id: 3, title: 'SÖZLEŞME BİLGLERİ', type: 'chart_bar' },
+    //  { id: 4, title: 'YÜKLENİCİ BİLGİLERİ', type: 'table' },
+    { id: 2, group: 'Fotoğraflar', title: 'AG Sahası Öncesi Sonrası', titleShort: 'AG', type: 'photo_ag' },
+    { id: 3, group: 'Fotoğraflar', title: 'YG Sahası Öncesi Sonrası', titleShort: 'YG', type: 'photo_yg' },
+    { id: 4, title: 'S1-S2 ANALİZİ', type: 'chart_s1_s2' }
 ];
 
 export const s1Data = [
