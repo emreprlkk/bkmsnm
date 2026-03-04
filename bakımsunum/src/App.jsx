@@ -9,6 +9,7 @@ import BarChartSlide from './components/slides/BarChartSlide';
 import TableSlide from './components/slides/TableSlide';
 import BeforeAfterSlide from './components/slides/BeforeAfterSlide';
 import S1S2Slide from './components/slides/S1S2Slide';
+import YerTeslimiSlide from './components/slides/YerTeslimiSlide';
 
 function App() {
   const [activeSlideId, setActiveSlideId] = useState(1);
@@ -71,6 +72,8 @@ function App() {
         />;
       case 'chart_s1_s2':
         return <S1S2Slide />;
+      case 'yer_teslimi':
+        return <YerTeslimiSlide />;
       default:
         return <div>Slide Type Not Found</div>;
     }

@@ -154,7 +154,33 @@ export const presentationSlides = [
     //  { id: 4, title: 'YÜKLENİCİ BİLGİLERİ', type: 'table' },
     { id: 2, group: 'Fotoğraflar', title: 'AG Sahası Öncesi Sonrası', titleShort: 'AG', type: 'photo_ag' },
     { id: 3, group: 'Fotoğraflar', title: 'YG Sahası Öncesi Sonrası', titleShort: 'YG', type: 'photo_yg' },
-    { id: 4, title: 'S1-S2 ANALİZİ', type: 'chart_s1_s2' }
+    { id: 4, title: 'S1-S2 ANALİZİ', type: 'chart_s1_s2' },
+    { id: 5, title: 'YER TESLİMİ', type: 'yer_teslimi' }
+];
+
+export const yerTeslimiData = [
+    { "BÖLGE MÜDÜRLÜĞÜ": "ADANA", "OM": "ADANA KUZEY", "Yüklenici": "Kayateknik", "Yer Teslim Sayısı": 27, "Gerçekleşen Proje Sayısı": 25, "Gerçekleşme Tutarı": 171760451.71 },
+    { "BÖLGE MÜDÜRLÜĞÜ": "ADANA", "OM": "ADANA METROPOL", "Yüklenici": "Ayduran", "Yer Teslim Sayısı": 69, "Gerçekleşen Proje Sayısı": 66, "Gerçekleşme Tutarı": 187113902.69 },
+    { "BÖLGE MÜDÜRLÜĞÜ": "MERSİN", "OM": "ANAMUR", "Yüklenici": "Armin", "Yer Teslim Sayısı": 38, "Gerçekleşen Proje Sayısı": 30, "Gerçekleşme Tutarı": 132360237.57 },
+    { "BÖLGE MÜDÜRLÜĞÜ": "ADANA", "OM": "CEYHAN", "Yüklenici": "Erce", "Yer Teslim Sayısı": 36, "Gerçekleşen Proje Sayısı": 11, "Gerçekleşme Tutarı": 36501546.30 },
+    { "BÖLGE MÜDÜRLÜĞÜ": "HATAY", "OM": "DÖRTYOL", "Yüklenici": "Demircan", "Yer Teslim Sayısı": 57, "Gerçekleşen Proje Sayısı": 35, "Gerçekleşme Tutarı": 72462572.99 },
+    { "BÖLGE MÜDÜRLÜĞÜ": "ADANA", "OM": "DÜZİÇİ", "Yüklenici": "Demircan", "Yer Teslim Sayısı": 18, "Gerçekleşen Proje Sayısı": 12, "Gerçekleşme Tutarı": 33998654.11 },
+    { "BÖLGE MÜDÜRLÜĞÜ": "MERSİN", "OM": "ERDEMLİ", "Yüklenici": "Gümüşcü", "Yer Teslim Sayısı": 29, "Gerçekleşen Proje Sayısı": 27, "Gerçekleşme Tutarı": 69564739.34 },
+    { "BÖLGE MÜDÜRLÜĞÜ": "GAZİANTEP", "OM": "GAZİANTEP METROPOL", "Yüklenici": "Armin", "Yer Teslim Sayısı": 52, "Gerçekleşen Proje Sayısı": 50, "Gerçekleşme Tutarı": 76427696.48 },
+    { "BÖLGE MÜDÜRLÜĞÜ": "HATAY", "OM": "HATAY KIRSAL", "Yüklenici": "Demircan", "Yer Teslim Sayısı": 57, "Gerçekleşen Proje Sayısı": 31, "Gerçekleşme Tutarı": 179702623.22 },
+    { "BÖLGE MÜDÜRLÜĞÜ": "HATAY", "OM": "HATAY METROPOL", "Yüklenici": "Demircan", "Yer Teslim Sayısı": 161, "Gerçekleşen Proje Sayısı": 154, "Gerçekleşme Tutarı": 414894123.07 },
+    { "BÖLGE MÜDÜRLÜĞÜ": "HATAY", "OM": "İSKENDERUN", "Yüklenici": "Armin", "Yer Teslim Sayısı": 48, "Gerçekleşen Proje Sayısı": 33, "Gerçekleşme Tutarı": 112518662.13 },
+    { "BÖLGE MÜDÜRLÜĞÜ": "GAZİANTEP", "OM": "ISLAHİYE", "Yüklenici": "Armin", "Yer Teslim Sayısı": 23, "Gerçekleşen Proje Sayısı": 14, "Gerçekleşme Tutarı": 18834486.94 },
+    { "BÖLGE MÜDÜRLÜĞÜ": "ADANA", "OM": "KADİRLİ", "Yüklenici": "Erce", "Yer Teslim Sayısı": 27, "Gerçekleşen Proje Sayısı": 24, "Gerçekleşme Tutarı": 59149344.67 },
+    { "BÖLGE MÜDÜRLÜĞÜ": "HATAY", "OM": "KIRIKHAN", "Yüklenici": "Demircan", "Yer Teslim Sayısı": 19, "Gerçekleşen Proje Sayısı": 16, "Gerçekleşme Tutarı": 55544723.02 },
+    { "BÖLGE MÜDÜRLÜĞÜ": "GAZİANTEP", "OM": "KİLİS", "Yüklenici": "Armin", "Yer Teslim Sayısı": 39, "Gerçekleşen Proje Sayısı": 28, "Gerçekleşme Tutarı": 42256718.33 },
+    { "BÖLGE MÜDÜRLÜĞÜ": "MERSİN", "OM": "MERSİN METROPOL", "Yüklenici": "MLA", "Yer Teslim Sayısı": 71, "Gerçekleşen Proje Sayısı": 67, "Gerçekleşme Tutarı": 182719865.83 },
+    { "BÖLGE MÜDÜRLÜĞÜ": "MERSİN", "OM": "MUT", "Yüklenici": "Dutar", "Yer Teslim Sayısı": 38, "Gerçekleşen Proje Sayısı": 31, "Gerçekleşme Tutarı": 81489874.45 },
+    { "BÖLGE MÜDÜRLÜĞÜ": "GAZİANTEP", "OM": "NİZİP", "Yüklenici": "Armin", "Yer Teslim Sayısı": 35, "Gerçekleşen Proje Sayısı": 17, "Gerçekleşme Tutarı": 30042882.18 },
+    { "BÖLGE MÜDÜRLÜĞÜ": "ADANA", "OM": "OSMANİYE", "Yüklenici": "Demircan", "Yer Teslim Sayısı": 47, "Gerçekleşen Proje Sayısı": 37, "Gerçekleşme Tutarı": 87712175.16 },
+    { "BÖLGE MÜDÜRLÜĞÜ": "HATAY", "OM": "REYHANLI", "Yüklenici": "Demircan", "Yer Teslim Sayısı": 35, "Gerçekleşen Proje Sayısı": 26, "Gerçekleşme Tutarı": 101793964.48 },
+    { "BÖLGE MÜDÜRLÜĞÜ": "MERSİN", "OM": "SİLİFKE", "Yüklenici": "Gümüşcü", "Yer Teslim Sayısı": 38, "Gerçekleşen Proje Sayısı": 32, "Gerçekleşme Tutarı": 158960298.15 },
+    { "BÖLGE MÜDÜRLÜĞÜ": "MERSİN", "OM": "TARSUS", "Yüklenici": "MLA", "Yer Teslim Sayısı": 89, "Gerçekleşen Proje Sayısı": 47, "Gerçekleşme Tutarı": 135468196.49 }
 ];
 
 export const s1Data = [
