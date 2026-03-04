@@ -127,10 +127,10 @@ export default function S1S2Slide() {
             dataLabels: {
                 enabled: true, // Labeller aktif edildi
                 style: {
-                    fontSize: '9px',
-                    fontFamily: 'inherit',
-                    fontWeight: 800,
-                    colors: ['#ffffff'] // Yazı rengi
+                    fontSize: '18px',
+                    //  fontFamily: 'inherit',
+                    fontWeight: 1000,
+                    colors: ['black'] // Yazı rengi
                 },
                 formatter: function (val) {
                     if (val === 0 || val === 0.0) return ''; // 0 olanları gizle, kalabalık yapmasın
