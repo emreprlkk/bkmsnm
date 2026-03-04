@@ -92,7 +92,11 @@ const YerTeslimiSlide = () => {
         colors: ['#00E396'], // Color for the actual bar
         dataLabels: {
             enabled: true,
-            formatter: function (val) {
+            formatter: function (val, opt) {
+                const goals = opt.w.config.series[opt.seriesIndex].data[opt.dataPointIndex]?.goals;
+                if (goals && goals.length > 0) {
+                    return `${val} / ${goals[0].value}`;
+                }
                 return val;
             },
             style: {

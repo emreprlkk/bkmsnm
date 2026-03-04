@@ -10,6 +10,7 @@ import TableSlide from './components/slides/TableSlide';
 import BeforeAfterSlide from './components/slides/BeforeAfterSlide';
 import S1S2Slide from './components/slides/S1S2Slide';
 import YerTeslimiSlide from './components/slides/YerTeslimiSlide';
+import YukleniciBilgileriSlide from './components/slides/YukleniciBilgileriSlide';
 
 function App() {
   const [activeSlideId, setActiveSlideId] = useState(1);
@@ -74,6 +75,8 @@ function App() {
         return <S1S2Slide />;
       case 'yer_teslimi':
         return <YerTeslimiSlide />;
+      case 'yuklenici_bilgileri':
+        return <YukleniciBilgileriSlide />;
       default:
         return <div>Slide Type Not Found</div>;
     }

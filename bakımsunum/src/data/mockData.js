@@ -155,7 +155,8 @@ export const presentationSlides = [
     { id: 2, group: 'Fotoğraflar', title: 'AG Sahası Öncesi Sonrası', titleShort: 'AG', type: 'photo_ag' },
     { id: 3, group: 'Fotoğraflar', title: 'YG Sahası Öncesi Sonrası', titleShort: 'YG', type: 'photo_yg' },
     { id: 4, title: 'S1-S2 ANALİZİ', type: 'chart_s1_s2' },
-    { id: 5, title: 'YER TESLİMİ', type: 'yer_teslimi' }
+    { id: 5, title: 'YER TESLİMİ', type: 'yer_teslimi' },
+    { id: 6, title: '2026 YÜKLENİCİ BİLGİLERİ', type: 'yuklenici_bilgileri' }
 ];
 
 export const yerTeslimiData = [
@@ -229,4 +230,23 @@ export const s2Data = [
     { BOLGE: "HATAY", OM: "Reyhanlı OM", BINA: 25, DUT: 9, SDK: 0, AG: 28.0, YG: 208.9 },
     { BOLGE: "MERSİN", OM: "Silifke OM", BINA: 8, DUT: 7, SDK: 0, AG: 60.5, YG: 127.9 },
     { BOLGE: "MERSİN", OM: "Tarsus OM", BINA: 4, DUT: 3, SDK: 5, AG: 30.4, YG: 13.9 }
+];
+
+export const yukleniciBilgileriData = [
+    { "OM": "Adana Kuzey", "SÖZLEŞME ADI": "Adana Kuzey Planlı Bakım Seviye - 3", "İhale Tutarı": 171798842.18, "Yüklenici Firma": "EMİ" },
+    { "OM": "Adana Metropol+Ceyhan", "SÖZLEŞME ADI": "Adana Metropol+Ceyhan Planlı Bakım Seviye - 3", "İhale Tutarı": 212799426.99, "Yüklenici Firma": "AYDURAN" },
+    { "OM": "Anamur", "SÖZLEŞME ADI": "Anamur Planlı Bakım Seviye - 3", "İhale Tutarı": 181130537.43, "Yüklenici Firma": "NORTON" },
+    { "OM": "Erdemli", "SÖZLEŞME ADI": "Erdemli Planlı Bakım Seviye - 3", "İhale Tutarı": 118728609.09, "Yüklenici Firma": "KAMERİM" },
+    { "OM": "Gaziantep Metropol", "SÖZLEŞME ADI": "Gaziantep Metropol Planlı Bakım Seviye - 3", "İhale Tutarı": 88947803.53, "Yüklenici Firma": "MLA" },
+    { "OM": "Hatay Kırsal", "SÖZLEŞME ADI": "Hatay Kırsal Planlı Bakım Seviye - 3", "İhale Tutarı": 150579029.63, "Yüklenici Firma": "DEMİRCAN" },
+    { "OM": "Hatay Metropol", "SÖZLEŞME ADI": "Hatay Metropol Planlı Bakım Seviye - 3", "İhale Tutarı": 225337358.85, "Yüklenici Firma": "DEMİRCAN" },
+    { "OM": "İskenderun+Dörtyol+Arsuz", "SÖZLEŞME ADI": "İskenderun+Dörtyol+Arsuz Planlı Bakım Seviye - 3", "İhale Tutarı": 109009025.46, "Yüklenici Firma": "HASAN BULUT" },
+    { "OM": "Kadirli", "SÖZLEŞME ADI": "Kadirli Planlı Bakım Seviye - 3", "İhale Tutarı": 100224627.69, "Yüklenici Firma": "ERSA" },
+    { "OM": "Kırıkhan+Reyhanlı", "SÖZLEŞME ADI": "Kırıkhan+Reyhanlı Planlı Bakım Seviye - 3", "İhale Tutarı": 186173372.78, "Yüklenici Firma": "MTE" },
+    { "OM": "Kilis+Nizip+İslahiye", "SÖZLEŞME ADI": "Kilis+Nizip+İslahiye Planlı Bakım Seviye - 3", "İhale Tutarı": 52145342.72, "Yüklenici Firma": "BİLGE" },
+    { "OM": "Mersin Metropol", "SÖZLEŞME ADI": "Mersin Metropol Planlı Bakım Seviye - 3", "İhale Tutarı": 126073964.24, "Yüklenici Firma": "MLA" },
+    { "OM": "Mut", "SÖZLEŞME ADI": "Mut Planlı Bakım Seviye - 3", "İhale Tutarı": 94005326.14, "Yüklenici Firma": "DUTAR" },
+    { "OM": "Osmaniye+Düziçi", "SÖZLEŞME ADI": "Osmaniye+Düziçi Planlı Bakım Seviye - 3", "İhale Tutarı": 101891087.45, "Yüklenici Firma": "ERSA" },
+    { "OM": "Silifke", "SÖZLEŞME ADI": "Silifke Planlı Bakım Seviye - 3", "İhale Tutarı": 174457150.53, "Yüklenici Firma": "ATAGÜC" },
+    { "OM": "Tarsus", "SÖZLEŞME ADI": "Tarsus Planlı Bakım Seviye - 3", "İhale Tutarı": 142203915.07, "Yüklenici Firma": "MLA" }
 ];
