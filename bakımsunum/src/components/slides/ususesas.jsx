@@ -183,7 +183,7 @@ export default function PlanliBakimDegisiklikler() {
                         style={{ fontSize: fs ? 14 : 12 }}
                     >
                         Elektrik dağıtım şirketlerine ilişkin planlı bakım mevzuatında yapılan
-                        <strong className="text-base-content/70"> 6 temel değişiklik</strong> — kart başına bir konu, hızlı öğren.
+                        <strong className="text-base-content/70"> 6 temel değişiklik</strong> incelenecektir.
                     </p>
                 </div>
 
@@ -229,8 +229,8 @@ export default function PlanliBakimDegisiklikler() {
                         key={k}
                         onClick={() => setAktifKat(k)}
                         className={`btn rounded-full transition-all ${fs ? 'btn-sm' : 'btn-xs'} ${aktifKat === k
-                                ? 'btn-primary shadow-sm font-bold'
-                                : 'btn-ghost border border-base-300 opacity-60 hover:opacity-100'
+                            ? 'btn-primary shadow-sm font-bold'
+                            : 'btn-ghost border border-base-300 opacity-60 hover:opacity-100'
                             }`}
                     >
                         {k}
@@ -246,8 +246,8 @@ export default function PlanliBakimDegisiklikler() {
 
             {/* ── Kart Grid ── */}
             <div className={`grid gap-4 flex-1 ${fs
-                    ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3'
-                    : 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3'
+                ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3'
+                : 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3'
                 }`}>
                 {goruntu.map(card => {
                     const Icon = card.icon;
