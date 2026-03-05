@@ -80,7 +80,7 @@ export default function BarChartSlide() {
             <div className="mb-8 flex justify-between items-start">
                 <div>
                     <h2 className="text-4xl font-extrabold text-base-content mb-2">SÖZLEŞME BİLGİLERİ</h2>
-                    <p className="text-base-content/60 text-lg">Bölgelere göre sözleşme dağılımı</p>
+                    <p className="text-base-content/60 text-lg">İllere Göre Dağılım</p>
                 </div>
                 <button
                     onClick={toggleFullscreen}

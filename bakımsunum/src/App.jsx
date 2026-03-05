@@ -11,6 +11,8 @@ import BeforeAfterSlide from './components/slides/BeforeAfterSlide';
 import S1S2Slide from './components/slides/S1S2Slide';
 import YerTeslimiSlide from './components/slides/YerTeslimiSlide';
 import YukleniciBilgileriSlide from './components/slides/YukleniciBilgileriSlide';
+import S1S2DenetlemeSlide from './components/slides/S1S2DenetlemeSlide';
+import YukleniciGerceklesme2025 from './components/slides/2025YukleniciGerceklesme';
 
 function App() {
   const [activeSlideId, setActiveSlideId] = useState(1);
@@ -77,6 +79,10 @@ function App() {
         return <YerTeslimiSlide />;
       case 'yuklenici_bilgileri':
         return <YukleniciBilgileriSlide />;
+      case 's1_s2_denetleme':
+        return <S1S2DenetlemeSlide />;
+      case '2025_yuklenici_gerceklesme':
+        return <YukleniciGerceklesme2025 />;
       default:
         return <div>Slide Type Not Found</div>;
     }

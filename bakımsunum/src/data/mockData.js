@@ -1,6 +1,8 @@
 // mockData.js
 // Simple, uncrowded datasets for presentations
 
+
+
 export const scopeCategories = [
     'AG ENH Bakımı',
     'YG ENH Bakımı',
@@ -15,15 +17,25 @@ export const scopeCategories = [
 
 // data = adet, cost = maliyet (₺) — sütun sırası scopeCategories ile aynı:
 // [AG ENH, YG ENH, İM-DM-TRP-KÖK, Güç Yükseltimi, DÜT Bakımı, İlave TR İşi, Aydınlatma Bakımı, SDK Bakımı, Demontaj İşi]
+// Sütun sırası: [AG ENH, YG ENH, İM-DM-TRP-KÖK, Güç Yükseltimi, DÜT Bakımı, İlave TR İşi, Aydınlatma Bakımı, SDK Bakımı, Demontaj İşi]
+
+
+
+//IndexKategori0AG ENH Bakımı1YG ENH Bakımı2İM-DM-TRP-KÖK3Güç Yükseltimi4DÜT Bakımı5İlave TR İşi6Aydınlatma Bakımı7SDK Bakımı8Demontaj İşi
 export const scopeData = [
     {
+        name: 'Adana Kuzey', bolge: 'ADANA',
+        data: [9, 14, 2, 0, 0, 0, 0, 0, 0],
+        cost: [45994313.76, 123102157.42, 2663980.54, 0, 0, 0, 0, 0, 0]
+    },
+    {
         name: 'Adana Metropol', bolge: 'ADANA',
-        data: [18, 8, 32, 7, 0, 1, 0, 0, 0],
+        data: [18, 8, 32, 0, 0, 7, 0, 0, 1],
         cost: [86721373.24, 67402430.39, 19710844.90, 0, 0, 13122001.70, 0, 0, 157252.47]
     },
     {
         name: 'Ceyhan', bolge: 'ADANA',
-        data: [3, 0, 8, 0, 0, 0, 0, 0, 0],
+        data: [3, 8, 0, 0, 0, 0, 0, 0, 0],
         cost: [7791484.89, 28710061.41, 0, 0, 0, 0, 0, 0, 0]
     },
     {
@@ -33,13 +45,8 @@ export const scopeData = [
     },
     {
         name: 'Kadirli', bolge: 'ADANA',
-        data: [3, 9, 11, 1, 0, 0, 0, 0, 0],
+        data: [3, 9, 11, 0, 0, 0, 0, 0, 1],
         cost: [20138569.53, 36605884.69, 2201110.83, 0, 0, 0, 0, 0, 203779.61]
-    },
-    {
-        name: 'Kozan', bolge: 'ADANA',
-        data: [9, 14, 2, 0, 0, 0, 0, 0, 0],
-        cost: [45994313.76, 123102157.42, 2663980.54, 0, 0, 0, 0, 0, 0]
     },
     {
         name: 'Osmaniye', bolge: 'ADANA',
@@ -47,12 +54,72 @@ export const scopeData = [
         cost: [62659139.45, 21697348.17, 3355687.54, 0, 0, 0, 0, 0, 0]
     },
     {
+        name: 'Anamur', bolge: 'MERSİN',
+        data: [11, 9, 8, 0, 2, 0, 0, 0, 0],
+        cost: [45975641.90, 82452104.21, 3160028.29, 0, 772463.18, 0, 0, 0, 0]
+    },
+    {
+        name: 'Erdemli', bolge: 'MERSİN',
+        data: [16, 8, 2, 0, 1, 0, 0, 0, 0],
+        cost: [37384012.83, 30859602.77, 699255.40, 0, 621868.34, 0, 0, 0, 0]
+    },
+    {
+        name: 'Mersin Metropol', bolge: 'MERSİN',
+        data: [14, 16, 10, 0, 22, 0, 4, 1, 0],
+        cost: [63795370.36, 101800872.94, 4213271.77, 0, 12310370.70, 0, 250020.10, 349959.97, 0]
+    },
+    {
+        name: 'Mut', bolge: 'MERSİN',
+        data: [20, 7, 2, 0, 1, 1, 0, 0, 0],
+        cost: [43360956.65, 34549635.92, 425295.50, 0, 132871.51, 3021114.86, 0, 0, 0]
+    },
+    {
+        name: 'Silifke', bolge: 'MERSİN',
+        data: [19, 2, 10, 0, 0, 1, 0, 0, 0],
+        cost: [122750591.06, 27089279.00, 3631068.15, 0, 0, 5489359.94, 0, 0, 0]
+    },
+    {
+        name: 'Tarsus', bolge: 'MERSİN',
+        data: [30, 6, 3, 3, 5, 0, 0, 0, 0],
+        cost: [82359257.38, 37825746.96, 4099309.84, 2468601.60, 8715280.72, 0, 0, 0, 0]
+    },
+    {
+        name: 'Dörtyol', bolge: 'HATAY',
+        data: [17, 5, 13, 0, 0, 0, 0, 0, 0],
+        cost: [41512908.00, 24549352.43, 6400312.56, 0, 0, 0, 0, 0, 0]
+    },
+    {
+        name: 'Hatay Kırsal', bolge: 'HATAY',
+        data: [18, 9, 0, 1, 0, 3, 0, 0, 0],
+        cost: [111741870.47, 47955726.32, 0, 6234788.50, 0, 13770237.93, 0, 0, 0]
+    },
+    {
+        name: 'Hatay Metropol', bolge: 'HATAY',
+        data: [78, 21, 11, 33, 1, 10, 0, 0, 0],
+        cost: [305309570.45, 55683795.51, 9949278.12, 23453187.06, 398688.32, 20099603.61, 0, 0, 0]
+    },
+    {
+        name: 'İskenderun', bolge: 'HATAY',
+        data: [19, 2, 6, 5, 0, 1, 0, 0, 0],
+        cost: [91836320.38, 1615610.12, 2432788.49, 11583883.49, 0, 5050059.66, 0, 0, 0]
+    },
+    {
+        name: 'Kırıkhan', bolge: 'HATAY',
+        data: [11, 1, 0, 2, 0, 2, 0, 0, 0],
+        cost: [40320376.89, 888664.89, 0, 1785194.71, 0, 12550486.53, 0, 0, 0]
+    },
+    {
+        name: 'Reyhanlı', bolge: 'HATAY',
+        data: [15, 7, 1, 2, 1, 0, 0, 0, 0],
+        cost: [75102476.08, 25223357.74, 159634.87, 1199795.49, 108700.30, 0, 0, 0, 0]
+    },
+    {
         name: 'Gaziantep Metropol', bolge: 'GAZİANTEP',
-        data: [10, 7, 27, 1, 3, 2, 0, 0, 0],
+        data: [10, 7, 27, 0, 0, 1, 3, 0, 2],
         cost: [14621006.87, 37420797.42, 12912968.27, 0, 0, 1972555.96, 9241944.02, 0, 258423.92]
     },
     {
-        name: 'Islahiye', bolge: 'GAZİANTEP',
+        name: 'İslahiye', bolge: 'GAZİANTEP',
         data: [8, 4, 2, 0, 0, 0, 0, 0, 0],
         cost: [12849923.19, 5388584.56, 595979.20, 0, 0, 0, 0, 0, 0]
     },
@@ -63,63 +130,8 @@ export const scopeData = [
     },
     {
         name: 'Nizip', bolge: 'GAZİANTEP',
-        data: [13, 3, 1, 0, 0, 0, 0, 0, 0],
+        data: [13, 3, 0, 0, 1, 0, 0, 0, 0],
         cost: [25369766.85, 4496857.53, 0, 0, 176257.79, 0, 0, 0, 0]
-    },
-    {
-        name: 'Antakya Metropol', bolge: 'HATAY',
-        data: [96, 30, 11, 34, 1, 13, 0, 0, 0],
-        cost: [417051440.92, 103639521.83, 9949278.12, 29687975.56, 398688.32, 33869841.53, 0, 0, 0]
-    },
-    {
-        name: 'Dörtyol', bolge: 'HATAY',
-        data: [17, 5, 13, 0, 0, 0, 0, 0, 0],
-        cost: [41512908.00, 24549352.43, 6400312.56, 0, 0, 0, 0, 0, 0]
-    },
-    {
-        name: 'İskenderun', bolge: 'HATAY',
-        data: [19, 2, 6, 5, 1, 0, 0, 0, 0],
-        cost: [91836320.38, 1615610.12, 2432788.49, 11583883.49, 0, 5050059.66, 0, 0, 0]
-    },
-    {
-        name: 'Kırıkhan', bolge: 'HATAY',
-        data: [11, 1, 2, 2, 0, 0, 0, 0, 0],
-        cost: [40320376.89, 888664.89, 0, 1785194.71, 0, 12550486.53, 0, 0, 0]
-    },
-    {
-        name: 'Reyhanlı', bolge: 'HATAY',
-        data: [15, 7, 1, 2, 1, 0, 0, 0, 0],
-        cost: [75102476.08, 25223357.74, 159634.87, 1199795.49, 108700.30, 0, 0, 0, 0]
-    },
-    {
-        name: 'Anamur', bolge: 'MERSİN',
-        data: [11, 9, 8, 2, 0, 0, 0, 0, 0],
-        cost: [45975641.90, 82452104.21, 3160028.29, 0, 772463.18, 0, 0, 0, 0]
-    },
-    {
-        name: 'Erdemli', bolge: 'MERSİN',
-        data: [16, 8, 2, 1, 0, 0, 0, 0, 0],
-        cost: [37384012.83, 30859602.77, 699255.40, 0, 621868.34, 0, 0, 0, 0]
-    },
-    {
-        name: 'Mersin Metropol', bolge: 'MERSİN',
-        data: [14, 16, 10, 22, 4, 1, 0, 0, 0],
-        cost: [63795370.36, 101800872.94, 4213271.77, 0, 12310370.70, 0, 250020.10, 349959.97, 0]
-    },
-    {
-        name: 'Mut', bolge: 'MERSİN',
-        data: [20, 7, 2, 1, 1, 0, 0, 0, 0],
-        cost: [43360956.65, 34549635.92, 425295.50, 0, 132871.51, 3021114.86, 0, 0, 0]
-    },
-    {
-        name: 'Silifke', bolge: 'MERSİN',
-        data: [19, 2, 10, 1, 0, 0, 0, 0, 0],
-        cost: [122750591.06, 27089279.00, 3631068.15, 0, 0, 5489359.94, 0, 0, 0]
-    },
-    {
-        name: 'Tarsus', bolge: 'MERSİN',
-        data: [30, 6, 3, 3, 5, 0, 0, 0, 0],
-        cost: [82359257.38, 37825746.96, 4099309.84, 2468601.60, 8715280.72, 0, 0, 0, 0]
     },
 ];
 
@@ -156,7 +168,9 @@ export const presentationSlides = [
     { id: 3, group: 'Fotoğraflar', title: 'YG Sahası Öncesi Sonrası', titleShort: 'YG', type: 'photo_yg' },
     { id: 4, title: 'S1-S2 ANALİZİ', type: 'chart_s1_s2' },
     { id: 5, title: 'YER TESLİMİ', type: 'yer_teslimi' },
-    { id: 6, title: '2026 YÜKLENİCİ BİLGİLERİ', type: 'yuklenici_bilgileri' }
+    { id: 6, title: '2026 YÜKLENİCİ BİLGİLERİ', type: 'yuklenici_bilgileri' },
+    { id: 7, title: 'S1-S2 DENETLEME', type: 's1_s2_denetleme' },
+    { id: 8, title: '2025 YÜKLENİCİ GERÇEKLEŞMELERİ', type: '2025_yuklenici_gerceklesme' }
 ];
 
 export const yerTeslimiData = [
@@ -250,3 +264,247 @@ export const yukleniciBilgileriData = [
     { "OM": "Silifke", "SÖZLEŞME ADI": "Silifke Planlı Bakım Seviye - 3", "İhale Tutarı": 174457150.53, "Yüklenici Firma": "ATAGÜC" },
     { "OM": "Tarsus", "SÖZLEŞME ADI": "Tarsus Planlı Bakım Seviye - 3", "İhale Tutarı": 142203915.07, "Yüklenici Firma": "MLA" }
 ];
+
+export const auditData = [
+    { om: 'Ceyhan', tur: 'AG HAT', formSayisi: 11, dogru: 5, yanlis: 6, uygun: 3, uygunsuz: 6, kontrolEdilmedi: 2, s2Duzeltilebilir: 6, s2Disinda: 0 },
+    { om: 'Ceyhan', tur: 'YG HAT', formSayisi: 2, dogru: 0, yanlis: 2, uygun: 0, uygunsuz: 2, kontrolEdilmedi: 0, s2Duzeltilebilir: 2, s2Disinda: 0 },
+    { om: 'Adana Metropol', tur: 'YG HAT', formSayisi: 4, dogru: 3, yanlis: 1, uygun: 0, uygunsuz: 4, kontrolEdilmedi: 0, s2Duzeltilebilir: 4, s2Disinda: 0 },
+    { om: 'Düziçi', tur: 'AG HAT', formSayisi: 11, dogru: 8, yanlis: 3, uygun: 2, uygunsuz: 9, kontrolEdilmedi: 0, s2Duzeltilebilir: 9, s2Disinda: 0 },
+    { om: 'Erdemli', tur: 'AG HAT', formSayisi: 19, dogru: 2, yanlis: 12, uygun: 7, uygunsuz: 7, kontrolEdilmedi: 5, s2Duzeltilebilir: 7, s2Disinda: 0 },
+    { om: 'Dörtyol', tur: 'AG HAT', formSayisi: 19, dogru: 10, yanlis: 9, uygun: 2, uygunsuz: 17, kontrolEdilmedi: 0, s2Duzeltilebilir: 16, s2Disinda: 1 },
+    { om: 'Erdemli', tur: 'AG DİREK', formSayisi: 14, dogru: 10, yanlis: 4, uygun: 0, uygunsuz: 14, kontrolEdilmedi: 0, s2Duzeltilebilir: 7, s2Disinda: 7 },
+    { om: 'Adana Kuzey', tur: 'YG DİREK', formSayisi: 10, dogru: 10, yanlis: 0, uygun: 0, uygunsuz: 10, kontrolEdilmedi: 0, s2Duzeltilebilir: 10, s2Disinda: 0 },
+    { om: 'Adana Kuzey', tur: 'AG DİREK', formSayisi: 33, dogru: 27, yanlis: 4, uygun: 4, uygunsuz: 27, kontrolEdilmedi: 2, s2Duzeltilebilir: 19, s2Disinda: 8 },
+    { om: 'Erdemli', tur: 'YG DİREK', formSayisi: 7, dogru: 5, yanlis: 2, uygun: 0, uygunsuz: 7, kontrolEdilmedi: 0, s2Duzeltilebilir: 7, s2Disinda: 0 },
+    { om: 'Erdemli', tur: 'YG HAT', formSayisi: 1, dogru: 0, yanlis: 1, uygun: 0, uygunsuz: 1, kontrolEdilmedi: 0, s2Duzeltilebilir: 1, s2Disinda: 0 },
+    { om: 'Düziçi', tur: 'AG DİREK', formSayisi: 5, dogru: 4, yanlis: 1, uygun: 1, uygunsuz: 4, kontrolEdilmedi: 0, s2Duzeltilebilir: 4, s2Disinda: 0 },
+    { om: 'Tarsus', tur: 'AG DİREK', formSayisi: 58, dogru: 45, yanlis: 3, uygun: 2, uygunsuz: 46, kontrolEdilmedi: 10, s2Duzeltilebilir: 42, s2Disinda: 4 },
+    { om: 'Hatay Metropol', tur: 'AG HAT', formSayisi: 5, dogru: 2, yanlis: 0, uygun: 0, uygunsuz: 2, kontrolEdilmedi: 3, s2Duzeltilebilir: 2, s2Disinda: 0 },
+    { om: 'Hatay Metropol', tur: 'AG DİREK', formSayisi: 20, dogru: 20, yanlis: 0, uygun: 1, uygunsuz: 19, kontrolEdilmedi: 0, s2Duzeltilebilir: 19, s2Disinda: 0 },
+    { om: 'Tarsus', tur: 'YG DİREK', formSayisi: 26, dogru: 26, yanlis: 0, uygun: 0, uygunsuz: 26, kontrolEdilmedi: 0, s2Duzeltilebilir: 26, s2Disinda: 0 },
+    { om: 'Islahiye', tur: 'AG DİREK', formSayisi: 2, dogru: 2, yanlis: 0, uygun: 0, uygunsuz: 2, kontrolEdilmedi: 0, s2Duzeltilebilir: 1, s2Disinda: 1 },
+    { om: 'Hatay Metropol', tur: 'YG DİREK', formSayisi: 29, dogru: 24, yanlis: 5, uygun: 0, uygunsuz: 29, kontrolEdilmedi: 0, s2Duzeltilebilir: 25, s2Disinda: 4 },
+    { om: 'Silifke', tur: 'AG DİREK', formSayisi: 45, dogru: 40, yanlis: 4, uygun: 0, uygunsuz: 44, kontrolEdilmedi: 1, s2Duzeltilebilir: 43, s2Disinda: 1 },
+    { om: 'Silifke', tur: 'AG HAT', formSayisi: 16, dogru: 11, yanlis: 0, uygun: 0, uygunsuz: 11, kontrolEdilmedi: 5, s2Duzeltilebilir: 11, s2Disinda: 0 },
+    { om: 'Adana Metropol', tur: 'AG HAT', formSayisi: 4, dogru: 4, yanlis: 0, uygun: 0, uygunsuz: 4, kontrolEdilmedi: 0, s2Duzeltilebilir: 4, s2Disinda: 0 },
+    { om: 'Adana Metropol', tur: 'YG DİREK', formSayisi: 5, dogru: 5, yanlis: 0, uygun: 0, uygunsuz: 5, kontrolEdilmedi: 0, s2Duzeltilebilir: 4, s2Disinda: 1 },
+    { om: 'Adana Kuzey', tur: 'AG HAT', formSayisi: 13, dogru: 10, yanlis: 0, uygun: 0, uygunsuz: 10, kontrolEdilmedi: 3, s2Duzeltilebilir: 9, s2Disinda: 1 },
+    { om: 'Adana Metropol', tur: 'AG DİREK', formSayisi: 4, dogru: 0, yanlis: 4, uygun: 0, uygunsuz: 4, kontrolEdilmedi: 0, s2Duzeltilebilir: 4, s2Disinda: 0 },
+    { om: 'Kırıkhan', tur: 'AG DİREK', formSayisi: 12, dogru: 12, yanlis: 0, uygun: 0, uygunsuz: 12, kontrolEdilmedi: 0, s2Duzeltilebilir: 12, s2Disinda: 0 },
+    { om: 'Kırıkhan', tur: 'YG DİREK', formSayisi: 2, dogru: 2, yanlis: 0, uygun: 0, uygunsuz: 2, kontrolEdilmedi: 0, s2Duzeltilebilir: 0, s2Disinda: 2 },
+    { om: 'Tarsus', tur: 'AG HAT', formSayisi: 46, dogru: 12, yanlis: 0, uygun: 0, uygunsuz: 12, kontrolEdilmedi: 34, s2Duzeltilebilir: 12, s2Disinda: 0 },
+    { om: 'Osmaniye', tur: 'YG DİREK', formSayisi: 43, dogru: 41, yanlis: 2, uygun: 2, uygunsuz: 41, kontrolEdilmedi: 0, s2Duzeltilebilir: 41, s2Disinda: 0 },
+    { om: 'İskenderun', tur: 'YG DİREK', formSayisi: 7, dogru: 3, yanlis: 4, uygun: 0, uygunsuz: 7, kontrolEdilmedi: 0, s2Duzeltilebilir: 7, s2Disinda: 0 },
+    { om: 'İskenderun', tur: 'AG DİREK', formSayisi: 6, dogru: 1, yanlis: 5, uygun: 0, uygunsuz: 6, kontrolEdilmedi: 0, s2Duzeltilebilir: 5, s2Disinda: 1 },
+    { om: 'Kadirli', tur: 'AG DİREK', formSayisi: 16, dogru: 13, yanlis: 2, uygun: 1, uygunsuz: 15, kontrolEdilmedi: 0, s2Duzeltilebilir: 13, s2Disinda: 2 },
+    { om: 'Kadirli', tur: 'AG HAT', formSayisi: 15, dogru: 14, yanlis: 0, uygun: 0, uygunsuz: 14, kontrolEdilmedi: 1, s2Duzeltilebilir: 14, s2Disinda: 0 },
+    { om: 'Osmaniye', tur: 'AG DİREK', formSayisi: 20, dogru: 16, yanlis: 2, uygun: 0, uygunsuz: 18, kontrolEdilmedi: 2, s2Duzeltilebilir: 16, s2Disinda: 2 },
+    { om: 'Osmaniye', tur: 'AG HAT', formSayisi: 4, dogru: 4, yanlis: 0, uygun: 0, uygunsuz: 4, kontrolEdilmedi: 0, s2Duzeltilebilir: 4, s2Disinda: 0 },
+    { om: 'Mut', tur: 'YG DİREK', formSayisi: 12, dogru: 11, yanlis: 1, uygun: 0, uygunsuz: 12, kontrolEdilmedi: 0, s2Duzeltilebilir: 11, s2Disinda: 1 },
+    { om: 'Mut', tur: 'AG DİREK', formSayisi: 3, dogru: 3, yanlis: 0, uygun: 0, uygunsuz: 3, kontrolEdilmedi: 0, s2Duzeltilebilir: 3, s2Disinda: 0 },
+    { om: 'Dörtyol', tur: 'YG DİREK', formSayisi: 7, dogru: 7, yanlis: 0, uygun: 0, uygunsuz: 7, kontrolEdilmedi: 0, s2Duzeltilebilir: 5, s2Disinda: 2 },
+    { om: 'Dörtyol', tur: 'AG DİREK', formSayisi: 10, dogru: 9, yanlis: 1, uygun: 0, uygunsuz: 10, kontrolEdilmedi: 0, s2Duzeltilebilir: 10, s2Disinda: 0 },
+    { om: 'Gaziantep Metropol', tur: 'AG DİREK', formSayisi: 8, dogru: 7, yanlis: 0, uygun: 0, uygunsuz: 7, kontrolEdilmedi: 1, s2Duzeltilebilir: 0, s2Disinda: 7 },
+    { om: 'Gaziantep Metropol', tur: 'YG DİREK', formSayisi: 1, dogru: 1, yanlis: 0, uygun: 0, uygunsuz: 1, kontrolEdilmedi: 0, s2Duzeltilebilir: 1, s2Disinda: 0 },
+    { om: 'Gaziantep Metropol', tur: 'YG HAT', formSayisi: 8, dogru: 8, yanlis: 0, uygun: 8, uygunsuz: 0, kontrolEdilmedi: 0, s2Duzeltilebilir: 0, s2Disinda: 0 },
+    { om: 'Gaziantep Metropol', tur: 'AG HAT', formSayisi: 6, dogru: 2, yanlis: 0, uygun: 0, uygunsuz: 2, kontrolEdilmedi: 4, s2Duzeltilebilir: 2, s2Disinda: 0 },
+    { om: 'Kadirli', tur: 'YG DİREK', formSayisi: 7, dogru: 7, yanlis: 0, uygun: 0, uygunsuz: 7, kontrolEdilmedi: 0, s2Duzeltilebilir: 7, s2Disinda: 0 },
+    { om: 'Kilis', tur: 'AG DİREK', formSayisi: 13, dogru: 13, yanlis: 0, uygun: 0, uygunsuz: 13, kontrolEdilmedi: 0, s2Duzeltilebilir: 13, s2Disinda: 0 },
+    { om: 'Kilis', tur: 'AG HAT', formSayisi: 3, dogru: 2, yanlis: 0, uygun: 2, uygunsuz: 0, kontrolEdilmedi: 1, s2Duzeltilebilir: 0, s2Disinda: 0 },
+    { om: 'Dörtyol', tur: 'YG HAT', formSayisi: 4, dogru: 4, yanlis: 0, uygun: 0, uygunsuz: 4, kontrolEdilmedi: 0, s2Duzeltilebilir: 4, s2Disinda: 0 },
+    { om: 'Reyhanlı', tur: 'AG HAT', formSayisi: 5, dogru: 5, yanlis: 0, uygun: 0, uygunsuz: 5, kontrolEdilmedi: 0, s2Duzeltilebilir: 5, s2Disinda: 0 },
+    { om: 'Reyhanlı', tur: 'AG DİREK', formSayisi: 15, dogru: 15, yanlis: 0, uygun: 0, uygunsuz: 15, kontrolEdilmedi: 0, s2Duzeltilebilir: 11, s2Disinda: 4 },
+    { om: 'İskenderun', tur: 'AG HAT', formSayisi: 2, dogru: 0, yanlis: 0, uygun: 0, uygunsuz: 0, kontrolEdilmedi: 2, s2Duzeltilebilir: 0, s2Disinda: 0 },
+    { om: 'Reyhanlı', tur: 'YG DİREK', formSayisi: 3, dogru: 3, yanlis: 0, uygun: 0, uygunsuz: 3, kontrolEdilmedi: 0, s2Duzeltilebilir: 3, s2Disinda: 0 },
+    { om: 'Hatay Metropol', tur: 'YG HAT', formSayisi: 2, dogru: 0, yanlis: 0, uygun: 0, uygunsuz: 0, kontrolEdilmedi: 2, s2Duzeltilebilir: 0, s2Disinda: 0 },
+];
+
+export const contractData = [
+    {
+        bm: 'ADANA',
+        sozlesmeNo: '25.0615.SSD.41',
+        sozlesmeAdi: 'ADANA KUZEY PLANLI BAKIM SEVİYE-3',
+        yuklenici: 'KAYATEKNİK',
+        sozlesmeBedeli: 91716583.36,
+        toplamHakEdis: 84743752.06,
+        kalanHakEdis: 6972831.30,
+        doluluk: 92.40
+    },
+    {
+        bm: 'ADANA',
+        sozlesmeNo: '25.0498.SSD.25',
+        sozlesmeAdi: 'ADANA METROPOL PLANLI BAKIM SEVİYE-3',
+        yuklenici: 'AYDURAN',
+        sozlesmeBedeli: 101127099.48,
+        toplamHakEdis: 95143049.34,
+        kalanHakEdis: 5984050.14,
+        doluluk: 94.08
+    },
+    {
+        bm: 'ADANA',
+        sozlesmeNo: '25.0515.SSD.30',
+        sozlesmeAdi: 'KADİRLİ+CEYHAN PLANLI BAKIM SEVİYE-3',
+        yuklenici: 'ERCE',
+        sozlesmeBedeli: 49481860.98,
+        toplamHakEdis: 48509315.33,
+        kalanHakEdis: 972545.65,
+        doluluk: 98.03
+    },
+    {
+        bm: 'ADANA',
+        sozlesmeNo: '25.0523.SSD.33',
+        sozlesmeAdi: 'OSMANİYE+DÜZİÇİ PLANLI BAKIM SEVİYE-3',
+        yuklenici: 'DEMİRCAN',
+        sozlesmeBedeli: 70242195.14,
+        toplamHakEdis: 57968701.19,
+        kalanHakEdis: 12273493.95,
+        doluluk: 82.53
+    },
+    {
+        bm: 'GAZİANTEP',
+        sozlesmeNo: '25.0528.SSD.38',
+        sozlesmeAdi: 'GAZİANTEP METROPOL PLANLI BAKIM SEVİYE-3',
+        yuklenici: 'ARMİN',
+        sozlesmeBedeli: 45316526.52,
+        toplamHakEdis: 31074315.42,
+        kalanHakEdis: 14242211.10,
+        doluluk: 68.57
+    },
+    {
+        bm: 'GAZİANTEP',
+        sozlesmeNo: '25.0524.SSD.34',
+        sozlesmeAdi: 'KİLİS+NİZİP+İSLAHİYE PLANLI BAKIM SEVİYE-3',
+        yuklenici: 'ARMİN',
+        sozlesmeBedeli: 51842391.83,
+        toplamHakEdis: 34777170.02,
+        kalanHakEdis: 17065221.81,
+        doluluk: 67.08
+    },
+    {
+        bm: 'HATAY',
+        sozlesmeNo: '25.0526.SSD.36',
+        sozlesmeAdi: 'HATAY METROPOL PLANLI BAKIM SEVİYE-3',
+        yuklenici: 'DEMİRCAN',
+        sozlesmeBedeli: 288188400.86,
+        toplamHakEdis: 213039354.08,
+        kalanHakEdis: 75149046.78,
+        doluluk: 73.92
+    },
+    {
+        bm: 'HATAY',
+        sozlesmeNo: '25.0527.SSD.37',
+        sozlesmeAdi: 'HATAY KIRSAL PLANLI BAKIM SEVİYE-3',
+        yuklenici: 'DEMİRCAN',
+        sozlesmeBedeli: 151132670.74,
+        toplamHakEdis: 98741685.00,
+        kalanHakEdis: 52390985.74,
+        doluluk: 65.33
+    },
+    {
+        bm: 'HATAY',
+        sozlesmeNo: '25.0525.SSD.35',
+        sozlesmeAdi: 'İSKENDERUN+DÖRTYOL+ARSUZ PLANLI BAKIM SEVİYE-3',
+        yuklenici: 'ARMİN',
+        sozlesmeBedeli: 137930210.39,
+        toplamHakEdis: 88538517.07,
+        kalanHakEdis: 49391693.32,
+        doluluk: 64.19
+    },
+    {
+        bm: 'HATAY',
+        sozlesmeNo: '25.0514.SSD.29',
+        sozlesmeAdi: 'KIRIKHAN+REYHANLI PLANLI BAKIM SEVİYE-3',
+        yuklenici: 'TOKİŞ',
+        sozlesmeBedeli: 87564392.24,
+        toplamHakEdis: 57915404.73,
+        kalanHakEdis: 29648987.51,
+        doluluk: 66.14
+    },
+    {
+        bm: 'MERSİN',
+        sozlesmeNo: '25.0513.SSD.28',
+        sozlesmeAdi: 'MERSİN METROPOL PLANLI BAKIM SEVİYE-3',
+        yuklenici: 'MLA',
+        sozlesmeBedeli: 100133296.65,
+        toplamHakEdis: 69711768.93,
+        kalanHakEdis: 30421527.72,
+        doluluk: 69.62
+    },
+    {
+        bm: 'MERSİN',
+        sozlesmeNo: '25.0497.SSD.24',
+        sozlesmeAdi: 'ERDEMLİ PLANLI BAKIM SEVİYE-3',
+        yuklenici: 'GÜMÜŞÇÜ',
+        sozlesmeBedeli: 36321184.08,
+        toplamHakEdis: 29670090.91,
+        kalanHakEdis: 6651093.17,
+        doluluk: 81.69
+    },
+    {
+        bm: 'MERSİN',
+        sozlesmeNo: '25.0522.SSD.32',
+        sozlesmeAdi: 'TARSUS PLANLI BAKIM SEVİYE-3',
+        yuklenici: 'MLA',
+        sozlesmeBedeli: 94041971.06,
+        toplamHakEdis: 81114101.78,
+        kalanHakEdis: 12927869.28,
+        doluluk: 86.25
+    },
+    {
+        bm: 'MERSİN',
+        sozlesmeNo: '25.0511.SSD.26',
+        sozlesmeAdi: 'SİLİFKE PLANLI BAKIM SEVİYE-3',
+        yuklenici: 'GÜMÜŞÇÜ',
+        sozlesmeBedeli: 82717890.77,
+        toplamHakEdis: 72514443.46,
+        kalanHakEdis: 10203447.31,
+        doluluk: 87.66
+    },
+    {
+        bm: 'MERSİN',
+        sozlesmeNo: '25.0529.SSD.39',
+        sozlesmeAdi: 'ANAMUR PLANLI BAKIM SEVİYE-3',
+        yuklenici: 'ARMİN',
+        sozlesmeBedeli: 97731658.26,
+        toplamHakEdis: 76368778.77,
+        kalanHakEdis: 21362879.49,
+        doluluk: 78.14
+    },
+    {
+        bm: 'MERSİN',
+        sozlesmeNo: '25.0512.SSD.27',
+        sozlesmeAdi: 'MUT PLANLI BAKIM SEVİYE-3',
+        yuklenici: 'DUTAR',
+        sozlesmeBedeli: 44476726.84,
+        toplamHakEdis: 33252379.23,
+        kalanHakEdis: 11224347.61,
+        doluluk: 74.76
+    },
+    {
+        bm: 'TOROSLAR',
+        sozlesmeNo: '25.0355.SİH.02',
+        sozlesmeAdi: 'DAĞITIM ŞEBEKELERİNDE AĞAÇ BUDAMA İŞİ',
+        yuklenici: 'TİBETOĞLU',
+        sozlesmeBedeli: 37187500.00,
+        toplamHakEdis: 36787486.01,
+        kalanHakEdis: 400013.99,
+        doluluk: 98.92
+    },
+    {
+        bm: 'TOROSLAR',
+        sozlesmeNo: '25.0386.SİH.05',
+        sozlesmeAdi: 'DAĞITIM ŞEBEKELERİNDE KORİDOR AÇMA İŞİ',
+        yuklenici: 'EKOLOJİ',
+        sozlesmeBedeli: 21094250.00,
+        toplamHakEdis: 20813500.00,
+        kalanHakEdis: 280750.00,
+        doluluk: 98.67
+    },
+];
+
+export const contractTotal = {
+    sozlesmeBedeli: 1588246809.20,
+    toplamHakEdis: 1230683813.33,
+    kalanHakEdis: 357562995.87,
+    doluluk: 77.49
+};

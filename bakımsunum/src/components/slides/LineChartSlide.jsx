@@ -192,7 +192,7 @@ export default function LineChartSlide() {
                                     <TableHead>
                                         <TableRow>
                                             <TableCell rowSpan={2} sx={{ verticalAlign: 'bottom', minWidth: 120, borderRight: '1px solid rgba(255,255,255,0.05)' }}>
-                                                <strong>BÖLGE MÜD.</strong>
+                                                <strong>İl</strong>
                                             </TableCell>
                                             {scopeCategories.map((cat, i) => (
                                                 <TableCell align="center" colSpan={2} key={i} sx={{ borderRight: '1px solid rgba(255,255,255,0.05)', borderBottom: 'none' }}>
