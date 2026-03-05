@@ -11,7 +11,7 @@ import {
     createTheme
 } from '@mui/material';
 import { Maximize, Minimize } from 'lucide-react';
-import { recentTransactions } from '../../data/mockData';
+//import { recentTransactions } from '../../data/mockData';
 
 export default function TableSlide() {
     const [isFullscreen, setIsFullscreen] = useState(false);
