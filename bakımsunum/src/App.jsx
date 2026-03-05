@@ -13,7 +13,7 @@ import YerTeslimiSlide from './components/slides/YerTeslimiSlide';
 import YukleniciBilgileriSlide from './components/slides/YukleniciBilgileriSlide';
 import S1S2DenetlemeSlide from './components/slides/S1S2DenetlemeSlide';
 import YukleniciGerceklesme2025 from './components/slides/2025YukleniciGerceklesme';
-import PlanliBakimDegisiklikler from './components/slides/ususesas';
+import PlanliBakimDegisiklikler from './components/slides/usulesas';
 
 function App() {
   const [activeSlideId, setActiveSlideId] = useState(1);

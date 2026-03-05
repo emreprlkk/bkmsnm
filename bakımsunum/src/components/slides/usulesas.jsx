@@ -19,9 +19,10 @@ const CARDS = [
         ozet: 'Usul ve Esaslar belirli bir tarife dönemine bağlı olmaktan çıkarıldı; artık her dönemde otomatik geçerli.',
         anaFark: '2021–2025 tarih aralığı kaldırıldı → Kalıcı düzenleme',
         puan: [
-            '"Tarife uygulama dönemi içerisinde" ifadesiyle genelleştirildi',
-            'Her dönem için ayrı düzenleme yapılmasına gerek kalmadı',
-            'Uygulama sürekliliği ve öngörülebilirlik artırıldı',
+            // JSX fragment → önemli kelimeler <strong> ile vurgulandı
+            <><strong style={{ color: '#6366f1', fontWeight: 800 }}>"Tarife uygulama dönemi içerisinde"</strong> ifadesiyle genelleştirildi</>,
+            <>Her dönem için <strong style={{ color: '#6366f1', fontWeight: 800 }}>ayrı düzenleme yapılmasına gerek kalmadı</strong></>,
+            <><strong style={{ color: '#6366f1', fontWeight: 800 }}>Uygulama sürekliliği</strong> ve öngörülebilirlik artırıldı</>,
         ],
         detay: "Önceki düzenlemede '2021-2025 yıllarını kapsayan tarife uygulama dönemi' ifadesi yer alıyordu. Yeni düzenlemede bu tarih aralığı kaldırılarak metin genelleştirildi.",
     },
@@ -37,9 +38,9 @@ const CARDS = [
         ozet: "Drone'lar resmi olarak bakım sürecine girdi. Tüm işlemler GPS koordinatı ve zaman damgasıyla kayıt altına alınıyor.",
         anaFark: 'Termal kamera + İHA → Dijital kayıt zorunluluğu',
         puan: [
-            "Madde başlığı 'Gözlem'den 'Gözlem ve Temel Bakım'a güncellendi",
-            'İHA (drone) kullanımı resmi olarak tanındı',
-            'Koordinat ve zaman kaydı zorunlu hale getirildi',
+            <>Madde başlığı 'Gözlem'den <strong style={{ color: '#10b981', fontWeight: 800 }}> "Gözlem ve Temel Bakım'a güncellendi"</strong>   </>,
+            <><strong style={{ color: '#10b981', fontWeight: 800 }}>"İHA (drone) kullanımı resmi olarak tanındı"</strong> ifadesiyle genelleştirildi</>,
+            <> <strong style={{ color: '#10b981', fontWeight: 800 }}> Koordinat ve zaman kaydı</strong> zorunlu hale getirildi </>,
         ],
         detay: "İHA kullanımının yaygınlaşmasıyla birlikte bu araçların resmi olarak tanınması sağlandı. Koordinat ve zaman kaydı yükümlülüğü gizlilik ve kişisel veri şikayetlerine karşı denetim güvencesi sağlamak amacıyla getirildi.",
     },
@@ -414,7 +415,7 @@ export default function PlanliBakimDegisiklikler() {
             >
                 <span className="font-bold text-base-content/50">Kaynak: </span>
                 Elektrik Dağıtım Şirketlerinin Planlı Bakım Harcamalarının Tarife Hesaplamalarında
-                Dikkate Alınmasına İlişkin Usul ve Esaslar — Mevcut / Yeni Düzenleme Karşılaştırması
+                Dikkate Alınmasına İlişkin Usul ve Esaslar — Mevcut / Yeni Düzenleme
             </div>
 
         </div>
