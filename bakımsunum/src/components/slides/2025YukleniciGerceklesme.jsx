@@ -172,7 +172,7 @@ export default function YukleniciGerceklesme2025() {
                 if (isNaN(n) || n === 0) return '';
                 return chartMetric === 'doluluk' ? `%${n.toFixed(1)}` : fmtShort(n);
             },
-            style: { fontSize: isFullscreen ? '12px' : '10px', fontWeight: 700, colors: ['#e2e8f0'] },
+            style: { fontSize: isFullscreen ? '14px' : '12px', fontWeight: 700, colors: ['#1a1b1dff'] },
             offsetX: 8,
         },
         // ApexCharts horizontal bar eksen davranışı:
@@ -290,7 +290,7 @@ export default function YukleniciGerceklesme2025() {
                         style={{ fontSize: fs ? 28 : 22 }}
                     >
                         <FileText className="text-primary" size={fs ? 28 : 22} />
-                        TOROSLAR EDAŞ 2025 Yüklenici Gerçekleşmeleri
+                        TOROSLAR EDAŞ - 2025 Yüklenici Gerçekleşmeleri
                     </h2>
                     <p className="text-base-content/50 mt-0.5" style={{ fontSize: fs ? 14 : 12 }}>
                         Sözleşme bazlı hak ediş ve doluluk takibi

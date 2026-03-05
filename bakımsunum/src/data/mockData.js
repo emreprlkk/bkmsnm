@@ -135,7 +135,7 @@ export const scopeData = [
     },
 ];
 
-export const revenueData = {
+/*export const revenueData = {
     categories: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran'],
     revenue: [12000, 15000, 14000, 18000, 22000, 25000],
     expenses: [8000, 9000, 11000, 10000, 12000, 13000],
@@ -152,7 +152,7 @@ export const recentTransactions = [
     { id: 3, date: '2026-02-28', customer: 'Mehmet Kaya', amount: 800, status: 'Tamamlandı' },
     { id: 4, date: '2026-02-27', customer: 'Fatma Şahin', amount: 3100, status: 'İptal' },
     { id: 5, date: '2026-02-26', customer: 'Ali Can', amount: 1200, status: 'Tamamlandı' },
-];
+]; */
 
 export const regionalSales = {
     categories: ['Marmara', 'Ege', 'İç Anadolu', 'Akdeniz', 'Karadeniz'],
