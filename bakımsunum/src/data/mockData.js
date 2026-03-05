@@ -170,7 +170,8 @@ export const presentationSlides = [
     { id: 5, title: 'YER TESLİMİ', type: 'yer_teslimi' },
     { id: 6, title: '2026 YÜKLENİCİ BİLGİLERİ', type: 'yuklenici_bilgileri' },
     { id: 7, title: 'S1-S2 DENETLEME', type: 's1_s2_denetleme' },
-    { id: 8, title: '2025 YÜKLENİCİ GERÇEKLEŞMELERİ', type: '2025_yuklenici_gerceklesme' }
+    { id: 8, title: '2025 YÜKLENİCİ GERÇEKLEŞMELERİ', type: '2025_yuklenici_gerceklesme' },
+    { id: 9, title: 'USUL VE ESASLAR DEĞİŞİKLİKLERİ', type: 'usul_esas' }
 ];
 
 export const yerTeslimiData = [
