@@ -1,27 +1,45 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import Chart from 'react-apexcharts';
-import { Maximize, Minimize, BarChart2, Filter } from 'lucide-react';
+import { Maximize, Minimize, BarChart2, ChevronDown, SlidersHorizontal, Layers, TrendingUp, Sigma } from 'lucide-react';
 import { s1Data, s2Data } from '../../data/mockData';
+
+// ─── Küçük yardımcı: Her OM datasından toplam hesapla
+const getTotal = (data) =>
+    data.reduce((sum, d) => sum + d.BINA + d.DUT + d.SDK + d.AG + d.YG, 0);
+
+// ─── Stat badge
+function StatBadge({ label, value, color }) {
+    return (
+        <div
+            style={{
+                background: `linear-gradient(135deg, ${color}18 0%, ${color}08 100%)`,
+                border: `1px solid ${color}30`,
+            }}
+            className="flex flex-col items-center justify-center px-4 py-2 rounded-xl gap-0.5"
+        >
+            <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: `${color}99` }}>
+                {label}
+            </span>
+            <span className="text-lg font-black tabular-nums" style={{ color }}>
+                {typeof value === 'number' ? value.toLocaleString('tr-TR', { maximumFractionDigits: 1 }) : value}
+            </span>
+        </div>
+    );
+}
 
 export default function S1S2Slide() {
     const [isFullscreen, setIsFullscreen] = useState(false);
-
-    // Filtreleme State'leri
     const [selectedBolge, setSelectedBolge] = useState('ADANA');
     const [selectedOM, setSelectedOM] = useState('TÜMÜ');
-
-    // Hangi Div'in devasa boyuta getirileceği
     const [focusedPanel, setFocusedPanel] = useState(null); // 'S1' | 'S2' | null
 
     const containerRef = useRef(null);
 
-    // Tüm Data'dan Bölge Listesi Çıkartma
     const bolgeList = useMemo(() => {
         const bolgeler = new Set(s1Data.map(d => d.BOLGE));
         return ['TÜMÜ', ...Array.from(bolgeler).sort()];
     }, []);
 
-    // Seçili Bölgeye Göre OM Listesi Çıkartma
     const omList = useMemo(() => {
         if (selectedBolge === 'TÜMÜ') {
             return ['TÜMÜ', ...Array.from(new Set(s1Data.map(d => d.OM))).sort()];
@@ -29,12 +47,10 @@ export default function S1S2Slide() {
         return ['TÜMÜ', ...Array.from(new Set(s1Data.filter(d => d.BOLGE === selectedBolge).map(d => d.OM))).sort()];
     }, [selectedBolge]);
 
-    // Bölge değiştiğinde OM'yi sıfırla
     useEffect(() => {
         setSelectedOM('TÜMÜ');
     }, [selectedBolge]);
 
-    // Filtrelenmiş Veriler
     const filteredS1Data = useMemo(() => {
         let result = s1Data;
         if (selectedBolge !== 'TÜMÜ') result = result.filter(d => d.BOLGE === selectedBolge);
@@ -49,13 +65,20 @@ export default function S1S2Slide() {
         return result;
     }, [selectedBolge, selectedOM]);
 
+    const s1Total = useMemo(() => getTotal(filteredS1Data), [filteredS1Data]);
+    const s2Total = useMemo(() => getTotal(filteredS2Data), [filteredS2Data]);
+
     useEffect(() => {
         const handleFullscreenChange = () => {
             const isFull = !!document.fullscreenElement;
             setIsFullscreen(isFull);
-            // Tam ekrandan çıkıldığında focus modunu da temizle (ikisi yan yana dönsün)
             if (!isFull) {
                 setFocusedPanel(null);
+                // Fullscreen'den çıkınca data-theme'yi temizle
+                containerRef.current?.removeAttribute('data-theme');
+            } else {
+                // Fullscreen girerken light tema zorla
+                containerRef.current?.setAttribute('data-theme', 'light');
             }
         };
         document.addEventListener('fullscreenchange', handleFullscreenChange);
@@ -64,122 +87,130 @@ export default function S1S2Slide() {
 
     const toggleMainFullscreen = () => {
         if (!document.fullscreenElement) {
-            setFocusedPanel(null); // Tüm sayfayı tam ekran yap, her ikisi de görünsün
+            setFocusedPanel(null);
             containerRef.current?.requestFullscreen();
         } else {
             document.exitFullscreen();
         }
     };
 
-    // İlgili div'i tam ekran ve tek başına focus modunda açmak için
     const focusAndFullscreen = (panelType) => {
         if (!document.fullscreenElement) {
             setFocusedPanel(panelType);
             containerRef.current?.requestFullscreen();
         } else {
-            // Zaten tam ekrandaysak çık
             document.exitFullscreen();
         }
     };
 
-    // Shared chart options logic to ensure uniformity
-    const getChartOptions = (titleStr, data) => {
-        const categories = data.map(d => d.OM.replace(' OM', '')); // Kısaltılmış OM isimleri
-
+    // ─── Chart Options
+    const getChartOptions = (data, accentColor, totalMode = false) => {
+        const categories = data.map(d => d.OM.replace(' OM', ''));
         return {
             chart: {
-                type: 'bar', // Using normal bar chart as requested
-                stacked: false, // Normal yan yana bar
+                type: 'bar',
+                stacked: false,
                 toolbar: { show: false },
                 background: 'transparent',
                 fontFamily: 'inherit',
                 animations: {
                     enabled: true,
                     easing: 'easeinout',
-                    speed: 800,
-                    animateGradually: {
-                        enabled: true,
-                        delay: 150
-                    },
-                    dynamicAnimation: {
-                        enabled: true,
-                        speed: 350
-                    }
+                    speed: 900,
+                    animateGradually: { enabled: true, delay: 120 },
+                    dynamicAnimation: { enabled: true, speed: 400 }
                 }
             },
-            colors: ['#3b82f6', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981'], // BINA, DUT, SDK, AG, YG
-            stroke: {
-                show: true,
-                width: 2,
-                colors: ['transparent']
-            },
+            colors: totalMode
+                ? [accentColor]
+                : ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981'],
+            fill: totalMode
+                ? {
+                    type: 'gradient',
+                    gradient: {
+                        shade: 'light',
+                        type: 'vertical',
+                        shadeIntensity: 0.2,
+                        gradientToColors: [accentColor === '#6366f1' ? '#818cf8' : '#a78bfa'],
+                        opacityFrom: 1,
+                        opacityTo: 0.8,
+                    }
+                }
+                : {
+                    type: 'gradient',
+                    gradient: {
+                        shade: 'dark',
+                        type: 'vertical',
+                        shadeIntensity: 0.3,
+                        gradientToColors: ['#818cf8', '#a78bfa', '#f472b6', '#fbbf24', '#34d399'],
+                        inverseColors: false,
+                        opacityFrom: 1,
+                        opacityTo: 0.85,
+                    }
+                },
+            stroke: { show: true, width: 1.5, colors: ['transparent'] },
             plotOptions: {
                 bar: {
                     horizontal: false,
-                    columnWidth: '80%',
-                    borderRadius: 3,
-                    dataLabels: {
-                        position: 'center', // Labeller barların ortasında dikey olarak dönsün
-                        orientation: 'vertical',
-                    },
+                    columnWidth: totalMode
+                        ? (data.length > 10 ? '55%' : '40%')
+                        : (data.length > 8 ? '82%' : '65%'),
+                    borderRadius: totalMode ? 7 : 5,
+                    borderRadiusApplication: 'end',
+                    dataLabels: { position: 'center', orientation: 'vertical' },
                 }
             },
             dataLabels: {
-                enabled: true, // Labeller aktif edildi
+                enabled: true,
                 style: {
-                    fontSize: '18px',
-                    //  fontFamily: 'inherit',
-                    fontWeight: 1000,
-                    colors: ['black'] // Yazı rengi
+                    fontSize: totalMode ? '12px' : '11px',
+                    fontWeight: 700,
+                    colors: ['black']
                 },
-                formatter: function (val) {
-                    if (val === 0 || val === 0.0) return ''; // 0 olanları gizle, kalabalık yapmasın
-                    return val;
-                },
-                dropShadow: {
-                    enabled: true,
-                    top: 1,
-                    left: 1,
-                    blur: 1,
-                    color: '#000',
-                    opacity: 0.45
-                }
+                formatter: (val) => (val === 0 || val === 0.0) ? '' : val,
+                dropShadow: { enabled: true, top: 1, left: 0, blur: 3, color: '#000', opacity: 0.5 }
             },
             xaxis: {
-                categories: categories,
+                categories,
                 labels: {
-                    style: { colors: '#94a3b8', fontSize: '11px', fontWeight: 600, fontFamily: 'inherit' },
-                    rotate: data.length > 5 ? -45 : 0,
+                    style: { colors: '#94a3b8', fontSize: '10px', fontWeight: 600, fontFamily: 'inherit' },
+                    rotate: data.length > 5 ? -40 : 0,
                     rotateAlways: data.length > 5,
                 },
                 axisBorder: { show: false },
                 axisTicks: { show: false }
             },
             yaxis: {
-                title: { text: 'Göstergeler (Adet + Tutar)', style: { color: '#94a3b8', fontSize: '10px', fontWeight: 700 } },
-                labels: { style: { colors: '#94a3b8', fontSize: '10px' } }
+                title: {
+                    text: totalMode ? 'Toplam Birim (Adet + km)' : 'Göstergeler (Adet / Birim)',
+                    style: { color: '#64748b', fontSize: '9px', fontWeight: 700 }
+                },
+                labels: { style: { colors: '#64748b', fontSize: '10px' } }
             },
             legend: {
+                show: !totalMode,
                 position: 'top',
                 horizontalAlign: 'center',
-                labels: { colors: '#cbd5e1' },
-                itemMargin: { horizontal: 10, vertical: 5 },
-                markers: { radius: 12 }
+                labels: { colors: '#94a3b8' },
+                itemMargin: { horizontal: 8, vertical: 4 },
+                markers: { radius: 8, width: 10, height: 10 },
             },
             grid: {
-                borderColor: 'rgba(255,255,255,0.05)',
-                strokeDashArray: 4,
-                xaxis: { lines: { show: false } }
+                borderColor: 'rgba(148,163,184,0.08)',
+                strokeDashArray: 5,
+                xaxis: { lines: { show: false } },
+                padding: { top: -6, bottom: -4 }
             },
             tooltip: {
                 theme: 'dark',
-                shared: true,
+                shared: !totalMode,
                 intersect: false,
+                style: { fontSize: '12px' },
                 y: {
-                    formatter: function (val, { seriesIndex }) {
-                        if (seriesIndex >= 3) return val + " (Birim)";
-                        return val + " Adet";
-                    }
+                    formatter: totalMode
+                        ? (val) => `${val.toLocaleString('tr-TR', { maximumFractionDigits: 1 })} Birim (Toplam)`
+                        : (val, { seriesIndex }) =>
+                            seriesIndex >= 3 ? `${val} km` : `${val} Adet`
                 }
             }
         };
@@ -201,134 +232,331 @@ export default function S1S2Slide() {
         { name: 'YG', data: filteredS2Data.map(d => d.YG) }
     ], [filteredS2Data]);
 
-    const s1Options = useMemo(() => getChartOptions('S1 SENARYO ANALİZİ', filteredS1Data), [filteredS1Data]);
-    const s2Options = useMemo(() => getChartOptions('S2 SENARYO ANALİZİ', filteredS2Data), [filteredS2Data]);
+    const s1Options = useMemo(() => getChartOptions(filteredS1Data, '#6366f1', false), [filteredS1Data]);
+    const s2Options = useMemo(() => getChartOptions(filteredS2Data, '#8b5cf6', false), [filteredS2Data]);
+    const s1TotalOptions = useMemo(() => getChartOptions(filteredS1Data, '#6366f1', true), [filteredS1Data]);
+    const s2TotalOptions = useMemo(() => getChartOptions(filteredS2Data, '#8b5cf6', true), [filteredS2Data]);
+
+    const activeLabel = selectedBolge === 'TÜMÜ'
+        ? 'Tüm Bölgeler'
+        : selectedOM === 'TÜMÜ'
+            ? selectedBolge
+            : `${selectedBolge} / ${selectedOM.replace(' OM', '')}`;
 
     return (
         <div
             ref={containerRef}
-            className={`flex flex-col h-full w-full transition-all duration-700 ease-in-out ${isFullscreen ? 'fixed inset-0 z-50 p-6 bg-base-100 overflow-y-auto' : ''}`}
+            className={`flex flex-col h-full w-full transition-all duration-700 ease-in-out ${isFullscreen ? 'fixed inset-0 z-50 overflow-y-auto p-8' : ''}`}
+            style={isFullscreen ? { background: '#ffffff', color: '#1e293b' } : {}}
         >
-            <div className={`mb-6 flex flex-col md:flex-row justify-between items-start md:items-end gap-4 transition-all duration-500 ease-out ${focusedPanel ? 'opacity-0 h-0 overflow-hidden mb-0' : 'opacity-100 h-auto'}`}>
-                <div>
-                    <h2 className="text-3xl font-extrabold text-base-content mb-2 flex items-center gap-3">
-                        <BarChart2 className="w-8 h-8 text-primary" />
-                        SEVİYE-1 ve SEVİYE-2 Kapsamında Yapılan İşlerin Tiplerine Göre Adetleri
-                    </h2>
-                    <p className="text-base-content/60 text-lg">
-                        Yandaki filteden lütfen il ve operasyon seçimi ile filtreleme yapınız
-                    </p>
+            {/* ═══ HEADER SECTION ═══ */}
+            <div
+                className={`mb-5 transition-all duration-500 ease-out ${focusedPanel ? 'opacity-0 h-0 overflow-hidden mb-0 pointer-events-none' : 'opacity-100'}`}
+            >
+                {/* Title Row */}
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
+                    <div className="flex items-center gap-3">
+                        {/* Icon Badge */}
+                        <div
+                            className="w-11 h-11 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg"
+                            style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)' }}
+                        >
+                            <BarChart2 className="w-5 h-5 text-white" />
+                        </div>
+                        <div>
+                            <h2 className="text-xl font-black text-base-content leading-tight">
+                                SEVİYE-1 & SEVİYE-2 İş Tipleri Analizi
+                            </h2>
+                            <p className="text-base-content/50 text-xs mt-0.5 font-medium">
+                                Bakım kapsamında gerçekleştirilen işlerin tiplerinin karşılaştırmalı görünümü
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                        <button
+                            onClick={toggleMainFullscreen}
+                            className="btn btn-sm btn-ghost gap-1.5 text-base-content/60 hover:text-base-content hover:bg-base-200"
+                            title={isFullscreen && !focusedPanel ? 'Küçült' : 'Tam Ekran'}
+                        >
+                            {isFullscreen && !focusedPanel
+                                ? <><Minimize size={14} /><span className="text-xs hidden sm:inline">Küçült</span></>
+                                : <><Maximize size={14} /><span className="text-xs hidden sm:inline">Tam Ekran</span></>
+                            }
+                        </button>
+                    </div>
                 </div>
 
-                <div className="flex items-center gap-3 bg-base-200/50 p-2 rounded-xl border border-base-200 shadow-sm mr-auto md:mr-0 animate-in fade-in slide-in-from-top-4 duration-500">
-                    <div className="flex items-center gap-2 text-primary">
-                        <Filter size={16} />
-                        <span className="text-xs font-bold uppercase tracking-wider">Filtre:</span>
-                    </div>
-
-                    {/* Bölge Seçici */}
-                    <div className="form-control">
-                        <select
-                            className="select select-sm select-bordered bg-base-100 text-sm font-semibold w-full max-w-xs focus:ring-2 focus:ring-primary/50 text-base-content/80"
-                            value={selectedBolge}
-                            onChange={(e) => setSelectedBolge(e.target.value)}
-                        >
-                            {bolgeList.map(b => (
-                                <option key={b} value={b}>{b === 'TÜMÜ' ? 'Tüm Bölgeler' : b}</option>
-                            ))}
-                        </select>
-                    </div>
-
-                    {/* OM Seçici */}
-                    <div className="form-control">
-                        <select
-                            className="select select-sm select-bordered bg-base-100 text-sm font-semibold w-full max-w-xs focus:ring-2 focus:ring-primary/50 text-base-content/80"
-                            value={selectedOM}
-                            onChange={(e) => setSelectedOM(e.target.value)}
-                            disabled={selectedBolge === 'TÜMÜ' && omList.length > 20}
-                        >
-                            {omList.map(om => (
-                                <option key={om} value={om}>{om === 'TÜMÜ' ? 'Tüm Operasyon MRK' : om}</option>
-                            ))}
-                        </select>
-                    </div>
-
-                    <div className="w-px h-6 bg-base-content/10 mx-1"></div>
-
-                    <button
-                        onClick={toggleMainFullscreen}
-                        className="btn btn-sm btn-outline shadow-sm bg-base-100"
-                        title={isFullscreen && !focusedPanel ? "Küçült" : "Genel Tam Ekran"}
+                {/* Filter + Stats Bar */}
+                <div
+                    className="rounded-2xl border p-3 flex flex-wrap items-center gap-3"
+                    style={{
+                        background: 'linear-gradient(135deg, hsl(var(--b2)/0.7) 0%, hsl(var(--b2)/0.4) 100%)',
+                        borderColor: 'hsl(var(--b3)/0.8)',
+                        backdropFilter: 'blur(8px)',
+                    }}
+                >
+                    {/* Filter Icon */}
+                    <div
+                        className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
+                        style={{ background: 'linear-gradient(135deg, #6366f120 0%, #8b5cf620 100%)', border: '1px solid #6366f130' }}
                     >
-                        {isFullscreen && !focusedPanel ? <Minimize size={16} /> : <Maximize size={16} />}
+                        <SlidersHorizontal size={14} style={{ color: '#818cf8' }} />
+                    </div>
+
+                    {/* Bölge Select */}
+                    <div className="flex flex-col gap-0.5 min-w-[140px]">
+                        <label className="text-[10px] font-bold uppercase tracking-widest text-base-content/40 px-1">Bölge</label>
+                        <div className="relative">
+                            <select
+                                className="select select-sm w-full font-semibold text-sm pr-8 appearance-none"
+                                style={{
+                                    background: 'hsl(var(--b1)/0.8)',
+                                    border: '1px solid hsl(var(--b3))',
+                                    borderRadius: '10px',
+                                    outline: 'none',
+                                    paddingRight: '2rem',
+                                }}
+                                value={selectedBolge}
+                                onChange={(e) => setSelectedBolge(e.target.value)}
+                            >
+                                {bolgeList.map(b => (
+                                    <option key={b} value={b}>{b === 'TÜMÜ' ? 'Tüm Bölgeler' : b}</option>
+                                ))}
+                            </select>
+                            <ChevronDown size={13} className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-base-content/40" />
+                        </div>
+                    </div>
+
+                    {/* OM Select */}
+                    <div className="flex flex-col gap-0.5 min-w-[160px]">
+                        <label className="text-[10px] font-bold uppercase tracking-widest text-base-content/40 px-1">Operasyon MRK</label>
+                        <div className="relative">
+                            <select
+                                className="select select-sm w-full font-semibold text-sm pr-8 appearance-none"
+                                style={{
+                                    background: 'hsl(var(--b1)/0.8)',
+                                    border: '1px solid hsl(var(--b3))',
+                                    borderRadius: '10px',
+                                    outline: 'none',
+                                    paddingRight: '2rem',
+                                    opacity: selectedBolge === 'TÜMÜ' && omList.length > 20 ? 0.5 : 1,
+                                }}
+                                value={selectedOM}
+                                onChange={(e) => setSelectedOM(e.target.value)}
+                                disabled={selectedBolge === 'TÜMÜ' && omList.length > 20}
+                            >
+                                {omList.map(om => (
+                                    <option key={om} value={om}>{om === 'TÜMÜ' ? 'Tüm Operasyon MRK' : om}</option>
+                                ))}
+                            </select>
+                            <ChevronDown size={13} className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-base-content/40" />
+                        </div>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="w-px h-10 bg-base-content/10 hidden sm:block" />
+
+                    {/* Active Filter Label */}
+                    <div className="flex-1 hidden md:flex items-center gap-2">
+                        <Layers size={12} className="text-base-content/30" />
+                        <span className="text-[11px] font-bold text-base-content/40">Aktif:</span>
+                        <span
+                            className="text-xs font-black px-2.5 py-1 rounded-lg"
+                            style={{
+                                background: 'linear-gradient(135deg, #6366f120, #8b5cf115)',
+                                color: '#818cf8',
+                                border: '1px solid #6366f130'
+                            }}
+                        >
+                            {activeLabel}
+                        </span>
+                    </div>
+
+                    {/* Stats Badges */}
+                    <div className="flex items-center gap-2 ml-auto">
+                        <StatBadge label="S1 Toplam" value={s1Total} color="#6366f1" />
+                        <StatBadge label="S2 Toplam" value={s2Total} color="#8b5cf6" />
+                    </div>
+                </div>
+            </div>
+
+            {/* ═══ CHART PANELS ═══ */}
+            <div
+                className={`flex-1 flex flex-col xl:flex-row gap-5 transition-all duration-700 ease-in-out min-h-0 ${isFullscreen && !focusedPanel ? 'p-6' : !isFullscreen ? '' : 'h-full'}`}
+            >
+                {/* ── S1 Panel ── */}
+                <ChartPanel
+                    panelKey="S1"
+                    label="SEVİYE-1 BAKIM"
+                    accentColor="#6366f1"
+                    secondColor="#818cf8"
+                    icon={<TrendingUp size={14} />}
+                    data={filteredS1Data}
+                    series={s1Series}
+                    options={s1Options}
+                    totalOptions={s1TotalOptions}
+                    isFocused={focusedPanel === 'S1'}
+                    isHidden={focusedPanel === 'S2'}
+                    onFocus={() => focusAndFullscreen('S1')}
+                    isFullscreen={isFullscreen}
+                />
+
+                {/* ── S2 Panel ── */}
+                <ChartPanel
+                    panelKey="S2"
+                    label="SEVİYE-2 BAKIM"
+                    accentColor="#8b5cf6"
+                    secondColor="#a78bfa"
+                    icon={<TrendingUp size={14} />}
+                    data={filteredS2Data}
+                    series={s2Series}
+                    options={s2Options}
+                    totalOptions={s2TotalOptions}
+                    isFocused={focusedPanel === 'S2'}
+                    isHidden={focusedPanel === 'S1'}
+                    onFocus={() => focusAndFullscreen('S2')}
+                    isFullscreen={isFullscreen}
+                />
+            </div>
+        </div>
+    );
+}
+
+// ─── Sub-component: Chart Panel ───────────────────────────────────────────────
+function ChartPanel({ panelKey, label, accentColor, secondColor, icon, data, series, options, totalOptions, isFocused, isHidden, onFocus, isFullscreen }) {
+    const [isTotalMode, setIsTotalMode] = useState(false);
+
+    // Toplam mod serisi: her OM için tek değer (hook early return'den önce çağrılmalı)
+    const totalSeries = useMemo(() => [
+        { name: 'Toplam', data: data.map(d => parseFloat((d.BINA + d.DUT + d.SDK + d.AG + d.YG).toFixed(1))) }
+    ], [data]);
+
+    const total = getTotal(data);
+    const activeSeries = isTotalMode ? totalSeries : series;
+    const activeOptions = isTotalMode ? totalOptions : options;
+
+    if (isHidden) return null;
+
+    return (
+        <div
+            className={`flex flex-col relative min-h-[380px] transition-all duration-700 ease-out overflow-hidden ${isFocused ? 'w-full flex-1' : 'w-full xl:w-1/2 flex-1'}`}
+            style={{
+                background: 'linear-gradient(145deg, hsl(var(--b1)) 0%, hsl(var(--b2)/0.6) 100%)',
+                border: `1px solid ${accentColor}22`,
+                borderRadius: '20px',
+                boxShadow: `0 4px 24px ${accentColor}10, 0 1px 4px rgba(0,0,0,0.12)`,
+            }}
+        >
+            {/* Top accent line */}
+            <div
+                className="absolute top-0 left-0 right-0 h-[2px] rounded-t-[20px]"
+                style={{ background: `linear-gradient(90deg, ${accentColor}, ${secondColor}, transparent)` }}
+            />
+
+            {/* Panel Header */}
+            <div className="flex items-center justify-between px-5 pt-4 pb-3 flex-shrink-0">
+                <div className="flex items-center gap-2.5">
+                    <div
+                        className="w-7 h-7 rounded-lg flex items-center justify-center text-white"
+                        style={{ background: `linear-gradient(135deg, ${accentColor}, ${secondColor})`, boxShadow: `0 2px 8px ${accentColor}40` }}
+                    >
+                        {icon}
+                    </div>
+                    <div>
+                        <div className="text-xs font-black tracking-wider" style={{ color: accentColor }}>
+                            {label} {isFocused && <span className="opacity-60">— Detaylı Görünüm</span>}
+                        </div>
+                        <div className="text-[10px] text-base-content/40 font-semibold">
+                            {data.length} lokasyon · Toplam{' '}
+                            <span className="font-black" style={{ color: accentColor }}>
+                                {total.toLocaleString('tr-TR', { maximumFractionDigits: 1 })}
+                            </span>{' '}
+                            birim
+                        </div>
+                    </div>
+                </div>
+
+                {/* Sağ: Toggle + Büyüt butonu */}
+                <div className="flex items-center gap-2">
+                    {/* Toplam Toggle */}
+                    <button
+                        onClick={() => setIsTotalMode(prev => !prev)}
+                        title={isTotalMode ? 'Detaylı görünüme geç' : 'Toplam görünüme geç'}
+                        className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all duration-300"
+                        style={isTotalMode
+                            ? {
+                                background: `linear-gradient(135deg, ${accentColor}25, ${secondColor}15)`,
+                                color: accentColor,
+                                border: `1px solid ${accentColor}50`,
+                                boxShadow: `0 0 10px ${accentColor}20`,
+                            }
+                            : {
+                                background: 'hsl(var(--b2)/0.6)',
+                                color: 'hsl(var(--bc)/0.45)',
+                                border: '1px solid hsl(var(--b3)/0.6)',
+                            }
+                        }
+                    >
+                        <Sigma size={11} />
+                        Toplam
+                        {/* Pill indicator */}
+                        <span
+                            className="w-6 h-3.5 rounded-full flex items-center transition-all duration-300 flex-shrink-0"
+                            style={{
+                                background: isTotalMode ? accentColor : 'hsl(var(--b3))',
+                                padding: '2px',
+                                justifyContent: isTotalMode ? 'flex-end' : 'flex-start',
+                            }}
+                        >
+                            <span
+                                className="w-2.5 h-2.5 rounded-full bg-white block"
+                                style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.3)' }}
+                            />
+                        </span>
+                    </button>
+
+                    {/* Büyüt butonu */}
+                    <button
+                        onClick={onFocus}
+                        className="btn btn-xs btn-ghost rounded-lg gap-1 text-base-content/40 hover:text-base-content hover:bg-base-200 transition-colors"
+                        title={isFocused ? 'Küçült' : 'Bu Grafiği Büyüt'}
+                    >
+                        {isFocused
+                            ? <><Minimize size={12} /><span className="hidden sm:inline text-[10px]">Küçült</span></>
+                            : <><Maximize size={12} /><span className="hidden sm:inline text-[10px]">Büyüt</span></>
+                        }
                     </button>
                 </div>
             </div>
 
-            {/* İki taraflı görselleştirme kapsayıcısı */}
-            <div className={`flex-1 flex flex-col xl:flex-row gap-6 transition-all duration-700 ease-in-out ${isFullscreen && !focusedPanel ? '' : !isFullscreen ? 'relative bg-base-200/50 shadow-inner rounded-3xl p-6 h-full' : 'h-full'}`}>
+            {/* Separator */}
+            <div className="mx-5 mb-2" style={{ height: '1px', background: `linear-gradient(90deg, ${accentColor}20, transparent)` }} />
 
-                {/* S1 Sol Div */}
-                <div className={`flex-col bg-base-100 rounded-2xl shadow-md border border-base-200 p-4 relative min-h-[400px] transition-all duration-700 ease-out flex ${focusedPanel === 'S1' ? 'w-full flex-1' : focusedPanel === 'S2' ? 'hidden' : 'w-full xl:w-1/2 flex-1'}`}>
-                    <div className="absolute top-4 right-4 z-20 flex items-center gap-3">
-                        <div className="text-xs font-bold text-primary/60 tracking-widest uppercase">
-                            S1 BAKIM {focusedPanel === 'S1' && '- DETAYLI GÖRÜNÜM'}
-                        </div>
-                        <button
-                            onClick={() => focusAndFullscreen('S1')}
-                            className="btn btn-xs btn-ghost btn-circle text-base-content/50 hover:text-primary transition-colors"
-                            title={focusedPanel === 'S1' ? "Küçült" : "Bu Grafiği Büyüt"}
+            {/* Chart Area */}
+            <div className="flex-1 w-full px-2 pb-3 min-h-0 flex">
+                {data.length > 0 ? (
+                    <div className="w-full h-full min-h-[300px] flex-1">
+                        <Chart
+                            key={`${panelKey}-${isTotalMode}`}
+                            options={activeOptions}
+                            series={activeSeries}
+                            type="bar"
+                            height="100%"
+                        />
+                    </div>
+                ) : (
+                    <div className="flex w-full h-full items-center justify-center flex-col gap-3">
+                        <div
+                            className="w-14 h-14 rounded-2xl flex items-center justify-center opacity-20"
+                            style={{ background: `${accentColor}20` }}
                         >
-                            {focusedPanel === 'S1' ? <Minimize size={14} /> : <Maximize size={14} />}
-                        </button>
-                    </div>
-
-                    <div className="flex-1 w-full -ml-3 mt-4 flex">
-                        {filteredS1Data.length > 0 ? (
-                            <div className="w-full h-full min-h-[300px] flex-1">
-                                <Chart
-                                    options={s1Options}
-                                    series={s1Series}
-                                    type="bar"
-                                    height="100%"
-                                />
-                            </div>
-                        ) : (
-                            <div className="flex w-full h-full items-center justify-center text-base-content/40 font-semibold">Bu filtreye uygun veri bulunamadı.</div>
-                        )}
-                    </div>
-                </div>
-
-                {/* S2 Sağ Div */}
-                <div className={`flex-col bg-base-100 rounded-2xl shadow-md border border-base-200 p-4 relative min-h-[400px] transition-all duration-700 ease-out flex ${focusedPanel === 'S2' ? 'w-full flex-1' : focusedPanel === 'S1' ? 'hidden' : 'w-full xl:w-1/2 flex-1'}`}>
-                    <div className="absolute top-4 right-4 z-20 flex items-center gap-3">
-                        <div className="text-xs font-bold text-primary/60 tracking-widest uppercase">
-                            S2 BAKIM {focusedPanel === 'S2' && '- DETAYLI GÖRÜNÜM'}
+                            <BarChart2 size={28} style={{ color: accentColor }} />
                         </div>
-                        <button
-                            onClick={() => focusAndFullscreen('S2')}
-                            className="btn btn-xs btn-ghost btn-circle text-base-content/50 hover:text-primary transition-colors"
-                            title={focusedPanel === 'S2' ? "Küçült" : "Bu Grafiği Büyüt"}
-                        >
-                            {focusedPanel === 'S2' ? <Minimize size={14} /> : <Maximize size={14} />}
-                        </button>
+                        <p className="text-base-content/40 font-semibold text-sm">Bu filtreye uygun veri bulunamadı.</p>
                     </div>
-
-                    <div className="flex-1 w-full -ml-3 mt-4 flex">
-                        {filteredS2Data.length > 0 ? (
-                            <div className="w-full h-full min-h-[300px] flex-1">
-                                <Chart
-                                    options={s2Options}
-                                    series={s2Series}
-                                    type="bar"
-                                    height="100%"
-                                />
-                            </div>
-                        ) : (
-                            <div className="flex w-full h-full items-center justify-center text-base-content/40 font-semibold">Bu filtreye uygun veri bulunamadı.</div>
-                        )}
-                    </div>
-                </div>
+                )}
             </div>
         </div>
     );

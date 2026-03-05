@@ -171,7 +171,8 @@ export const presentationSlides = [
     { id: 6, title: '2026 YÜKLENİCİ BİLGİLERİ', type: 'yuklenici_bilgileri' },
     { id: 7, title: 'S1-S2 DENETLEME', type: 's1_s2_denetleme' },
     { id: 8, title: '2025 YÜKLENİCİ GERÇEKLEŞMELERİ', type: '2025_yuklenici_gerceklesme' },
-    { id: 9, title: 'USUL VE ESASLAR DEĞİŞİKLİKLERİ', type: 'usul_esas' }
+    { id: 9, title: 'USUL VE ESASLAR DEĞİŞİKLİKLERİ', type: 'usul_esas' },
+    { id: 10, title: '2025 AFET-HAKEDİŞ VERİLERİ', type: 'afet' },
 ];
 
 export const yerTeslimiData = [
@@ -509,3 +510,22 @@ export const contractTotal = {
     kalanHakEdis: 357562995.87,
     doluluk: 77.49
 };
+
+// ── Afet Verileri ────────────────────────────────────────────────────────────
+
+export const afetSicaklikOrmanData = [
+    { om: "ADANA METROPOL", ort_gun_personel: 27, ort_gun_arac: 8, ort_gun_vinc: 2, ort_gun_kepce: null, orman_yangini: null, sicaklik: 1621043.03, genel_toplam: 1621043.03 },
+    { om: "GAZİANTEP METROPOL", ort_gun_personel: 33, ort_gun_arac: 9, ort_gun_vinc: 2, ort_gun_kepce: null, orman_yangini: null, sicaklik: 3081040.94, genel_toplam: 3081040.94 },
+    { om: "HATAY METROPOL", ort_gun_personel: 3, ort_gun_arac: 1, ort_gun_vinc: null, ort_gun_kepce: null, orman_yangini: null, sicaklik: 332041.11, genel_toplam: 332041.11 },
+    { om: "İSKENDERUN", ort_gun_personel: 4, ort_gun_arac: 2, ort_gun_vinc: null, ort_gun_kepce: null, orman_yangini: null, sicaklik: 101697.39, genel_toplam: 101697.39 },
+    { om: "KIRIKHAN", ort_gun_personel: 10, ort_gun_arac: 3, ort_gun_vinc: 1, ort_gun_kepce: 1, orman_yangini: null, sicaklik: 682935.12, genel_toplam: 682935.12 },
+    { om: "REYHANLI", ort_gun_personel: 3, ort_gun_arac: 1, ort_gun_vinc: null, ort_gun_kepce: null, orman_yangini: null, sicaklik: 40887.80, genel_toplam: 40887.80 },
+    { om: "SİLİFKE", ort_gun_personel: 10, ort_gun_arac: 3, ort_gun_vinc: null, ort_gun_kepce: null, orman_yangini: 288459.35, sicaklik: null, genel_toplam: 288459.35 },
+    { om: "GENEL TOPLAM", ort_gun_personel: null, ort_gun_arac: null, ort_gun_vinc: null, ort_gun_kepce: null, orman_yangini: 288459.35, sicaklik: 5859645.39, genel_toplam: 6148104.74 },
+];
+
+export const afetDepremData = [
+    { om: "HATAY METROPOL", ort_gun_personel: 26, ort_gun_arac: 13, ort_gun_vinc: null, ort_gun_kepce: null, deprem_hakedis: 52254562.98 },
+    { om: "KIRIKHAN", ort_gun_personel: 4, ort_gun_arac: 2, ort_gun_vinc: null, ort_gun_kepce: null, deprem_hakedis: 2487177.54 },
+    { om: "GENEL TOPLAM", ort_gun_personel: null, ort_gun_arac: null, ort_gun_vinc: null, ort_gun_kepce: null, deprem_hakedis: 54741740.52 },
+];

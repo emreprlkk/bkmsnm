@@ -22,9 +22,14 @@ export default function PresentationLayout({
                         </label>
                     </div>
                     <div className="flex-1 px-2 mx-2 text-xl font-bold flex items-center gap-2">
-                        <Presentation className="text-primary" size={24} />
+                        <img
+                            src="https://www.toroslaredas.com.tr/frontEndPages/img/toroslar-logo-black.svg"
+                            width={250}
+                            height={250}
+                            style={{ objectFit: "contain" }}
+                        />
                         <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                            TOROSLAR EDAŞ BAKIM DASHBOARD-SUNUM PORTALI
+                            EDAŞ BAKIM DASHBOARD-SUNUM PORTALI
                         </span>
                     </div>
                     <div className="flex-none hidden sm:flex gap-2">
@@ -141,7 +146,7 @@ export default function PresentationLayout({
                     })}
                     <li className="mt-auto">
                         <div className="flex flex-col gap-2 opacity-60 text-xs mt-10 text-center">
-                            <p>PRLK</p>
+                            <p>DEVELOPER BY EMRE PARLAK</p>
                         </div>
                     </li>
                 </ul>

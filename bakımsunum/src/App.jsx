@@ -14,6 +14,7 @@ import YukleniciBilgileriSlide from './components/slides/YukleniciBilgileriSlide
 import S1S2DenetlemeSlide from './components/slides/S1S2DenetlemeSlide';
 import YukleniciGerceklesme2025 from './components/slides/2025YukleniciGerceklesme';
 import PlanliBakimDegisiklikler from './components/slides/usulesas';
+import AfetSlide from './components/slides/AfetSlide';
 
 function App() {
   const [activeSlideId, setActiveSlideId] = useState(1);
@@ -86,6 +87,8 @@ function App() {
         return <YukleniciGerceklesme2025 />;
       case 'usul_esas':
         return <PlanliBakimDegisiklikler />;
+      case 'afet':
+        return <AfetSlide />;
       default:
         return <div>Slide Type Not Found</div>;
     }
