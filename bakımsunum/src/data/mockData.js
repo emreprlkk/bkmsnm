@@ -161,18 +161,42 @@ export const regionalSales = {
 
 export const presentationSlides = [
     // { id: 1, title: 'SEVİYE-3 PROJE KAPSAMLARI', type: 'chart_line' },
-    { id: 1, title: 'SEVYE-3 PROJE TUTARLARI', type: 'chart_pie' },
+    { id: 9, title: 'USUL VE ESASLAR DEĞİŞİKLİKLERİ', type: 'usul_esas' },
+    { id: 8, title: '2025 YÜKLENİCİ GERÇEKLEŞMELERİ', type: '2025_yuklenici_gerceklesme' },
+    { id: 5, title: 'YER TESLİMİ', type: 'yer_teslimi' },
+    { id: 1, title: 'SEVYE-3 İş Kapsamı-TEDAŞ RAPORLAMA', type: 'chart_pie' },
+    { id: 4, title: 'S1-S2 ANALİZİ', type: 'chart_s1_s2' },
+    { id: 7, title: 'S1-S2 DENETLEME', type: 's1_s2_denetleme' },
+    { id: 10, title: '2025 AFET-HAKEDİŞ VERİLERİ', type: 'afet' },
+    { id: 11, title: 'CBS DURUMU', type: 'cbs_durumu' },
+    { id: 12, title: '2026 KEŞİF ÖZETİ', type: 'kesif_ozeti' },
     //  { id: 3, title: 'SÖZLEŞME BİLGLERİ', type: 'chart_bar' },
     //  { id: 4, title: 'YÜKLENİCİ BİLGİLERİ', type: 'table' },
     { id: 2, group: 'Fotoğraflar', title: 'AG Sahası Öncesi Sonrası', titleShort: 'AG', type: 'photo_ag' },
     { id: 3, group: 'Fotoğraflar', title: 'YG Sahası Öncesi Sonrası', titleShort: 'YG', type: 'photo_yg' },
-    { id: 4, title: 'S1-S2 ANALİZİ', type: 'chart_s1_s2' },
-    { id: 5, title: 'YER TESLİMİ', type: 'yer_teslimi' },
+
+
     { id: 6, title: '2026 YÜKLENİCİ BİLGİLERİ', type: 'yuklenici_bilgileri' },
-    { id: 7, title: 'S1-S2 DENETLEME', type: 's1_s2_denetleme' },
-    { id: 8, title: '2025 YÜKLENİCİ GERÇEKLEŞMELERİ', type: '2025_yuklenici_gerceklesme' },
-    { id: 9, title: 'USUL VE ESASLAR DEĞİŞİKLİKLERİ', type: 'usul_esas' },
-    { id: 10, title: '2025 AFET-HAKEDİŞ VERİLERİ', type: 'afet' },
+
+
+
+
+
+    /*
+    GİRİŞ AÇILIŞ SAYFASI OLACAK
+    USUL ESASLARDAKİ DEĞİŞİKLİKLER
+    2025 YÜKLENİCİ GERÇEKLEŞMELERİ -2025 TE NELER YAPILDI ANLAMINDA BİR GİRİŞ OLACAK
+    YER TESLİMİ  
+    SEVİYE 3 PORJE ADET TEDAŞ RAPORLAMA MALİYETLERİ
+    s1-s2 analizi 
+    s1-s2 denetleme
+    afet
+    ağaç budama- koridor açma 
+    fotoğraflar (digitalleşme - macro görüntüsü-)
+    
+    
+    
+    */
 ];
 
 export const yerTeslimiData = [
@@ -529,3 +553,66 @@ export const afetDepremData = [
     { om: "KIRIKHAN", ort_gun_personel: 4, ort_gun_arac: 2, ort_gun_vinc: null, ort_gun_kepce: null, deprem_hakedis: 2487177.54 },
     { om: "GENEL TOPLAM", ort_gun_personel: null, ort_gun_arac: null, ort_gun_vinc: null, ort_gun_kepce: null, deprem_hakedis: 54741740.52 },
 ];
+
+// ── CBS Durumu Verileri ──────────────────────────────────────────────────────
+
+export const cbsdata = [
+    { om: 'Adana Metropol', hataliKoordinat: 1, onaylandi: 0, ozNitelikUyumsuz: 6, plakaHatasi: 0, hataliVeri: 4, islendi: 56, eksikVeri: 10, genelToplam: 77 },
+    { om: 'Anamur', hataliKoordinat: 0, onaylandi: 0, ozNitelikUyumsuz: 0, plakaHatasi: 5, hataliVeri: 1, islendi: 44, eksikVeri: 0, genelToplam: 50 },
+    { om: 'Antakya Metropol', hataliKoordinat: 3, onaylandi: 1, ozNitelikUyumsuz: 4, plakaHatasi: 2, hataliVeri: 4, islendi: 89, eksikVeri: 59, genelToplam: 162 },
+    { om: 'Ceyhan', hataliKoordinat: 2, onaylandi: 0, ozNitelikUyumsuz: 4, plakaHatasi: 0, hataliVeri: 0, islendi: 24, eksikVeri: 10, genelToplam: 41 },
+    { om: 'Dörtyol', hataliKoordinat: 0, onaylandi: 0, ozNitelikUyumsuz: 4, plakaHatasi: 1, hataliVeri: 6, islendi: 38, eksikVeri: 24, genelToplam: 73 },
+    { om: 'Düziçi', hataliKoordinat: 0, onaylandi: 0, ozNitelikUyumsuz: 0, plakaHatasi: 0, hataliVeri: 5, islendi: 14, eksikVeri: 8, genelToplam: 27 },
+    { om: 'Erdemli', hataliKoordinat: 0, onaylandi: 0, ozNitelikUyumsuz: 0, plakaHatasi: 1, hataliVeri: 1, islendi: 34, eksikVeri: 7, genelToplam: 43 },
+    { om: 'Gaziantep Metropol', hataliKoordinat: 0, onaylandi: 0, ozNitelikUyumsuz: 1, plakaHatasi: 0, hataliVeri: 4, islendi: 67, eksikVeri: 12, genelToplam: 84 },
+    { om: 'Islahiye', hataliKoordinat: 1, onaylandi: 0, ozNitelikUyumsuz: 1, plakaHatasi: 0, hataliVeri: 3, islendi: 19, eksikVeri: 5, genelToplam: 29 },
+    { om: 'İskenderun', hataliKoordinat: 1, onaylandi: 0, ozNitelikUyumsuz: 0, plakaHatasi: 0, hataliVeri: 8, islendi: 34, eksikVeri: 14, genelToplam: 57 },
+    { om: 'Kadirli', hataliKoordinat: 0, onaylandi: 0, ozNitelikUyumsuz: 9, plakaHatasi: 1, hataliVeri: 7, islendi: 34, eksikVeri: 11, genelToplam: 62 },
+    { om: 'Kırıkhan', hataliKoordinat: 1, onaylandi: 0, ozNitelikUyumsuz: 3, plakaHatasi: 1, hataliVeri: 1, islendi: 17, eksikVeri: 12, genelToplam: 35 },
+    { om: 'Kilis', hataliKoordinat: 2, onaylandi: 0, ozNitelikUyumsuz: 2, plakaHatasi: 0, hataliVeri: 3, islendi: 69, eksikVeri: 10, genelToplam: 86 },
+    { om: 'Kozan', hataliKoordinat: 1, onaylandi: 0, ozNitelikUyumsuz: 3, plakaHatasi: 3, hataliVeri: 6, islendi: 38, eksikVeri: 18, genelToplam: 69 },
+    { om: 'Mersin Metropol', hataliKoordinat: 0, onaylandi: 0, ozNitelikUyumsuz: 6, plakaHatasi: 3, hataliVeri: 2, islendi: 105, eksikVeri: 14, genelToplam: 130 },
+    { om: 'Mut', hataliKoordinat: 1, onaylandi: 0, ozNitelikUyumsuz: 2, plakaHatasi: 4, hataliVeri: 0, islendi: 52, eksikVeri: 7, genelToplam: 66 },
+    { om: 'Nizip', hataliKoordinat: 1, onaylandi: 0, ozNitelikUyumsuz: 0, plakaHatasi: 0, hataliVeri: 2, islendi: 22, eksikVeri: 1, genelToplam: 27 },
+    { om: 'Osmaniye', hataliKoordinat: 0, onaylandi: 0, ozNitelikUyumsuz: 1, plakaHatasi: 0, hataliVeri: 0, islendi: 0, eksikVeri: 0, genelToplam: 1 },
+    { om: 'Reyhanlı', hataliKoordinat: 1, onaylandi: 0, ozNitelikUyumsuz: 3, plakaHatasi: 3, hataliVeri: 4, islendi: 28, eksikVeri: 21, genelToplam: 60 },
+    { om: 'Silifke', hataliKoordinat: 5, onaylandi: 0, ozNitelikUyumsuz: 5, plakaHatasi: 6, hataliVeri: 2, islendi: 66, eksikVeri: 11, genelToplam: 95 },
+    { om: 'Tarsus', hataliKoordinat: 0, onaylandi: 0, ozNitelikUyumsuz: 1, plakaHatasi: 2, hataliVeri: 7, islendi: 61, eksikVeri: 7, genelToplam: 78 },
+];
+
+export const koordinatTotal = {
+    hataliKoordinat: 20, onaylandi: 1, ozNitelikUyumsuz: 55, plakaHatasi: 32,
+    hataliVeri: 70, islendi: 911, eksikVeri: 261, genelToplam: 1352
+};
+
+// ── 2026 Keşif Envanteri ──────────────────────────────────────────────────────
+
+export const envanterData = [
+    { bolge: 'ADANA', om: 'Adana Metropol', direk: 250, hucreMmhGazli: 2, hucreMmmhHavali: 75, kesiciSf6: 0, panoAgDagilim: 202, panoAydinlatma: 0, panoSdk: 2, trafoDagitimHr: 10, genelToplam: 541 },
+    { bolge: 'MERSİN', om: 'Anamur', direk: 113, hucreMmhGazli: 0, hucreMmmhHavali: 0, kesiciSf6: 0, panoAgDagilim: 0, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 0, genelToplam: 113 },
+    { bolge: 'HATAY', om: 'Antakya Metropol', direk: 373, hucreMmhGazli: 6, hucreMmmhHavali: 9, kesiciSf6: 0, panoAgDagilim: 18, panoAydinlatma: 0, panoSdk: 25, trafoDagitimHr: 2, genelToplam: 433 },
+    { bolge: 'MERSİN', om: 'Arsuz', direk: 6, hucreMmhGazli: 0, hucreMmmhHavali: 0, kesiciSf6: 0, panoAgDagilim: 0, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 0, genelToplam: 6 },
+    { bolge: 'ADANA', om: 'Ceyhan', direk: 56, hucreMmhGazli: 0, hucreMmmhHavali: 0, kesiciSf6: 0, panoAgDagilim: 8, panoAydinlatma: 1, panoSdk: 1, trafoDagitimHr: 0, genelToplam: 66 },
+    { bolge: 'HATAY', om: 'Dörtyol', direk: 117, hucreMmhGazli: 0, hucreMmmhHavali: 2, kesiciSf6: 0, panoAgDagilim: 5, panoAydinlatma: 0, panoSdk: 5, trafoDagitimHr: 4, genelToplam: 133 },
+    { bolge: 'ADANA', om: 'Düziçi', direk: 66, hucreMmhGazli: 0, hucreMmmhHavali: 2, kesiciSf6: 0, panoAgDagilim: 0, panoAydinlatma: 7, panoSdk: 0, trafoDagitimHr: 0, genelToplam: 75 },
+    { bolge: 'MERSİN', om: 'Erdemli', direk: 120, hucreMmhGazli: 4, hucreMmmhHavali: 2, kesiciSf6: 2, panoAgDagilim: 0, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 0, genelToplam: 128 },
+    { bolge: 'GAZİANTEP', om: 'Gaziantep Metropol', direk: 139, hucreMmhGazli: 0, hucreMmmhHavali: 8, kesiciSf6: 0, panoAgDagilim: 10, panoAydinlatma: 10, panoSdk: 7, trafoDagitimHr: 1, genelToplam: 175 },
+    { bolge: 'GAZİANTEP', om: 'Islahiye', direk: 21, hucreMmhGazli: 0, hucreMmmhHavali: 0, kesiciSf6: 0, panoAgDagilim: 0, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 0, genelToplam: 21 },
+    { bolge: 'HATAY', om: 'İskenderun', direk: 43, hucreMmhGazli: 0, hucreMmmhHavali: 3, kesiciSf6: 0, panoAgDagilim: 4, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 2, genelToplam: 52 },
+    { bolge: 'ADANA', om: 'Kadirli', direk: 138, hucreMmhGazli: 0, hucreMmmhHavali: 4, kesiciSf6: 0, panoAgDagilim: 11, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 0, genelToplam: 153 },
+    { bolge: 'HATAY', om: 'Kırıkhan', direk: 118, hucreMmhGazli: 0, hucreMmmhHavali: 0, kesiciSf6: 0, panoAgDagilim: 0, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 0, genelToplam: 118 },
+    { bolge: 'GAZİANTEP', om: 'Kilis', direk: 8, hucreMmhGazli: 0, hucreMmmhHavali: 15, kesiciSf6: 0, panoAgDagilim: 0, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 0, genelToplam: 23 },
+    { bolge: 'ADANA', om: 'Kozan', direk: 93, hucreMmhGazli: 0, hucreMmmhHavali: 0, kesiciSf6: 0, panoAgDagilim: 11, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 0, genelToplam: 104 },
+    { bolge: 'MERSİN', om: 'Mersin Metropol', direk: 127, hucreMmhGazli: 0, hucreMmmhHavali: 0, kesiciSf6: 0, panoAgDagilim: 0, panoAydinlatma: 1, panoSdk: 8, trafoDagitimHr: 0, genelToplam: 136 },
+    { bolge: 'MERSİN', om: 'Mut', direk: 143, hucreMmhGazli: 0, hucreMmmhHavali: 0, kesiciSf6: 0, panoAgDagilim: 0, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 0, genelToplam: 143 },
+    { bolge: 'GAZİANTEP', om: 'Nizip', direk: 45, hucreMmhGazli: 0, hucreMmmhHavali: 0, kesiciSf6: 0, panoAgDagilim: 0, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 0, genelToplam: 45 },
+    { bolge: 'ADANA', om: 'Osmaniye', direk: 148, hucreMmhGazli: 0, hucreMmmhHavali: 3, kesiciSf6: 0, panoAgDagilim: 6, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 0, genelToplam: 157 },
+    { bolge: 'HATAY', om: 'Reyhanlı', direk: 114, hucreMmhGazli: 0, hucreMmmhHavali: 12, kesiciSf6: 0, panoAgDagilim: 15, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 2, genelToplam: 143 },
+    { bolge: 'MERSİN', om: 'Silifke', direk: 151, hucreMmhGazli: 0, hucreMmmhHavali: 0, kesiciSf6: 0, panoAgDagilim: 0, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 6, genelToplam: 157 },
+    { bolge: 'MERSİN', om: 'Tarsus', direk: 189, hucreMmhGazli: 0, hucreMmmhHavali: 0, kesiciSf6: 0, panoAgDagilim: 23, panoAydinlatma: 8, panoSdk: 0, trafoDagitimHr: 6, genelToplam: 226 },
+];
+
+export const envanterTotal = {
+    direk: 2578, hucreMmhGazli: 12, hucreMmmhHavali: 135, kesiciSf6: 2,
+    panoAgDagilim: 313, panoAydinlatma: 27, panoSdk: 48, trafoDagitimHr: 33, genelToplam: 3148
+};
