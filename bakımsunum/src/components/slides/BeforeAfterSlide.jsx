@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Maximize, Minimize, MoveHorizontal, Info, CheckCircle2, Hand, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function BeforeAfterSlide({ categoryTitle, items }) {
-    const [isFullscreen, setIsFullscreen] = useState(false);
+    const [isFullscreen, setIsFullscreen] = useState(() => !!document.fullscreenElement);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [sliderPos, setSliderPos] = useState(50);
     const [imgPos, setImgPos] = useState({ x: 50, y: 50 }); // % for object-position panning
@@ -29,7 +29,7 @@ export default function BeforeAfterSlide({ categoryTitle, items }) {
 
     const toggleFullscreen = () => {
         if (!document.fullscreenElement) {
-            containerRef.current?.requestFullscreen();
+            document.getElementById('presentation-fullscreen-wrapper')?.requestFullscreen();
         } else {
             document.exitFullscreen();
         }

@@ -163,7 +163,7 @@ function DepremTable() {
 
 // ─── Main Slide ───────────────────────────────────────────────────────────────
 export default function AfetSlide() {
-    const [isFullscreen, setIsFullscreen] = useState(false);
+    const [isFullscreen, setIsFullscreen] = useState(() => !!document.fullscreenElement);
     const containerRef = useRef(null);
 
     useEffect(() => {
@@ -174,7 +174,7 @@ export default function AfetSlide() {
 
     const toggleFullscreen = () => {
         if (!document.fullscreenElement) {
-            containerRef.current?.requestFullscreen().catch(console.error);
+            document.getElementById('presentation-fullscreen-wrapper')?.requestFullscreen().catch(console.error);
         } else {
             document.exitFullscreen();
         }

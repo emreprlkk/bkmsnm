@@ -53,7 +53,7 @@ function StatCard({ icon: Icon, label, value, sub, accent, fs }) {
 // ─── Ana Component ──────────────────────────────────────────────────────────
 export default function YukleniciGerceklesme2025() {
     const containerRef = useRef(null);
-    const [isFullscreen, setIsFullscreen] = useState(false);
+    const [isFullscreen, setIsFullscreen] = useState(() => !!document.fullscreenElement);
 
     const [view, setView] = useState('table');
     const [bmFilter, setBmFilter] = useState('TÜMÜ');
@@ -71,7 +71,7 @@ export default function YukleniciGerceklesme2025() {
 
     const toggleFullscreen = () => {
         if (!document.fullscreenElement) {
-            containerRef.current?.requestFullscreen();
+            document.getElementById('presentation-fullscreen-wrapper')?.requestFullscreen();
         } else {
             document.exitFullscreen();
         }

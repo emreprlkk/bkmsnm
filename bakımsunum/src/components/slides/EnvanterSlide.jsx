@@ -96,7 +96,7 @@ export default function EnvanterSlide() {
     const [sortDir, setSortDir] = useState('desc');
     const [search, setSearch] = useState('');
     const [bolgeFilter, setBolgeFilter] = useState('');
-    const [isFullscreen, setIsFullscreen] = useState(false);
+    const [isFullscreen, setIsFullscreen] = useState(() => !!document.fullscreenElement);
     const containerRef = useRef(null);
 
     const uniqueBolgeler = useMemo(
@@ -112,7 +112,7 @@ export default function EnvanterSlide() {
 
     const toggleFullscreen = () => {
         if (!document.fullscreenElement) {
-            containerRef.current?.requestFullscreen().catch(console.error);
+            document.getElementById('presentation-fullscreen-wrapper')?.requestFullscreen().catch(console.error);
         } else {
             document.exitFullscreen();
         }

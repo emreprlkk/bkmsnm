@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import PresentationLayout from './components/PresentationLayout';
 import { presentationSlides } from './data/mockData';
 
@@ -19,15 +19,53 @@ import CBSDurumuSlide from './components/slides/CBSDurumuSlide';
 import EnvanterSlide from './components/slides/EnvanterSlide';
 
 function App() {
-  const [activeSlideId, setActiveSlideId] = useState(1);
+  const [activeSlideId, setActiveSlideId] = useState(presentationSlides[0]?.id ?? 1);
+  const currentIndex = presentationSlides.findIndex(s => s.id === activeSlideId);
 
-  const handleNext = () => {
-    setActiveSlideId((prev) => Math.min(prev + 1, presentationSlides.length));
-  };
+  const handleNext = useCallback(() => {
+    setActiveSlideId((prevId) => {
+      const idx = presentationSlides.findIndex(s => s.id === prevId);
+      const nextIdx = Math.min(idx + 1, presentationSlides.length - 1);
+      return presentationSlides[nextIdx].id;
+    });
+  }, []);
 
-  const handlePrev = () => {
-    setActiveSlideId((prev) => Math.max(prev - 1, 1));
-  };
+  const handlePrev = useCallback(() => {
+    setActiveSlideId((prevId) => {
+      const idx = presentationSlides.findIndex(s => s.id === prevId);
+      const prevIdx = Math.max(idx - 1, 0);
+      return presentationSlides[prevIdx].id;
+    });
+  }, []);
+
+  // ── Klavye navigasyonu ──────────────────────────────────────────────────────
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Input / textarea / select veya contenteditable odaklanmışsa geçiş yapma
+      const el = document.activeElement;
+      const tag = el?.tagName?.toLowerCase();
+      if (
+        tag === 'input' ||
+        tag === 'textarea' ||
+        tag === 'select' ||
+        el?.isContentEditable
+      ) return;
+
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        e.stopPropagation();
+        handleNext();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        e.stopPropagation();
+        handlePrev();
+      }
+    };
+
+    // capture:true → propagation'dan bağımsız, en erken tetiklenir
+    document.addEventListener('keydown', handleKeyDown, { capture: true });
+    return () => document.removeEventListener('keydown', handleKeyDown, { capture: true });
+  }, [handleNext, handlePrev]);
 
   const activeSlide = presentationSlides.find(s => s.id === activeSlideId);
 
@@ -108,8 +146,10 @@ function App() {
       onNext={handleNext}
       onPrev={handlePrev}
     >
-      <div key={activeSlideId} className="flex-1 w-full animate-in fade-in slide-in-from-right-4 duration-500 ease-out flex flex-col">
-        {renderSlideContent()}
+      <div id="presentation-fullscreen-wrapper" className="w-full h-full flex flex-col bg-base-100/0">
+        <div key={activeSlideId} className="flex-1 w-full animate-in fade-in slide-in-from-right-4 duration-500 ease-out flex flex-col">
+          {renderSlideContent()}
+        </div>
       </div>
     </PresentationLayout>
   );

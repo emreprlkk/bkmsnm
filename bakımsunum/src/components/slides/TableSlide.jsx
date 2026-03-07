@@ -14,7 +14,7 @@ import { Maximize, Minimize } from 'lucide-react';
 //import { recentTransactions } from '../../data/mockData';
 
 export default function TableSlide() {
-    const [isFullscreen, setIsFullscreen] = useState(false);
+    const [isFullscreen, setIsFullscreen] = useState(() => !!document.fullscreenElement);
     const containerRef = useRef(null);
 
     useEffect(() => {
@@ -27,7 +27,7 @@ export default function TableSlide() {
 
     const toggleFullscreen = () => {
         if (!document.fullscreenElement) {
-            containerRef.current?.requestFullscreen().catch(err => {
+            document.getElementById('presentation-fullscreen-wrapper')?.requestFullscreen().catch(err => {
                 console.error(`Error attempting to enable fullscreen: ${err.message}`);
             });
         } else {

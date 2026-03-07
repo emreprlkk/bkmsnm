@@ -28,7 +28,7 @@ function StatBadge({ label, value, color }) {
 }
 
 export default function S1S2Slide() {
-    const [isFullscreen, setIsFullscreen] = useState(false);
+    const [isFullscreen, setIsFullscreen] = useState(() => !!document.fullscreenElement);
     const [selectedBolge, setSelectedBolge] = useState('ADANA');
     const [selectedOM, setSelectedOM] = useState('TÜMÜ');
     const [focusedPanel, setFocusedPanel] = useState(null); // 'S1' | 'S2' | null
@@ -88,7 +88,7 @@ export default function S1S2Slide() {
     const toggleMainFullscreen = () => {
         if (!document.fullscreenElement) {
             setFocusedPanel(null);
-            containerRef.current?.requestFullscreen();
+            document.getElementById('presentation-fullscreen-wrapper')?.requestFullscreen();
         } else {
             document.exitFullscreen();
         }
@@ -97,7 +97,7 @@ export default function S1S2Slide() {
     const focusAndFullscreen = (panelType) => {
         if (!document.fullscreenElement) {
             setFocusedPanel(panelType);
-            containerRef.current?.requestFullscreen();
+            document.getElementById('presentation-fullscreen-wrapper')?.requestFullscreen();
         } else {
             document.exitFullscreen();
         }

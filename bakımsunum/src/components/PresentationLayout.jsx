@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronLeft, ChevronRight, Menu, Presentation, Play } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Menu, Play } from 'lucide-react';
 
 export default function PresentationLayout({
     children,
@@ -34,7 +34,7 @@ export default function PresentationLayout({
                     </div>
                     <div className="flex-none hidden sm:flex gap-2">
                         <div className="badge badge-primary badge-outline font-semibold py-3 px-4">
-                            {activeSlideId} / {slides.length}
+                            {(slides.findIndex(s => s.id === activeSlideId) + 1)} / {slides.length}
                         </div>
                         {/* Fullscreen simulation or play mode */}
                         <button className="btn btn-ghost btn-circle">

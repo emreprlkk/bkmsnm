@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import {
     Box,
     Typography,
@@ -18,14 +18,31 @@ import {
     useTheme
 } from '@mui/material';
 import Chart from 'react-apexcharts';
+import { Maximize, Minimize } from 'lucide-react';
 import { yerTeslimiData } from '../../data/mockData';
 
 const YerTeslimiSlide = () => {
     const theme = useTheme();
+    const containerRef = useRef(null);
+    const [isFullscreen, setIsFullscreen] = useState(() => !!document.fullscreenElement);
     const [viewMode, setViewMode] = useState('chart'); // 'chart' or 'table'
     const [bolgeFilter, setBolgeFilter] = useState('ADANA');
     const [omFilter, setOmFilter] = useState('Tümü');
     const [yukleniciFilter, setYukleniciFilter] = useState('Tümü');
+
+    useEffect(() => {
+        const handler = () => setIsFullscreen(!!document.fullscreenElement);
+        document.addEventListener('fullscreenchange', handler);
+        return () => document.removeEventListener('fullscreenchange', handler);
+    }, []);
+
+    const toggleFullscreen = () => {
+        if (!document.fullscreenElement) {
+            document.getElementById('presentation-fullscreen-wrapper')?.requestFullscreen().catch(console.error);
+        } else {
+            document.exitFullscreen();
+        }
+    };
 
     // Derive unique filter options
     const bolgeler = useMemo(() => {
@@ -166,114 +183,129 @@ const YerTeslimiSlide = () => {
     };
 
     return (
-        <Box sx={{ p: 4, height: '100%', display: 'flex', flexDirection: 'column' }}>
-            <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
-                <Typography variant="h4" fontWeight="bold" color="primary">
-                    Yer Teslimi Verileri
-                </Typography>
+        <div
+            ref={containerRef}
+            data-theme={isFullscreen ? 'light' : undefined}
+            style={isFullscreen ? { position: 'fixed', inset: 0, zIndex: 9999, background: '#fff', overflowY: 'auto' } : { height: '100%' }}
+        >
+            <Box sx={{ p: 4, height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
+                    <Typography variant="h4" fontWeight="bold" color="primary">
+                        Yer Teslimi Verileri
+                    </Typography>
 
-                <FormControlLabel
-                    control={
-                        <Switch
-                            checked={viewMode === 'table'}
-                            onChange={handleToggle}
-                            color="primary"
+                    <Box display="flex" alignItems="center" gap={2}>
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    checked={viewMode === 'table'}
+                                    onChange={handleToggle}
+                                    color="primary"
+                                />
+                            }
+                            label={viewMode === 'chart' ? 'Grafik Görünümü' : 'Tablo Görünümü'}
                         />
-                    }
-                    label={viewMode === 'chart' ? 'Grafik Görünümü' : 'Tablo Görünümü'}
-                />
-            </Box>
+                        <button
+                            onClick={toggleFullscreen}
+                            title={isFullscreen ? 'Küçült' : 'Tam Ekran'}
+                            className="btn btn-sm btn-outline bg-base-100 shadow-sm"
+                        >
+                            {isFullscreen ? <Minimize size={16} /> : <Maximize size={16} />}
+                        </button>
+                    </Box>
+                </Box>
 
-            {/* Filters */}
-            <Box display="flex" gap={2} mb={3}>
-                <FormControl size="small" sx={{ minWidth: 150 }}>
-                    <InputLabel>İL</InputLabel>
-                    <Select
-                        value={bolgeFilter}
-                        label="Bölge Müdürlüğü"
-                        onChange={handleBolgeChange}
-                    >
-                        {bolgeler.map(b => (
-                            <MenuItem key={b} value={b}>{b}</MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
+                {/* Filters */}
+                <Box display="flex" gap={2} mb={3}>
+                    <FormControl size="small" sx={{ minWidth: 150 }}>
+                        <InputLabel>İL</InputLabel>
+                        <Select
+                            value={bolgeFilter}
+                            label="Bölge Müdürlüğü"
+                            onChange={handleBolgeChange}
+                        >
+                            {bolgeler.map(b => (
+                                <MenuItem key={b} value={b}>{b}</MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
 
-                <FormControl size="small" sx={{ minWidth: 150 }}>
-                    <InputLabel>OM</InputLabel>
-                    <Select
-                        value={omFilter}
-                        label="OM"
-                        onChange={handleOmChange}
-                    >
-                        {omler.map(o => (
-                            <MenuItem key={o} value={o}>{o}</MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
+                    <FormControl size="small" sx={{ minWidth: 150 }}>
+                        <InputLabel>OM</InputLabel>
+                        <Select
+                            value={omFilter}
+                            label="OM"
+                            onChange={handleOmChange}
+                        >
+                            {omler.map(o => (
+                                <MenuItem key={o} value={o}>{o}</MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
 
-                <FormControl size="small" sx={{ minWidth: 150 }}>
-                    <InputLabel>Yüklenici</InputLabel>
-                    <Select
-                        value={yukleniciFilter}
-                        label="Yüklenici"
-                        onChange={(e) => setYukleniciFilter(e.target.value)}
-                    >
-                        {yukleniciler.map(y => (
-                            <MenuItem key={y} value={y}>{y}</MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-            </Box>
+                    <FormControl size="small" sx={{ minWidth: 150 }}>
+                        <InputLabel>Yüklenici</InputLabel>
+                        <Select
+                            value={yukleniciFilter}
+                            label="Yüklenici"
+                            onChange={(e) => setYukleniciFilter(e.target.value)}
+                        >
+                            {yukleniciler.map(y => (
+                                <MenuItem key={y} value={y}>{y}</MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </Box>
 
-            {/* Content Area */}
-            <Box flex={1} overflow="hidden">
-                {viewMode === 'chart' ? (
-                    <Paper elevation={3} sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column' }}>
-                        <Chart
-                            options={chartOptions}
-                            series={chartSeries}
-                            type="bar"
-                            height="100%"
-                        />
-                    </Paper>
-                ) : (
-                    <TableContainer component={Paper} elevation={3} sx={{ height: '100%' }}>
-                        <Table stickyHeader size="small">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell sx={{ fontWeight: 'bold' }}>İL</TableCell>
-                                    <TableCell sx={{ fontWeight: 'bold' }}>OM</TableCell>
-                                    <TableCell sx={{ fontWeight: 'bold' }}>Yüklenici</TableCell>
-                                    <TableCell align="right" sx={{ fontWeight: 'bold' }}>Yer Teslim Sayısı</TableCell>
-                                    <TableCell align="right" sx={{ fontWeight: 'bold' }}>Gerçekleşen Proje Sayısı</TableCell>
-                                    <TableCell align="right" sx={{ fontWeight: 'bold' }}>Gerçekleşme Tutarı (₺)</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {filteredData.map((row, index) => (
-                                    <TableRow hover key={index}>
-                                        <TableCell>{row['BÖLGE MÜDÜRLÜĞÜ']}</TableCell>
-                                        <TableCell>{row['OM']}</TableCell>
-                                        <TableCell>{row['Yüklenici']}</TableCell>
-                                        <TableCell align="right">{row['Yer Teslim Sayısı']}</TableCell>
-                                        <TableCell align="right">{row['Gerçekleşen Proje Sayısı']}</TableCell>
-                                        <TableCell align="right">
-                                            {new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY' }).format(row['Gerçekleşme Tutarı'])}
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                                {filteredData.length === 0 && (
+                {/* Content Area */}
+                <Box flex={1} overflow="hidden">
+                    {viewMode === 'chart' ? (
+                        <Paper elevation={3} sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column' }}>
+                            <Chart
+                                options={chartOptions}
+                                series={chartSeries}
+                                type="bar"
+                                height="100%"
+                            />
+                        </Paper>
+                    ) : (
+                        <TableContainer component={Paper} elevation={3} sx={{ height: '100%' }}>
+                            <Table stickyHeader size="small">
+                                <TableHead>
                                     <TableRow>
-                                        <TableCell colSpan={6} align="center">Veri bulunamadı.</TableCell>
+                                        <TableCell sx={{ fontWeight: 'bold' }}>İL</TableCell>
+                                        <TableCell sx={{ fontWeight: 'bold' }}>OM</TableCell>
+                                        <TableCell sx={{ fontWeight: 'bold' }}>Yüklenici</TableCell>
+                                        <TableCell align="right" sx={{ fontWeight: 'bold' }}>Yer Teslim Sayısı</TableCell>
+                                        <TableCell align="right" sx={{ fontWeight: 'bold' }}>Gerçekleşen Proje Sayısı</TableCell>
+                                        <TableCell align="right" sx={{ fontWeight: 'bold' }}>Gerçekleşme Tutarı (₺)</TableCell>
                                     </TableRow>
-                                )}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                )}
+                                </TableHead>
+                                <TableBody>
+                                    {filteredData.map((row, index) => (
+                                        <TableRow hover key={index}>
+                                            <TableCell>{row['BÖLGE MÜDÜRLÜĞÜ']}</TableCell>
+                                            <TableCell>{row['OM']}</TableCell>
+                                            <TableCell>{row['Yüklenici']}</TableCell>
+                                            <TableCell align="right">{row['Yer Teslim Sayısı']}</TableCell>
+                                            <TableCell align="right">{row['Gerçekleşen Proje Sayısı']}</TableCell>
+                                            <TableCell align="right">
+                                                {new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY' }).format(row['Gerçekleşme Tutarı'])}
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                    {filteredData.length === 0 && (
+                                        <TableRow>
+                                            <TableCell colSpan={6} align="center">Veri bulunamadı.</TableCell>
+                                        </TableRow>
+                                    )}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    )}
+                </Box>
             </Box>
-        </Box>
+        </div>
     );
 };
 

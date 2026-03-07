@@ -13,7 +13,7 @@ const formatCurrency = (val) => {
 
 export default function LineChartSlide() {
     const [viewMode, setViewMode] = useState('chart');
-    const [isFullscreen, setIsFullscreen] = useState(false);
+    const [isFullscreen, setIsFullscreen] = useState(() => !!document.fullscreenElement);
     const containerRef = useRef(null);
 
     useEffect(() => {
@@ -26,7 +26,7 @@ export default function LineChartSlide() {
 
     const toggleFullscreen = () => {
         if (!document.fullscreenElement) {
-            containerRef.current?.requestFullscreen().catch(err => {
+            document.getElementById('presentation-fullscreen-wrapper')?.requestFullscreen().catch(err => {
                 console.error('Fullscreen error:', err.message);
             });
         } else {

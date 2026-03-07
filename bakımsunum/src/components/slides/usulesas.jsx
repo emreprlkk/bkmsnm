@@ -135,7 +135,7 @@ function PuanItem({ text, renk, fs }) {
 // ─── Ana Component ───────────────────────────────────────────────────────────
 export default function PlanliBakimDegisiklikler() {
     const containerRef = useRef(null);
-    const [isFullscreen, setIsFullscreen] = useState(false);
+    const [isFullscreen, setIsFullscreen] = useState(() => !!document.fullscreenElement);
     const [aktifKat, setAktifKat] = useState('Tümü');
     const [acilanId, setAcilanId] = useState(null);
 
@@ -149,7 +149,7 @@ export default function PlanliBakimDegisiklikler() {
     }, []);
 
     const toggleFullscreen = () => {
-        if (!document.fullscreenElement) containerRef.current?.requestFullscreen();
+        if (!document.fullscreenElement) document.getElementById('presentation-fullscreen-wrapper')?.requestFullscreen();
         else document.exitFullscreen();
     };
 

@@ -12,7 +12,7 @@ const formatCurrencyM = (val) => {
 };
 
 export default function PieChartSlide() {
-    const [isFullscreen, setIsFullscreen] = useState(false);
+    const [isFullscreen, setIsFullscreen] = useState(() => !!document.fullscreenElement);
     const [activeBolge, setActiveBolge] = useState('');
     const [activeDistrict, setActiveDistrict] = useState(null);
     const containerRef = useRef(null);
@@ -68,7 +68,7 @@ export default function PieChartSlide() {
 
     const toggleFullscreen = () => {
         if (!document.fullscreenElement) {
-            containerRef.current?.requestFullscreen().catch(err => {
+            document.getElementById('presentation-fullscreen-wrapper')?.requestFullscreen().catch(err => {
                 console.error(`Error attempting to enable fullscreen: ${err.message}`);
             });
         } else {
