@@ -78,6 +78,19 @@ export default function PieChartSlide() {
 
     const activeBolgeData = bolgeList.find(b => b.bolge === activeBolge);
 
+    const activeBolgeChartData = useMemo(() => {
+        if (!activeBolgeData) return null;
+        let sumCost = new Array(scopeCategories.length).fill(0);
+        let sumData = new Array(scopeCategories.length).fill(0);
+
+        activeBolgeData.districts.forEach(d => {
+            d.rawCost.forEach((val, i) => sumCost[i] += (val || 0));
+            d.rawData.forEach((val, i) => sumData[i] += (val || 0));
+        });
+
+        return { rawCost: sumCost, rawData: sumData };
+    }, [activeBolgeData]);
+
     const pieOptions = {
         chart: {
             type: 'donut',
@@ -254,8 +267,8 @@ export default function PieChartSlide() {
                 {/* Sol Taraf: Grafikler */}
                 <div className="w-full xl:w-2/5 flex flex-col overflow-hidden relative min-h-[400px]">
 
-                    {/* Genel Bölge Pasta Grafiği (Sadece lokasyon seçili DEĞİLSE görünür) */}
-                    <div className={`absolute inset-0 transition-all duration-500 ease-in-out flex flex-col justify-center bg-base-100 rounded-2xl p-4 shadow-sm ${!activeDistrict ? 'opacity-100 z-10 translate-x-0' : 'opacity-0 -z-10 -translate-x-10 pointer-events-none'}`}>
+                    {/* Genel Bölge Pasta Grafiği (Sadece hiçbir şey seçili DEĞİLSE görünür) */}
+                    <div className={`absolute inset-0 transition-all duration-500 ease-in-out flex flex-col justify-center bg-base-100 rounded-2xl p-4 shadow-sm ${!activeBolge ? 'opacity-100 z-10 translate-x-0' : 'opacity-0 -z-10 -translate-x-10 pointer-events-none'}`}>
                         <h3 className="text-center font-bold text-base-content/70 flex justify-center items-center gap-2 text-sm z-10 absolute top-4 left-0 right-0">
                             <MapPin size={16} /> Bölgelere Göre Dağılım
                         </h3>
@@ -264,12 +277,12 @@ export default function PieChartSlide() {
                         </div>
                     </div>
 
-                    {/* Aktif Lokasyon Detay Grafiği (Bar Chart - Sadece lokasyon SEÇİLİYSE görünür) */}
-                    <div className={`absolute inset-0 transition-all duration-500 ease-in-out bg-base-100 rounded-2xl p-4 shadow-sm flex flex-col overflow-hidden ${activeDistrict ? 'opacity-100 z-10 translate-x-0' : 'opacity-0 -z-10 translate-x-10 pointer-events-none'}`}>
-                        {activeDistrict && (
+                    {/* Aktif Bölge veya Lokasyon Detay Grafiği (Bar/Line Chart - Seçiliyse görünür) */}
+                    <div className={`absolute inset-0 transition-all duration-500 ease-in-out bg-base-100 rounded-2xl p-4 shadow-sm flex flex-col overflow-hidden ${activeBolge ? 'opacity-100 z-10 translate-x-0' : 'opacity-0 -z-10 translate-x-10 pointer-events-none'}`}>
+                        {activeBolge && (
                             <>
                                 <h3 className="text-center font-extrabold text-primary mb-1 text-sm tracking-wide uppercase mt-2">
-                                    {activeDistrict.name}
+                                    {activeDistrict ? activeDistrict.name : `${activeBolgeData.bolge} BÖLGESİ`}
                                 </h3>
                                 <p className="text-center text-[10px] text-base-content/50 uppercase tracking-widest mb-2 border-b border-base-200 pb-2">
                                     Kapsam Bazlı Adet ve Maliyet Analizi
@@ -278,19 +291,21 @@ export default function PieChartSlide() {
                                     <Chart
                                         options={districtChartOptions}
                                         series={[
-                                            { name: 'MaliyetTutarı', type: 'column', data: activeDistrict.rawCost },
-                                            { name: 'Proje Adedi', type: 'line', data: activeDistrict.rawData }
+                                            { name: 'Maliyet Tutarı', type: 'column', data: activeDistrict ? activeDistrict.rawCost : activeBolgeChartData.rawCost },
+                                            { name: 'Proje Adedi', type: 'line', data: activeDistrict ? activeDistrict.rawData : activeBolgeChartData.rawData }
                                         ]}
                                         type="line"
                                         height="100%"
                                     />
                                 </div>
-                                <button
-                                    onClick={() => setActiveDistrict(null)}
-                                    className="btn btn-sm btn-ghost absolute top-3 right-3 text-base-content/40 hover:text-base-content/70"
-                                >
-                                    ✕ Geri
-                                </button>
+                                {activeDistrict && (
+                                    <button
+                                        onClick={() => setActiveDistrict(null)}
+                                        className="btn btn-sm btn-ghost absolute top-3 right-3 text-base-content/40 hover:text-base-content/70"
+                                    >
+                                        ✕ Geri
+                                    </button>
+                                )}
                             </>
                         )}
                     </div>

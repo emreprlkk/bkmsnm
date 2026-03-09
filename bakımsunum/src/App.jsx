@@ -1,4 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+const MotionDiv = motion.div;
 import PresentationLayout from './components/PresentationLayout';
 import { presentationSlides } from './data/mockData';
 
@@ -270,12 +272,21 @@ function App() {
       onNext={handleNext}
       onPrev={handlePrev}
     >
-      <div id="presentation-fullscreen-wrapper" className="w-full h-full flex flex-col bg-base-100/0 relative">
+      <div id="presentation-fullscreen-wrapper" className="w-full h-full flex flex-col bg-base-100/0 relative overflow-hidden">
         <TimelineOverlay slides={presentationSlides} activeSlideId={activeSlideId} />
 
-        <div key={activeSlideId} className="flex-1 w-full animate-in fade-in slide-in-from-right-4 duration-500 ease-out flex flex-col">
-          {renderSlideContent()}
-        </div>
+        <AnimatePresence mode="wait">
+          <MotionDiv
+            key={activeSlideId}
+            initial={{ opacity: 0, x: 30, scale: 0.98 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: -30, scale: 0.98 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="flex-1 w-full flex flex-col"
+          >
+            {renderSlideContent()}
+          </MotionDiv>
+        </AnimatePresence>
       </div>
     </PresentationLayout>
   );

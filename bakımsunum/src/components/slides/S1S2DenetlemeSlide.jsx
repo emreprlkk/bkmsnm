@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
     Box,
     Typography,
@@ -61,9 +61,23 @@ const S1S2DenetlemeSlide = () => {
     const [omFilter, setOmFilter] = useState('Tümü');
 
     // Fullscreen states
-    const [cardsFullScreen, setCardsFullScreen] = useState(false);
+    const [isFullscreen, setIsFullscreen] = useState(() => !!document.fullscreenElement);
     const [dialogFullScreen, setDialogFullScreen] = useState(false);
     const [showTotalInModal, setShowTotalInModal] = useState(false);
+
+    useEffect(() => {
+        const handler = () => setIsFullscreen(!!document.fullscreenElement);
+        document.addEventListener('fullscreenchange', handler);
+        return () => document.removeEventListener('fullscreenchange', handler);
+    }, []);
+
+    const toggleFullscreen = () => {
+        if (!document.fullscreenElement) {
+            document.getElementById('presentation-fullscreen-wrapper')?.requestFullscreen().catch(console.error);
+        } else {
+            document.exitFullscreen();
+        }
+    };
 
     // Group data by OM
     const omStats = useMemo(() => {
@@ -425,12 +439,12 @@ const S1S2DenetlemeSlide = () => {
     const slideContent = (
         <Box
             sx={{
-                p: cardsFullScreen ? { xs: 2, md: 4 } : 0,
+                p: isFullscreen ? { xs: 2, md: 4 } : 0,
                 height: '100%',
                 display: 'flex',
                 flexDirection: 'column',
                 backgroundColor: theme.palette.background.default,
-                overflow: 'hidden'
+                overflowY: 'auto'
             }}
         >
             {/* Top Toolbar: Header & Filters merged into a single horizontal row to save vertical space */}
@@ -507,12 +521,12 @@ const S1S2DenetlemeSlide = () => {
                     />
 
                     <IconButton
-                        onClick={() => setCardsFullScreen(!cardsFullScreen)}
+                        onClick={toggleFullscreen}
                         color="primary"
                         size="small"
                         sx={{ ml: { xs: 0, lg: 1 }, backgroundColor: 'primary.main', color: 'primary.contrastText', '&:hover': { backgroundColor: 'primary.dark' }, borderRadius: 2 }}
                     >
-                        {cardsFullScreen ? <Minimize size={20} /> : <Maximize size={20} />}
+                        {isFullscreen ? <Minimize size={20} /> : <Maximize size={20} />}
                     </IconButton>
                 </Box>
             </Box>
@@ -823,25 +837,10 @@ const S1S2DenetlemeSlide = () => {
 
     // Modal etc. below
     return (
-        <Box
-            sx={{
-                p: { xs: 2, md: 4 },
-                height: '100%',
-                width: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                boxSizing: 'border-box'
-            }}
-        >
-            <Dialog
-                fullScreen
-                open={cardsFullScreen}
-                onClose={() => setCardsFullScreen(false)}
-            >
+        <React.Fragment>
+            <div data-theme={isFullscreen ? 'light' : undefined} style={isFullscreen ? { position: 'fixed', inset: 0, zIndex: 9999, background: '#fff', overflowY: 'auto', display: 'flex', flexDirection: 'column' } : { height: '100%' }}>
                 {slideContent}
-            </Dialog>
-
-            {!cardsFullScreen && slideContent}
+            </div>
 
             <Dialog
                 open={openDialog}
@@ -923,8 +922,13 @@ const S1S2DenetlemeSlide = () => {
                                                 options={chartData.uygunUygunsuz.options}
                                                 series={chartData.uygunUygunsuz.series}
                                                 type="bar"
-                                                height={280}
+                                                height={230}
                                             />
+                                            <Box mt={2} pt={1.5} sx={{ borderTop: `1px dashed ${theme.palette.divider}` }}>
+                                                <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.75rem', fontWeight: 500, lineHeight: 1.2 }}>
+                                                    Envanterlerin montaj standartı ve fiziki sağlamlık açısından uygunluk göstergesidir.
+                                                </Typography>
+                                            </Box>
                                         </Paper>
                                     </Grid>
                                     <Grid item xs={12} md={6}>
@@ -936,8 +940,13 @@ const S1S2DenetlemeSlide = () => {
                                                 options={chartData.dogruYanlis.options}
                                                 series={chartData.dogruYanlis.series}
                                                 type="bar"
-                                                height={280}
+                                                height={230}
                                             />
+                                            <Box mt={2} pt={1.5} sx={{ borderTop: `1px dashed ${theme.palette.divider}` }}>
+                                                <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.75rem', fontWeight: 500, lineHeight: 1.2 }}>
+                                                    Bakım formlarına işlenen verilerin, sahadaki fiili durumla uyuşma istatistiklerini yansıtır.
+                                                </Typography>
+                                            </Box>
                                         </Paper>
                                     </Grid>
                                     <Grid item xs={12}>
@@ -949,8 +958,13 @@ const S1S2DenetlemeSlide = () => {
                                                 options={chartData.s2Durum.options}
                                                 series={chartData.s2Durum.series}
                                                 type="bar"
-                                                height={280}
+                                                height={230}
                                             />
+                                            <Box mt={2} pt={1.5} sx={{ borderTop: `1px dashed ${theme.palette.divider}` }}>
+                                                <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.75rem', fontWeight: 500, lineHeight: 1.2 }}>
+                                                    Sahadaki envanterlerin Seviye-2 bakım standartlarına ne kadar elverişli olup olmadığını gösterir.
+                                                </Typography>
+                                            </Box>
                                         </Paper>
                                     </Grid>
                                 </Grid>
@@ -960,7 +974,7 @@ const S1S2DenetlemeSlide = () => {
                     )}
                 </DialogContent>
             </Dialog>
-        </Box>
+        </React.Fragment>
     );
 };
 
