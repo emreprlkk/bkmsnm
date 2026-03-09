@@ -118,7 +118,7 @@ export default function BeforeAfterSlide({ categoryTitle, items }) {
             <div className="mb-6 flex justify-between items-start">
                 <div>
                     <h2 className="text-3xl font-extrabold text-base-content mb-2">{categoryTitle}</h2>
-                    <p className="text-base-content/60 text-lg">Öncesi ve Sonrası Durum Analizi</p>
+                    <p className="text-base-content/60 text-lg">Bakım Kapsamında Yapılan İşlerin Öncesi Ve Sonrası Fotoğraflarıß</p>
                 </div>
                 <div className="flex items-center gap-4">
                     {/* Navigation Controls */}
@@ -168,55 +168,68 @@ export default function BeforeAfterSlide({ categoryTitle, items }) {
                     onMouseDown={(e) => handlePointerDown(e, 'pan')}
                     onTouchStart={(e) => handlePointerDown(e, 'pan')}
                 >
-                    <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-base-300/60 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-base-content/70 flex items-center gap-1 z-30 pointer-events-none opacity-50 transition-opacity group-hover:opacity-100">
-                        <Hand size={12} /> Detaylar için resmi kaydırın
-                    </div>
+                    {beforeUrl && (
+                        <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-base-300/60 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-base-content/70 flex items-center gap-1 z-30 pointer-events-none opacity-50 transition-opacity group-hover:opacity-100">
+                            <Hand size={12} /> Detaylar için resmi kaydırın
+                        </div>
+                    )}
 
-                    {/* After Image (Background) */}
-                    <div className="absolute inset-0 w-full h-full select-none">
+                    {/* After Image (Background) / Single Image */}
+                    <div className="absolute inset-0 w-full h-full select-none bg-base-200/50">
                         <img
                             src={afterUrl}
-                            alt="After"
-                            className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
+                            alt="Visual"
+                            className="absolute inset-0 w-full h-full object-contain select-none pointer-events-none"
                             style={{ objectPosition: `${imgPos.x}% ${imgPos.y}%` }}
                         />
-                        <div className="absolute top-6 right-6 bg-base-100/90 text-success px-4 py-2 rounded-xl text-sm font-black drop-shadow-xl backdrop-blur-md border border-success/20 flex items-center gap-2 z-10 transition-transform">
-                            <CheckCircle2 size={16} />
-                            SONRASI
-                        </div>
+                        {beforeUrl ? (
+                            <div className="absolute top-6 right-6 bg-base-100/90 text-success px-4 py-2 rounded-xl text-sm font-black drop-shadow-xl backdrop-blur-md border border-success/20 flex items-center gap-2 z-10 transition-transform">
+                                <CheckCircle2 size={16} />
+                                SONRASI
+                            </div>
+                        ) : (
+                            <div className="absolute top-6 right-6 bg-base-100/90 text-warning px-4 py-2 rounded-xl text-sm font-black drop-shadow-xl backdrop-blur-md border border-warning/20 flex items-center gap-2 z-10 transition-transform">
+                                <Info size={16} />
+                                TESPİT EDİLEN DURUM
+                            </div>
+                        )}
                     </div>
 
                     {/* Before Image (Foreground, clipped) */}
-                    <div
-                        className="absolute inset-0 w-full h-full select-none z-10 pointer-events-none"
-                        style={{ clipPath: `polygon(0% 0%, ${sliderPos}% 0%, ${sliderPos}% 100%, 0% 100%)` }}
-                    >
-                        <img
-                            src={beforeUrl}
-                            alt="Before"
-                            className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
-                            style={{ objectPosition: `${imgPos.x}% ${imgPos.y}%` }}
-                        />
-                        <div className="absolute top-6 left-6 bg-base-100/90 text-error px-4 py-2 rounded-xl text-sm font-black drop-shadow-xl backdrop-blur-md border border-error/20 z-10 pointer-events-auto transition-transform">
-                            ÖNCESİ
-                        </div>
-                    </div>
+                    {beforeUrl && (
+                        <>
+                            <div
+                                className="absolute inset-0 w-full h-full select-none z-10 pointer-events-none bg-base-200/50"
+                                style={{ clipPath: `polygon(0% 0%, ${sliderPos}% 0%, ${sliderPos}% 100%, 0% 100%)` }}
+                            >
+                                <img
+                                    src={beforeUrl}
+                                    alt="Before"
+                                    className="absolute inset-0 w-full h-full object-contain select-none pointer-events-none"
+                                    style={{ objectPosition: `${imgPos.x}% ${imgPos.y}%` }}
+                                />
+                                <div className="absolute top-6 left-6 bg-base-100/90 text-error px-4 py-2 rounded-xl text-sm font-black drop-shadow-xl backdrop-blur-md border border-error/20 z-10 pointer-events-auto transition-transform">
+                                    ÖNCESİ
+                                </div>
+                            </div>
 
-                    {/* Slider handle */}
-                    <div
-                        className="absolute top-0 bottom-0 w-1.5 bg-white cursor-ew-resize z-20 shadow-[-2px_0_10px_rgba(0,0,0,0.3)] transition-colors hover:bg-primary"
-                        style={{ left: `${sliderPos}%`, transform: 'translateX(-50%)' }}
-                        onMouseDown={(e) => { e.stopPropagation(); handlePointerDown(e, 'slider'); }}
-                        onTouchStart={(e) => { e.stopPropagation(); handlePointerDown(e, 'slider'); }}
-                    >
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-2xl flex items-center justify-center border-4 border-white text-base-content/60 transition-all duration-300 hover:scale-110 hover:text-primary hover:border-primary/20 cursor-ew-resize backdrop-blur-md z-30">
-                            <MoveHorizontal size={24} />
-                        </div>
+                            {/* Slider handle */}
+                            <div
+                                className="absolute top-0 bottom-0 w-1.5 bg-white cursor-ew-resize z-20 shadow-[-2px_0_10px_rgba(0,0,0,0.3)] transition-colors hover:bg-primary"
+                                style={{ left: `${sliderPos}%`, transform: 'translateX(-50%)' }}
+                                onMouseDown={(e) => { e.stopPropagation(); handlePointerDown(e, 'slider'); }}
+                                onTouchStart={(e) => { e.stopPropagation(); handlePointerDown(e, 'slider'); }}
+                            >
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-2xl flex items-center justify-center border-4 border-white text-base-content/60 transition-all duration-300 hover:scale-110 hover:text-primary hover:border-primary/20 cursor-ew-resize backdrop-blur-md z-30">
+                                    <MoveHorizontal size={24} />
+                                </div>
 
-                        {/* Ortadaki çizginin altı ve üstündeki ufak ok okları (Estetik) */}
-                        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-1 h-12 bg-base-content/20 rounded-full cursor-ew-resize pointer-events-none"></div>
-                        <div className="absolute bottom-1/4 left-1/2 -translate-x-1/2 w-1 h-12 bg-base-content/20 rounded-full cursor-ew-resize pointer-events-none"></div>
-                    </div>
+                                {/* Ortadaki çizginin altı ve üstündeki ufak ok okları (Estetik) */}
+                                <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-1 h-12 bg-base-content/20 rounded-full cursor-ew-resize pointer-events-none"></div>
+                                <div className="absolute bottom-1/4 left-1/2 -translate-x-1/2 w-1 h-12 bg-base-content/20 rounded-full cursor-ew-resize pointer-events-none"></div>
+                            </div>
+                        </>
+                    )}
                 </div>
 
                 {/* Sağ/Alt Taraf: Notlar Kartı */}

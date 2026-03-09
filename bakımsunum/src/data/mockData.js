@@ -173,9 +173,15 @@ export const presentationSlides = [
     { id: 12, title: '2026 KEŞİF ÖZETİ', type: 'kesif_ozeti' },
     //  { id: 3, title: 'SÖZLEŞME BİLGLERİ', type: 'chart_bar' },
     //  { id: 4, title: 'YÜKLENİCİ BİLGİLERİ', type: 'table' },
-    { id: 2, group: 'Fotoğraflar', title: 'AG Sahası Öncesi Sonrası', titleShort: 'AG', type: 'photo_ag' },
-    { id: 3, group: 'Fotoğraflar', title: 'YG Sahası Öncesi Sonrası', titleShort: 'YG', type: 'photo_yg' },
+    { id: 101, group: 'Fotoğraflar', title: 'Bina Yenileme İşi', titleShort: 'Bina', type: 'photo_bina' },
+    { id: 102, group: 'Fotoğraflar', title: 'Ağaç Budama İşi', titleShort: 'Budama', type: 'photo_budama' },
+    { id: 103, group: 'Fotoğraflar', title: 'YG Koridor Açma', titleShort: 'Koridor', type: 'photo_koridor' },
+    { id: 104, group: 'Fotoğraflar', title: 'Si-Coat Uygulaması', titleShort: 'Si-Coat', type: 'photo_sicoat' },
+    { id: 105, group: 'Fotoğraflar', title: 'Si-Coat Uygunsuzluklar', titleShort: 'Uygunsuz', type: 'photo_uygunsuz' },
 
+    { id: 106, group: 'Dijital Süreçler', title: 'Yüklenici Takip: Keşif Modülü', titleShort: 'Keşif', type: 'video_kesif' },
+    { id: 107, group: 'Dijital Süreçler', title: 'Yüklenici Takip: Yer Teslimi', titleShort: 'Yer Teslimi', type: 'video_yerteslimi' },
+    { id: 108, group: 'Dijital Süreçler', title: 'Excel Makro Süreçleri', titleShort: 'Makrolar', type: 'video_makro' },
 
     { id: 6, title: '2026 YÜKLENİCİ BİLGİLERİ', type: 'yuklenici_bilgileri' },
 

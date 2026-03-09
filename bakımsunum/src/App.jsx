@@ -20,6 +20,7 @@ import AfetSlide from './components/slides/AfetSlide';
 import CBSDurumuSlide from './components/slides/CBSDurumuSlide';
 import EnvanterSlide from './components/slides/EnvanterSlide';
 import GirisSlide from './components/slides/GirisSlide';
+import VideoSlide from './components/slides/VideoSlide';
 import { X, GripHorizontal, Eye } from 'lucide-react';
 
 const TimelineOverlay = ({ slides, activeSlideId }) => {
@@ -203,39 +204,76 @@ function App() {
         return <BarChartSlide />;
       case 'table':
         return <TableSlide />;
-      case 'photo_ag':
+      case 'photo_bina':
         return <BeforeAfterSlide
-          categoryTitle="AG Kapsamındaki Çalışmalar"
+          categoryTitle="Bina Yenileme İşi"
           items={[
             {
-              title: "KADİRLİ OM GAFFARLI FİDER BAKIMI",
-              beforeUrl: "https://res.cloudinary.com/dl7jo4fhd/image/upload/v1772452472/gaffal%C4%B1before_wxochd.jpg",
-              afterUrl: "https://res.cloudinary.com/dl7jo4fhd/image/upload/v1772452519/gaffarl%C4%B1after_ujdrea.jpg",
-              notes: "Kadirli OM ye ait GAFFARLI fiderinde 23 adet müşterek direk dikildi.12 asdet ENH direği dikildi. 1 km AG hat,6 KM YG hat tesis edilmiştir.."
-            },
-            {
-              title: "CART CURT PROJE İŞİ",
-              beforeUrl: "https://res.cloudinary.com/dl7jo4fhd/image/upload/v1772452472/gaffal%C4%B1before_wxochd.jpg",
-              afterUrl: "https://res.cloudinary.com/dl7jo4fhd/image/upload/v1772452519/gaffarl%C4%B1after_ujdrea.jpg",
-              notes: "CAR CURT  operasyon merkezindeki yorgun AG izolatörleri tamamen yenileri ile değiştirilerek kopmalara karşı güvenlik artırıldı."
+              title: "Bina Yenileme İşi",
+              afterUrl: "https://res.cloudinary.com/diol6whsz/image/upload/v1773091772/bina_yenilme_%C3%B6ncesi1_awffvg.jpg",
+
+              beforeUrl: "https://res.cloudinary.com/diol6whsz/image/upload/v1773091772/binayenilemesonras%C4%B11_iedcyf.jpg",
+              notes: "Dağıtım merkezleri ve trafo binalarında kapsamlı dış cephe yenileme, sıva ve boyama çalışmaları gerçekleştirilmiş, binaların fiziksel dayanımı artırılmıştır."
             }
           ]}
         />;
-      case 'photo_yg':
+      case 'photo_budama':
         return <BeforeAfterSlide
-          categoryTitle="YG Kapsamındaki Çalışmalar"
+          categoryTitle="Ağaç Budama İşi"
           items={[
             {
-              title: "YG Travers Değişimi",
-              beforeUrl: "https://res.cloudinary.com/dl7jo4fhd/image/upload/v1772452472/gaffal%C4%B1before_wxochd.jpg",
-              afterUrl: "https://res.cloudinary.com/dl7jo4fhd/image/upload/v1772452519/gaffarl%C4%B1after_ujdrea.jpg",
-              notes: "YG hattındaki riskli bölgelerde yer alan deforme olmuş traversler için yenileme yapıldı. (Temsili Veri)"
+              title: "Ağaç Budama İşi",
+              beforeUrl: "https://res.cloudinary.com/diol6whsz/image/upload/v1773091771/a%C4%9Fa%C3%A7_budama_%C3%B6ncesi_1_gxspln.jpg",
+              afterUrl: "https://res.cloudinary.com/diol6whsz/image/upload/v1773091772/a%C4%9Fa%C3%A7_budama_sonras%C4%B1_1_xmmvjp.jpg",
+              notes: "Alçak Gerilim (AG) hatlarına temas eden veya risk oluşturan ağaç dalları düzenli periyotta budanarak hat şebeke güvenliği sağlanmış, olası kısa devre ve arıza riskleri giderilmiştir."
+            }
+          ]}
+        />;
+      case 'photo_koridor':
+        return <BeforeAfterSlide
+          categoryTitle="YG Koridor Açma İşi"
+          items={[
+            {
+              title: "YG Koridor Açma İşi",
+              beforeUrl: "https://res.cloudinary.com/diol6whsz/image/upload/v1773091774/yg_koridor_a%C3%A7ma_%C3%B6ncesi_1_t0qdtt.jpg",
+              afterUrl: "https://res.cloudinary.com/diol6whsz/image/upload/v1773091775/yg_koridor_a%C3%A7ma_sonras%C4%B1_1_llgo1e.jpg",
+              notes: "Ormanlık alandaki YG hat güzergahlarında koridor açma ve temizleme işleri yapılarak, yangın ve şiddetli rüzgar kaynaklı iletken kopma riskleri minimize edilmiştir."
+            }
+          ]}
+        />;
+      case 'photo_sicoat':
+        return <BeforeAfterSlide
+          categoryTitle="Si-Coat Uygulaması"
+          items={[
+            {
+              title: "Si-Coat Uygulaması",
+              beforeUrl: "https://res.cloudinary.com/diol6whsz/image/upload/v1773091526/sicoat_%C3%B6ncesi_et6agg.jpg",
+              afterUrl: "https://res.cloudinary.com/diol6whsz/image/upload/v1773091526/sicoat_sonras%C4%B1_yvncos.jpg",
+              notes: "İzolatörlerde kıyı ve kirli sanayi bölgelerinde yaşanan kirlilik kaynaklı atlamaları önlemek amacıyla boyama ve Si-Coat (Silikon Kaplama) izolasyon çalışması yapılmıştır."
+            }
+          ]}
+        />;
+      case 'photo_uygunsuz':
+        return <BeforeAfterSlide
+          categoryTitle="Si-Coat Uygunsuz Durum Analizleri"
+          items={[
+            {
+              title: "Si-Coat Uygunsuz Durum Analizi (1)",
+              beforeUrl: null,
+              afterUrl: "https://res.cloudinary.com/diol6whsz/image/upload/v1773091773/sicoat_uygunsuz_foto1_rmmwqv.jpg",
+              notes: "Si-Coat yalıtım uygulamasının standartlara uygun yapılmadığı noktalarda tespit edilen deformasyon örneği. Boyanın düzensiz kalınlığı yalıtım eksikliğine zemin hazırlamaktadır."
             },
             {
-              title: "CEYHAN OM GÜÇ YÜKSELTİMİ",
-              beforeUrl: "https://res.cloudinary.com/dl7jo4fhd/image/upload/v1772452472/gaffal%C4%B1before_wxochd.jpg",
-              afterUrl: "https://res.cloudinary.com/dl7jo4fhd/image/upload/v1772452519/gaffarl%C4%B1after_ujdrea.jpg",
-              notes: "Kapasite aşımı olan trafo bölgesinde güç yükseltimi yapıldı ve pano montajı tamamlandı."
+              title: "Si-Coat Uygunsuz Durum Analizi (2)",
+              beforeUrl: null,
+              afterUrl: "https://res.cloudinary.com/diol6whsz/image/upload/v1773091773/sicoat_uygunsuz_foto2_ahvtjr.jpg",
+              notes: "Mevcut yalıtım aparatlarında ve kaplamada gözlemlenen yüzey soyulması, yetersiz malzeme uygulanması ve fiziksel aşınma durumundan kaynaklanan bölgesel uygunsuzluklar."
+            },
+            {
+              title: "Si-Coat Uygunsuz Durum Analizi (3)",
+              beforeUrl: null,
+              afterUrl: "https://res.cloudinary.com/diol6whsz/image/upload/v1773091774/sicoat_uygunsuz_foto3_mujemb.jpg",
+              notes: "Sahadaki denetimler sonucunda Si-Coat işlemi yapılamayan veya ömrünü çok hızlı tamamlamış riskli noktalara ait bulgular detaylandırılmıştır. Düzeltici faaliyet planlanmıştır."
             }
           ]}
         />;
@@ -255,6 +293,24 @@ function App() {
         return <AfetSlide />;
       case 'cbs_durumu':
         return <CBSDurumuSlide />;
+      case 'video_kesif':
+        return <VideoSlide
+          title="Yüklenici Takip: Sistemi Keşif Modülü"
+          description="Gerçek zamanlı metraj,otomatik direk tipi seçimi,direğe otomatik atanan envarter listesi,anlık keşif takibİ,SAP sistemine uygun keşif export'u"
+          videoId="-kXSANEsyqc"
+        />;
+      case 'video_yerteslimi':
+        return <VideoSlide
+          title="Yüklenici Takip: Yer Teslimi"
+          description="Y."
+          videoId=""
+        />;
+      case 'video_makro':
+        return <VideoSlide
+          title="Excel Makro Süreçleri"
+          description="."
+          videoId=""
+        />;
       case 'kesif_ozeti':
         return <EnvanterSlide />;
       case 'giris':
