@@ -13,7 +13,7 @@ const formatCurrencyM = (val) => {
 
 export default function PieChartSlide() {
     const [isFullscreen, setIsFullscreen] = useState(() => !!document.fullscreenElement);
-    const [activeBolge, setActiveBolge] = useState('');
+    const [activeBolge, setActiveBolge] = useState(null);
     const [activeDistrict, setActiveDistrict] = useState(null);
     const containerRef = useRef(null);
 
@@ -51,12 +51,7 @@ export default function PieChartSlide() {
         return { bolgeList: list, grandTotal: total };
     }, []);
 
-    // Set initial active bolge
-    useEffect(() => {
-        if (bolgeList.length > 0 && !activeBolge) {
-            setActiveBolge(bolgeList[0].bolge);
-        }
-    }, [bolgeList, activeBolge]);
+    // Removed initial active bolge selection so it starts at the region selection view
 
     useEffect(() => {
         const handleFullscreenChange = () => {
@@ -235,15 +230,17 @@ export default function PieChartSlide() {
     };
 
     return (
-        <div className="flex flex-col h-full w-full">
-            <div className="mb-6 flex justify-between items-start">
+        <div className={`flex flex-col w-full ${isFullscreen ? 'fixed inset-0 z-[100] bg-base-100 p-6 md:p-10' : 'h-full'}`}>
+            <div className="mb-6 flex flex-shrink-0 justify-between items-start">
                 <div>
-                    <h2 className="text-3xl font-extrabold text-base-content mb-2">SEVİYE-3 PROJE TUTARLARI</h2>
-                    <p className="text-base-content/60 text-lg">Bölge ve lokasyon bazlı bütçe dağılımları ({formatCurrencyM(grandTotal)})</p>
+                    <h2 className="text-2xl md:text-3xl font-extrabold text-base-content mb-2 flex items-center gap-3">
+                        SEVİYE-3 İŞ KAPSAMI - TEDAŞ RAPORLAMA
+                    </h2>
+                    <p className="text-base-content/60 text-sm md:text-lg">Bölge ve lokasyon bazlı bütçe dağılımları ({formatCurrencyM(grandTotal)})</p>
                 </div>
                 <button
                     onClick={toggleFullscreen}
-                    className="btn btn-sm btn-outline shadow-sm bg-base-100"
+                    className="btn btn-sm btn-outline shadow-sm bg-base-100 flex-shrink-0 ml-4"
                     title={isFullscreen ? "Küçült" : "Tam Ekran"}
                 >
                     {isFullscreen ? <Minimize size={16} /> : <Maximize size={16} />}
@@ -252,7 +249,7 @@ export default function PieChartSlide() {
 
             <div
                 ref={containerRef}
-                className={`flex-1 rounded-3xl p-6 flex flex-col xl:flex-row gap-8 relative bg-base-200/50 shadow-inner ${isFullscreen ? 'h-screen w-screen m-0 rounded-none overflow-y-auto bg-base-100' : 'h-full overflow-hidden'}`}
+                className="flex-1 rounded-3xl p-4 md:p-6 flex flex-col xl:flex-row gap-8 relative bg-base-200/50 shadow-inner overflow-hidden min-h-0"
             >
                 {/* Sol Taraf: Grafikler */}
                 <div className="w-full xl:w-2/5 flex flex-col overflow-hidden relative min-h-[400px]">
@@ -299,87 +296,126 @@ export default function PieChartSlide() {
                     </div>
                 </div>
 
-                {/* Sağ Taraf: Gelişmiş İstatistik Kartları */}
+                {/* Sağ Taraf: Gelişmiş İstatistik Kartları / Bölge ve OM Görünümü */}
                 <div className="w-full xl:w-3/5 flex flex-col h-full overflow-hidden">
-                    {/* Tabs */}
-                    <div className="tabs tabs-boxed bg-base-100 p-1 shadow-sm mb-4 w-full flex-wrap">
-                        {bolgeList.map(b => (
-                            <button
-                                key={b.bolge}
-                                className={`tab flex-1 min-w-[100px] h-10 font-bold ${activeBolge === b.bolge ? 'tab-active bg-primary text-primary-content' : 'text-base-content/70'}`}
-                                onClick={() => handleBolgeChange(b.bolge)}
-                            >
-                                {b.bolge}
-                            </button>
-                        ))}
-                    </div>
 
-                    {/* Aktif Bölge Özeti */}
-                    {activeBolgeData && (
+                    {!activeBolge ? (
+                        /* Bölüm 1: BÖLGELER LİSTESİ */
                         <div className="flex-1 overflow-y-auto pr-2 pb-4 space-y-4">
-
-                            {/* Bölge Ana İstatistik Kartı */}
-                            <div className="stats shadow w-full bg-gradient-to-br from-primary to-primary-focus text-primary-content">
-                                <div className="stat">
-                                    <div className="stat-figure opacity-20">
-                                        <TrendingUp size={48} />
-                                    </div>
-                                    <div className="stat-title text-primary-content/80 font-semibold">{activeBolgeData.bolge} TOPLAM TUTARI</div>
-                                    <div className="stat-value text-3xl md:text-4xl">{formatCurrencyExact(activeBolgeData.totalCost)}</div>
-                                    <div className="stat-desc text-primary-content/80 mt-1 font-medium">Toplam {activeBolgeData.totalCount} Adet Proje</div>
-                                </div>
-                            </div>
-
-                            <div className="divider text-base-content/40 text-sm font-semibold">OPERASYON MERKEZİ DETAYLARI</div>
-
-                            {/* Lokasyon (District) Kartları Grid */}
+                            <div className="divider text-base-content/40 text-sm font-semibold mt-0">İL BAZLI ÖZET</div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {activeBolgeData.districts.map((d, idx) => {
-                                    const percentage = ((d.cost / activeBolgeData.totalCost) * 100);
-                                    const isActive = activeDistrict?.name === d.name;
-
-                                    return (
-                                        <div
-                                            key={d.name}
-                                            onClick={() => setActiveDistrict(isActive ? null : d)}
-                                            className={`card bg-base-100 border shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer group ${isActive ? 'border-primary ring-2 ring-primary/20 bg-primary/5' : 'border-base-200'
-                                                }`}
-                                        >
-                                            <div className="card-body p-5">
-                                                <div className="flex justify-between items-start mb-2">
-                                                    <h3 className={`card-title text-[15px] font-bold transition-colors ${isActive ? 'text-primary' : 'text-base-content group-hover:text-primary'}`}>
-                                                        {d.name}
-                                                    </h3>
-                                                    <div className={`badge badge-sm font-bold opacity-80 gap-1 ${isActive ? 'badge-primary' : 'badge-error badge-outline'}`}>
-                                                        <Layers size={10} /> {d.count} Adet
-                                                    </div>
-                                                </div>
-
-                                                <div className="mt-2 flex flex-col">
-                                                    <span className="text-[10px] text-base-content/50 font-bold uppercase tracking-widest mb-1">TEDAŞ RAPORLAMA</span>
-                                                    <span className="text-xl font-black text-base-content">{formatCurrencyExact(d.cost)}</span>
-                                                </div>
-
-                                                <div className="mt-4 w-full bg-base-200 rounded-full h-1.5 overflow-hidden">
-                                                    <div
-                                                        className={`h-full rounded-full transition-all duration-1000 ease-out ${idx === 0 || isActive ? 'bg-primary' : 'bg-base-content/30 group-hover:bg-primary/50'}`}
-                                                        style={{ width: `${percentage}%` }}
-                                                    ></div>
-                                                </div>
-
-                                                <div className="flex justify-between items-center mt-2">
-                                                    <span className="text-[10px] text-base-content/40 font-medium">İl'deki yüzdesi</span>
-                                                    <span className={`text-[11px] font-bold ${idx === 0 || isActive ? 'text-primary' : 'text-base-content/60'}`}>
-                                                        %{percentage.toFixed(1)}
-                                                    </span>
+                                {bolgeList.map((b) => (
+                                    <div
+                                        key={b.bolge}
+                                        onClick={() => handleBolgeChange(b.bolge)}
+                                        className="card bg-base-100 border border-base-200 shadow-sm hover:shadow-lg hover:-translate-y-1 hover:border-primary transition-all duration-300 cursor-pointer group"
+                                    >
+                                        <div className="card-body p-5">
+                                            <div className="flex justify-between items-start mb-2">
+                                                <h3 className="card-title text-[18px] font-bold text-base-content group-hover:text-primary transition-colors">
+                                                    {b.bolge}
+                                                </h3>
+                                                <div className="badge badge-primary badge-outline badge-sm font-bold opacity-80 gap-1">
+                                                    <Layers size={10} /> {b.totalCount} Proje
                                                 </div>
                                             </div>
-                                        </div>
-                                    );
-                                })}
-                            </div>
 
+                                            <div className="mt-2 flex flex-col">
+                                                <span className="text-[10px] text-base-content/50 font-bold uppercase tracking-widest mb-1">TOPLAM TEDAŞ RAPORLAMA FİYATI</span>
+                                                <span className="text-2xl font-black text-primary">{formatCurrencyExact(b.totalCost)}</span>
+                                            </div>
+
+                                            <div className="flex justify-between items-center mt-4 pt-4 border-t border-base-200">
+                                                <span className="text-xs text-base-content/60 font-medium">Bağlı OM Sayısı: {b.districts.length}</span>
+                                                <span className="text-xs font-bold text-primary flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                                    Detayları Gör →
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
+                    ) : (
+                        /* Bölüm 2: SEÇİLİ BÖLGENİN OM DETAYLARI */
+                        activeBolgeData && (
+                            <div className="flex-1 overflow-y-auto pr-2 pb-4 space-y-4 flex flex-col">
+                                {/* Geri Dönüş ve Bölge Başlığı */}
+                                <div className="flex items-center gap-3 mb-2">
+                                    <button
+                                        className="btn btn-sm btn-ghost bg-base-200/50 hover:bg-base-200"
+                                        onClick={() => setActiveBolge(null)}
+                                    >
+                                        ← Geri Dön
+                                    </button>
+                                    <h3 className="text-xl font-bold text-base-content flex-1">
+                                        {activeBolgeData.bolge} BÖLGESİ DETAYLARI
+                                    </h3>
+                                </div>
+
+                                {/* Bölge Ana İstatistik Kartı */}
+                                <div className="stats shadow w-full bg-gradient-to-br from-primary to-primary-focus text-primary-content">
+                                    <div className="stat">
+                                        <div className="stat-figure opacity-20">
+                                            <TrendingUp size={48} />
+                                        </div>
+                                        <div className="stat-title text-primary-content/80 font-semibold">{activeBolgeData.bolge} TOPLAM TUTARI</div>
+                                        <div className="stat-value text-3xl md:text-4xl">{formatCurrencyExact(activeBolgeData.totalCost)}</div>
+                                        <div className="stat-desc text-primary-content/80 mt-1 font-medium">Toplam {activeBolgeData.totalCount} Adet Proje</div>
+                                    </div>
+                                </div>
+
+                                <div className="divider text-base-content/40 text-sm font-semibold">OPERASYON MERKEZİ DETAYLARI</div>
+
+                                {/* Lokasyon (District) Kartları Grid */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4">
+                                    {activeBolgeData.districts.map((d, idx) => {
+                                        const percentage = ((d.cost / activeBolgeData.totalCost) * 100);
+                                        const isActive = activeDistrict?.name === d.name;
+
+                                        return (
+                                            <div
+                                                key={d.name}
+                                                onClick={() => setActiveDistrict(isActive ? null : d)}
+                                                className={`card bg-base-100 border shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 cursor-pointer group flex-shrink-0 ${isActive ? 'border-primary ring-2 ring-primary/20 bg-primary/5' : 'border-base-200'
+                                                    }`}
+                                            >
+                                                <div className="card-body p-5">
+                                                    <div className="flex justify-between items-start mb-2">
+                                                        <h3 className={`card-title text-[15px] font-bold transition-colors ${isActive ? 'text-primary' : 'text-base-content group-hover:text-primary'}`}>
+                                                            {d.name}
+                                                        </h3>
+                                                        <div className={`badge badge-sm font-bold opacity-80 gap-1 ${isActive ? 'badge-primary' : 'badge-error badge-outline'}`}>
+                                                            <Layers size={10} /> {d.count} Adet
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="mt-2 flex flex-col">
+                                                        <span className="text-[10px] text-base-content/50 font-bold uppercase tracking-widest mb-1">TEDAŞ RAPORLAMA</span>
+                                                        <span className="text-xl font-black text-base-content">{formatCurrencyExact(d.cost)}</span>
+                                                    </div>
+
+                                                    <div className="mt-4 w-full bg-base-200 rounded-full h-1.5 overflow-hidden">
+                                                        <div
+                                                            className={`h-full rounded-full transition-all duration-1000 ease-out ${idx === 0 || isActive ? 'bg-primary' : 'bg-base-content/30 group-hover:bg-primary/50'}`}
+                                                            style={{ width: `${percentage}%` }}
+                                                        ></div>
+                                                    </div>
+
+                                                    <div className="flex justify-between items-center mt-2">
+                                                        <span className="text-[10px] text-base-content/40 font-medium">İl'deki yüzdesi</span>
+                                                        <span className={`text-[11px] font-bold ${idx === 0 || isActive ? 'text-primary' : 'text-base-content/60'}`}>
+                                                            %{percentage.toFixed(1)}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+
+                            </div>
+                        )
                     )}
                 </div>
             </div>

@@ -158,70 +158,73 @@ export default function CBSDurumuSlide() {
             {/* İç içerik: padding ve flex-col burada */}
             <div className="flex flex-col gap-5 p-8">
 
-                {/* ── Header ── */}
-                <div className="flex flex-wrap items-start justify-between gap-4">
-                    <div>
-                        <h2 className="text-2xl font-black text-base-content leading-tight flex items-center gap-2">
-                            <Map size={22} className="text-primary" />
-                            CBS DURUMU — OM BAZLI VERİ ANALİZİ
-                        </h2>
-                        <p className="text-base-content/50 text-sm mt-1">
-                            Operasyon merkezleri bazında CBS kayıt durumları; hata türleri, işlenme ve onay bilgileri.
-                        </p>
-                    </div>
+                {/* ── Header & Arama/Filtre (Sticky Ekran Başlığı ve Filtresi) ── */}
+                <div className="sticky -top-8 -mt-8 -mx-8 px-8 pt-8 pb-4 z-50 bg-base-100/95 backdrop-blur-md shadow-sm border-b border-base-200 flex flex-col gap-5">
+                    {/* Header */}
+                    <div className="flex flex-wrap items-start justify-between gap-4">
+                        <div>
+                            <h2 className="text-2xl font-black text-base-content leading-tight flex items-center gap-2">
+                                <Map size={22} className="text-primary" />
+                                CBS DURUMU — OM BAZLI VERİ ANALİZİ
+                            </h2>
+                            <p className="text-base-content/50 text-sm mt-1">
+                                Operasyon merkezleri bazında CBS kayıt durumları; hata türleri, işlenme ve onay bilgileri.
+                            </p>
+                        </div>
 
-                    {/* KPI + Fullscreen */}
-                    <div className="flex flex-wrap gap-2 items-center">
-                        {kpiCards.map((k) => (
-                            <div
-                                key={k.label}
-                                className={`flex flex-col items-end rounded-xl px-3 py-2 border min-w-[100px] ${k.color}`}
-                            >
-                                <span className="text-[10px] font-bold uppercase tracking-widest opacity-70">{k.label}</span>
-                                <span className="font-extrabold text-base leading-tight">{k.value.toLocaleString('tr-TR')}</span>
-                            </div>
-                        ))}
-                        <button
-                            onClick={toggleFullscreen}
-                            title={isFullscreen ? 'Küçült' : 'Tam Ekran'}
-                            className="btn btn-sm btn-outline shadow-sm bg-base-100 self-center"
-                        >
-                            {isFullscreen ? <Minimize size={16} /> : <Maximize size={16} />}
-                        </button>
-                    </div>
-                </div>
-
-                {/* ── Arama & Filtre ── */}
-                <div className="flex items-center gap-3 flex-wrap">
-                    <div className="relative flex-1 min-w-[200px] max-w-xs">
-                        <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-base-content/40" />
-                        <input
-                            type="text"
-                            placeholder="OM ara..."
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            className="input input-sm input-bordered w-full pl-8 pr-8 text-sm"
-                        />
-                        {search && (
+                        {/* KPI + Fullscreen */}
+                        <div className="flex flex-wrap gap-2 items-center">
+                            {kpiCards.map((k) => (
+                                <div
+                                    key={k.label}
+                                    className={`flex flex-col items-end rounded-xl px-3 py-2 border min-w-[100px] ${k.color}`}
+                                >
+                                    <span className="text-[10px] font-bold uppercase tracking-widest opacity-70">{k.label}</span>
+                                    <span className="font-extrabold text-base leading-tight">{k.value.toLocaleString('tr-TR')}</span>
+                                </div>
+                            ))}
                             <button
-                                onClick={() => setSearch('')}
-                                className="absolute right-2 top-1/2 -translate-y-1/2 text-base-content/40 hover:text-base-content"
+                                onClick={toggleFullscreen}
+                                title={isFullscreen ? 'Küçült' : 'Tam Ekran'}
+                                className="btn btn-sm btn-outline shadow-sm bg-base-100 self-center"
                             >
-                                <X size={13} />
+                                {isFullscreen ? <Minimize size={16} /> : <Maximize size={16} />}
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Arama & Filtre */}
+                    <div className="flex items-center gap-3 flex-wrap">
+                        <div className="relative flex-1 min-w-[200px] max-w-xs">
+                            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-base-content/40" />
+                            <input
+                                type="text"
+                                placeholder="OM ara..."
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                                className="input input-sm input-bordered w-full pl-8 pr-8 text-sm"
+                            />
+                            {search && (
+                                <button
+                                    onClick={() => setSearch('')}
+                                    className="absolute right-2 top-1/2 -translate-y-1/2 text-base-content/40 hover:text-base-content"
+                                >
+                                    <X size={13} />
+                                </button>
+                            )}
+                        </div>
+                        {sortKey && (
+                            <button
+                                onClick={() => { setSortKey(null); setSortDir('asc'); }}
+                                className="btn btn-xs btn-ghost gap-1 text-primary"
+                            >
+                                <X size={12} /> Sıralamayı Sıfırla
                             </button>
                         )}
+                        <span className="text-xs text-base-content/40 ml-auto">
+                            {sorted.length} / {cbsdata.length} kayıt · Sıralamak için başlığa tıkla
+                        </span>
                     </div>
-                    {sortKey && (
-                        <button
-                            onClick={() => { setSortKey(null); setSortDir('asc'); }}
-                            className="btn btn-xs btn-ghost gap-1 text-primary"
-                        >
-                            <X size={12} /> Sıralamayı Sıfırla
-                        </button>
-                    )}
-                    <span className="text-xs text-base-content/40 ml-auto">
-                        {sorted.length} / {cbsdata.length} kayıt · Sıralamak için başlığa tıkla
-                    </span>
                 </div>
 
                 {/* ── Tablo ── */}
@@ -274,8 +277,8 @@ export default function CBSDurumuSlide() {
                                         <tr
                                             key={row.om}
                                             className={`border-b border-base-200 transition-colors duration-150 ${i % 2 === 0
-                                                    ? 'bg-base-100 hover:bg-base-200/50'
-                                                    : 'bg-base-200/25 hover:bg-base-200/60'
+                                                ? 'bg-base-100 hover:bg-base-200/50'
+                                                : 'bg-base-200/25 hover:bg-base-200/60'
                                                 }`}
                                         >
                                             <td className="px-3 py-2.5 font-semibold text-base-content whitespace-nowrap">

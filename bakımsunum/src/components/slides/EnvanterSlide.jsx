@@ -147,9 +147,23 @@ export default function EnvanterSlide() {
         });
     }, [filtered, sortKey, sortDir]);
 
+    const dynamicTotal = useMemo(() => {
+        const initial = NUMERIC_KEYS.reduce((acc, key) => {
+            acc[key] = 0;
+            return acc;
+        }, {});
+
+        return filtered.reduce((acc, row) => {
+            NUMERIC_KEYS.forEach((key) => {
+                acc[key] += row[key] || 0;
+            });
+            return acc;
+        }, initial);
+    }, [filtered]);
+
     const outerClass = isFullscreen
-        ? 'fixed inset-0 z-50 bg-white overflow-y-auto'
-        : 'h-full w-full overflow-y-auto';
+        ? 'fixed inset-0 z-50 bg-base-100 flex flex-col overflow-hidden'
+        : 'h-full w-full flex flex-col overflow-hidden';
 
     return (
         <div
@@ -157,7 +171,7 @@ export default function EnvanterSlide() {
             data-theme={isFullscreen ? 'light' : undefined}
             className={outerClass}
         >
-            <div className="flex flex-col gap-5 p-8">
+            <div className="flex flex-col gap-5 p-8 h-full">
 
                 {/* ── Header ── */}
                 <div className="flex flex-wrap items-start justify-between gap-4">
@@ -180,7 +194,7 @@ export default function EnvanterSlide() {
                             >
                                 <span className="text-[10px] font-bold uppercase tracking-widest opacity-70">{k.label}</span>
                                 <span className="font-extrabold text-base leading-tight">
-                                    {envanterTotal[k.key]?.toLocaleString('tr-TR')}
+                                    {dynamicTotal[k.key]?.toLocaleString('tr-TR')}
                                 </span>
                             </div>
                         ))}
@@ -259,40 +273,47 @@ export default function EnvanterSlide() {
                 </div>
 
                 {/* ── Tablo ── */}
-                <div className="rounded-2xl overflow-hidden border border-base-200 shadow-md bg-base-100">
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-sm border-collapse">
-                            <thead>
-                                <tr className="bg-base-200 text-base-content/60 text-xs uppercase tracking-wider">
-                                    {COLUMNS.map((col) => (
-                                        <th
-                                            key={col.key}
-                                            onClick={() => col.numeric && handleSort(col.key)}
-                                            className={`
-                                                px-3 py-3 font-bold border-b border-base-300 whitespace-nowrap
-                                                ${col.align === 'right' ? 'text-right' : 'text-left'}
-                                                ${col.numeric ? 'cursor-pointer select-none hover:bg-base-300/60 transition-colors' : ''}
-                                            `}
-                                        >
-                                            <span className="inline-flex items-center gap-1 justify-end w-full">
-                                                {col.align === 'right' && col.numeric && (
-                                                    <SortIcon column={col.key} sortKey={sortKey} sortDir={sortDir} />
-                                                )}
-                                                {col.label}
-                                                {col.align === 'left' && col.numeric && (
-                                                    <SortIcon column={col.key} sortKey={sortKey} sortDir={sortDir} />
-                                                )}
-                                            </span>
-                                        </th>
-                                    ))}
+                <div className="rounded-2xl border border-base-200 shadow-md bg-base-100 flex-1 flex flex-col min-h-0">
+                    <div className="overflow-auto flex-1">
+                        <table className="w-full text-sm border-collapse relative">
+                            <thead className="sticky top-0 z-20 bg-base-100 shadow-sm outline outline-1 outline-base-200">
+                                <tr className="bg-base-200 text-base-content/60 text-xs uppercase tracking-wider relative z-20">
+                                    {COLUMNS.map((col, idx) => {
+                                        const isSticky1 = idx === 0;
+                                        const isSticky2 = idx === 1;
+                                        return (
+                                            <th
+                                                key={col.key}
+                                                onClick={() => col.numeric && handleSort(col.key)}
+                                                className={`
+                                                    px-3 py-3 font-bold border-b border-base-300 whitespace-nowrap bg-base-200
+                                                    ${col.align === 'right' ? 'text-right' : 'text-left'}
+                                                    ${col.numeric ? 'cursor-pointer select-none hover:bg-base-300/60 transition-colors' : ''}
+                                                    ${isSticky1 ? 'sticky left-0 z-30 min-w-[120px] w-[120px]' : ''}
+                                                    ${isSticky2 ? 'sticky left-[120px] z-30 min-w-[200px] w-[200px] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]' : ''}
+                                                `}
+                                            >
+                                                <span className="inline-flex items-center gap-1 justify-end w-full">
+                                                    {col.align === 'right' && col.numeric && (
+                                                        <SortIcon column={col.key} sortKey={sortKey} sortDir={sortDir} />
+                                                    )}
+                                                    {col.label}
+                                                    {col.align === 'left' && col.numeric && (
+                                                        <SortIcon column={col.key} sortKey={sortKey} sortDir={sortDir} />
+                                                    )}
+                                                </span>
+                                            </th>
+                                        );
+                                    })}
                                 </tr>
 
                                 {/* Toplam satırı */}
-                                <tr className="bg-primary/10 border-b-2 border-primary/30 text-xs font-extrabold text-primary">
-                                    <td className="px-3 py-2 font-extrabold" colSpan={2}>TOPLAM</td>
+                                <tr className="bg-primary/5 border-b-2 border-primary/30 text-xs font-extrabold text-primary relative z-10">
+                                    <td className="px-3 py-2 font-extrabold bg-base-200 sticky left-0 z-20 min-w-[120px]">TOPLAM</td>
+                                    <td className="px-3 py-2 font-extrabold bg-base-200 sticky left-[120px] z-20 min-w-[200px] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]"></td>
                                     {NUMERIC_KEYS.map((key) => (
-                                        <td key={key} className="px-3 py-2 text-right tabular-nums">
-                                            {envanterTotal[key]?.toLocaleString('tr-TR')}
+                                        <td key={key} className="px-3 py-2 text-right tabular-nums bg-base-100/50 backdrop-blur-md">
+                                            {dynamicTotal[key]?.toLocaleString('tr-TR')}
                                         </td>
                                     ))}
                                 </tr>
@@ -310,13 +331,10 @@ export default function EnvanterSlide() {
                                         return (
                                             <tr
                                                 key={row.om}
-                                                className={`border-b border-base-200 transition-colors duration-150 ${i % 2 === 0
-                                                        ? 'bg-base-100 hover:bg-base-200/50'
-                                                        : 'bg-base-200/25 hover:bg-base-200/60'
-                                                    }`}
+                                                className={`border-b border-base-200 transition-colors duration-150 bg-base-100 hover:bg-base-200`}
                                             >
                                                 {/* Bölge */}
-                                                <td className="px-3 py-2.5 whitespace-nowrap">
+                                                <td className="px-3 py-2.5 whitespace-nowrap sticky left-0 z-10 bg-inherit min-w-[120px]">
                                                     <span
                                                         className="inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-bold"
                                                         style={{ background: bc.bg, color: bc.text }}
@@ -329,7 +347,7 @@ export default function EnvanterSlide() {
                                                     </span>
                                                 </td>
                                                 {/* OM */}
-                                                <td className="px-3 py-2.5 font-semibold text-base-content whitespace-nowrap">
+                                                <td className="px-3 py-2.5 font-semibold text-base-content whitespace-nowrap sticky left-[120px] z-10 bg-inherit min-w-[200px] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]">
                                                     {row.om}
                                                 </td>
                                                 {/* Sayısal sütunlar */}

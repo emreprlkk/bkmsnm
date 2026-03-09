@@ -71,7 +71,7 @@ export default function TableSlide() {
 
     return (
         <div className="flex flex-col h-full w-full">
-            <div className="mb-8 flex justify-between items-end">
+            <div className="sticky -top-8 -mt-8 -mx-8 px-8 pt-8 pb-4 z-50 bg-base-100/95 backdrop-blur-md shadow-sm border-b border-base-200 mb-8 flex justify-between items-end">
                 <div>
                     <h2 className="text-4xl font-extrabold text-base-content mb-2">YÜKLENİCİ BİLGİLERİ</h2>
                     <p className="text-base-content/60 text-lg">Sisteme düşen en son finansal hareketler</p>

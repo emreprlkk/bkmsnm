@@ -165,7 +165,7 @@ export default function PlanliBakimDegisiklikler() {
         >
 
             {/* ── Üst başlık ── */}
-            <div className="flex flex-col md:flex-row justify-between items-start gap-4">
+            <div className={`sticky z-50 bg-base-100/95 backdrop-blur-md shadow-sm pb-4 flex flex-col md:flex-row justify-between items-start gap-4 ${fs ? '-top-8 -mt-8 -mx-8 px-8 pt-8' : '-top-8 md:-top-12 -mt-8 md:-mt-12 -mx-8 md:-mx-12 px-8 md:px-12 pt-8 md:pt-12'}`}>
                 <div>
                     <div className="flex items-center gap-2 mb-1">
                         <BookOpen className="text-primary" size={fs ? 26 : 20} />

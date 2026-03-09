@@ -162,6 +162,7 @@ export default function S1S2Slide() {
             },
             dataLabels: {
                 enabled: true,
+                hideOverflowingLabels: false,
                 style: {
                     fontSize: totalMode ? '12px' : '11px',
                     fontWeight: 700,
@@ -188,12 +189,7 @@ export default function S1S2Slide() {
                 labels: { style: { colors: '#64748b', fontSize: '10px' } }
             },
             legend: {
-                show: !totalMode,
-                position: 'top',
-                horizontalAlign: 'center',
-                labels: { colors: '#94a3b8' },
-                itemMargin: { horizontal: 8, vertical: 4 },
-                markers: { radius: 8, width: 10, height: 10 },
+                show: false
             },
             grid: {
                 borderColor: 'rgba(148,163,184,0.08)',
@@ -251,7 +247,7 @@ export default function S1S2Slide() {
         >
             {/* ═══ HEADER SECTION ═══ */}
             <div
-                className={`mb-5 transition-all duration-500 ease-out ${focusedPanel ? 'opacity-0 h-0 overflow-hidden mb-0 pointer-events-none' : 'opacity-100'}`}
+                className={`sticky -top-8 -mt-8 -mx-8 px-8 pt-8 pb-4 z-50 bg-base-100/95 backdrop-blur-md shadow-sm border-b border-base-200 mb-5 transition-all duration-500 ease-out ${focusedPanel ? 'opacity-0 h-0 overflow-hidden mb-0 pointer-events-none' : 'opacity-100'}`}
             >
                 {/* Title Row */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
@@ -427,6 +423,7 @@ export default function S1S2Slide() {
 // ─── Sub-component: Chart Panel ───────────────────────────────────────────────
 function ChartPanel({ panelKey, label, accentColor, secondColor, icon, data, series, options, totalOptions, isFocused, isHidden, onFocus, isFullscreen }) {
     const [isTotalMode, setIsTotalMode] = useState(false);
+    const [hiddenSeries, setHiddenSeries] = useState([]);
 
     // Toplam mod serisi: her OM için tek değer (hook early return'den önce çağrılmalı)
     const totalSeries = useMemo(() => [
@@ -436,6 +433,41 @@ function ChartPanel({ panelKey, label, accentColor, secondColor, icon, data, ser
     const total = getTotal(data);
     const activeSeries = isTotalMode ? totalSeries : series;
     const activeOptions = isTotalMode ? totalOptions : options;
+
+    const toggleSeries = (seriesName) => {
+        setHiddenSeries(prev =>
+            prev.includes(seriesName)
+                ? prev.filter(n => n !== seriesName)
+                : [...prev, seriesName]
+        );
+    };
+
+    const getFilteredData = () => {
+        if (isTotalMode) return { finalOptions: activeOptions, finalSeries: activeSeries };
+
+        const filteredIndexes = series.map((s, i) => hiddenSeries.includes(s.name) ? -1 : i).filter(i => i !== -1);
+        const finalSeries = filteredIndexes.map(i => series[i]);
+
+        // Match active colors based on filtered indexes
+        const finalColors = filteredIndexes.map(i => activeOptions.colors[i]);
+        const finalGradientColors = filteredIndexes.map(i => activeOptions.fill.gradient.gradientToColors[i]);
+
+        const finalOptions = {
+            ...activeOptions,
+            colors: finalColors,
+            fill: {
+                ...activeOptions.fill,
+                gradient: {
+                    ...activeOptions.fill.gradient,
+                    gradientToColors: finalGradientColors
+                }
+            }
+        };
+
+        return { finalOptions, finalSeries };
+    };
+
+    const { finalOptions, finalSeries } = getFilteredData();
 
     if (isHidden) return null;
 
@@ -531,17 +563,48 @@ function ChartPanel({ panelKey, label, accentColor, secondColor, icon, data, ser
                 </div>
             </div>
 
+            {/* Custom Sticky Legend */}
+            {!isTotalMode && (
+                <div className="flex flex-wrap items-center justify-center gap-4 px-4 pb-2">
+                    {series.map((s, i) => {
+                        const isHiddenItem = hiddenSeries.includes(s.name);
+                        const baseColor = options.colors[i];
+
+                        return (
+                            <div
+                                key={s.name}
+                                onClick={() => toggleSeries(s.name)}
+                                className="flex items-center gap-1.5 cursor-pointer transition-all hover:opacity-80"
+                            >
+                                <span
+                                    className="w-3 h-3 rounded-full shadow-sm"
+                                    style={{
+                                        backgroundColor: isHiddenItem ? '#334155' : baseColor,
+                                        border: isHiddenItem ? '1px solid #475569' : 'none'
+                                    }}
+                                />
+                                <span
+                                    className={`text-[11px] font-bold ${isHiddenItem ? 'text-base-content/30 line-through' : 'text-base-content/70'}`}
+                                >
+                                    {s.name}
+                                </span>
+                            </div>
+                        );
+                    })}
+                </div>
+            )}
+
             {/* Separator */}
             <div className="mx-5 mb-2" style={{ height: '1px', background: `linear-gradient(90deg, ${accentColor}20, transparent)` }} />
 
             {/* Chart Area */}
-            <div className="flex-1 w-full px-2 pb-3 min-h-0 flex">
+            <div className="flex-1 w-full px-2 pb-3 min-h-0 overflow-x-auto overflow-y-hidden" style={{ scrollbarWidth: 'thin' }}>
                 {data.length > 0 ? (
-                    <div className="w-full h-full min-h-[300px] flex-1">
+                    <div className="h-full min-h-[300px]" style={{ minWidth: data.length > 8 ? `${data.length * (isTotalMode ? 45 : 80)}px` : '100%' }}>
                         <Chart
-                            key={`${panelKey}-${isTotalMode}`}
-                            options={activeOptions}
-                            series={activeSeries}
+                            key={`${panelKey}-${isTotalMode}-${hiddenSeries.join('-')}`}
+                            options={finalOptions}
+                            series={finalSeries}
                             type="bar"
                             height="100%"
                         />

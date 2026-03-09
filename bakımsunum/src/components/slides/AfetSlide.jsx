@@ -196,7 +196,7 @@ export default function AfetSlide() {
         >
 
             {/* Header */}
-            <div className="flex items-start justify-between gap-4 flex-wrap">
+            <div className="sticky -top-8 -mt-8 -mx-8 px-8 pt-8 pb-4 z-50 bg-base-100/95 backdrop-blur-md shadow-sm border-b border-base-200 mb-6 flex items-start justify-between gap-4 flex-wrap">
                 <div>
                     <h2 className="text-3xl font-black text-base-content leading-tight">
                         2025 TOROSLAR EDAŞ - AFET KAPSAMINDA YAPILAN HAKEDİŞLER VE DETAYLARI

@@ -122,7 +122,7 @@ export default function LineChartSlide() {
     return (
         <div className="flex flex-col flex-1 w-full">
             {/* Header */}
-            <div className="flex flex-col md:flex-row justify-between md:items-end mb-6 gap-4">
+            <div className="sticky -top-12 -mt-12 -mx-12 px-12 pt-12 pb-4 z-50 bg-[#0f172a]/95 backdrop-blur-md shadow-sm border-b border-white/5 mb-6 flex flex-col md:flex-row justify-between md:items-end gap-4">
                 <div>
                     <p className="text-xs font-semibold text-primary/60 uppercase tracking-widest mb-1">Slayt 01</p>
                     <h2 className="text-2xl md:text-3xl font-extrabold text-base-content tracking-tight">
