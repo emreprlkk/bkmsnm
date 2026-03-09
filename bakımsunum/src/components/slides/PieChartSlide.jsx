@@ -13,6 +13,7 @@ const formatCurrencyM = (val) => {
 
 export default function PieChartSlide() {
     const [isFullscreen, setIsFullscreen] = useState(() => !!document.fullscreenElement);
+    const [showRegions, setShowRegions] = useState(false);
     const [activeBolge, setActiveBolge] = useState(null);
     const [activeDistrict, setActiveDistrict] = useState(null);
     const containerRef = useRef(null);
@@ -314,10 +315,45 @@ export default function PieChartSlide() {
                 {/* Sağ Taraf: Gelişmiş İstatistik Kartları / Bölge ve OM Görünümü */}
                 <div className="w-full xl:w-3/5 flex flex-col h-full overflow-hidden">
 
-                    {!activeBolge ? (
+                    {!showRegions ? (
+                        /* Bölüm 0: ŞİRKET KARTI (TOROSLAR EDAŞ) */
+                        <div className="flex-1 overflow-y-auto pr-2 pb-4 space-y-4 flex flex-col items-center justify-center">
+                            <div
+                                className="w-full max-w-md card bg-base-100 border-2 border-primary/20 shadow-xl hover:shadow-2xl hover:-translate-y-2 hover:border-primary transition-all duration-300 cursor-pointer group"
+                                onClick={() => setShowRegions(true)}
+                            >
+                                <div className="card-body p-8 items-center text-center">
+                                    <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-4 shadow-inner group-hover:scale-110 transition-transform duration-300">
+                                        <Layers size={32} className="text-primary" />
+                                    </div>
+                                    <h2 className="card-title text-3xl font-black text-base-content mb-2 group-hover:text-primary transition-colors">TOROSLAR EDAŞ</h2>
+                                    <p className="text-base-content/60 mb-6 font-medium text-sm">Tüm bölgelere ait seviye-3 proje detaylarını görüntülemek için tıklayın.</p>
+
+                                    <div className="w-full bg-base-200/50 rounded-2xl p-6 mb-4">
+                                        <div className="text-xs text-base-content/50 font-bold uppercase tracking-widest mb-2">GERÇEKLEŞEN TOPLAM BÜTÇE</div>
+                                        <div className="text-4xl font-black text-primary">{formatCurrencyM(grandTotal)}</div>
+                                        <div className="mt-3 text-sm font-semibold text-base-content/70">
+                                            Toplam {bolgeList.reduce((acc, b) => acc + b.totalCount, 0)} Proje
+                                        </div>
+                                    </div>
+                                    <button className="btn btn-primary w-full shadow-lg gap-2 text-primary-content">
+                                        Bölgeleri Görüntüle <TrendingUp size={16} />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ) : !activeBolge ? (
                         /* Bölüm 1: BÖLGELER LİSTESİ */
-                        <div className="flex-1 overflow-y-auto pr-2 pb-4 space-y-4">
-                            <div className="divider text-base-content/40 text-sm font-semibold mt-0">İL BAZLI ÖZET</div>
+                        <div className="flex-1 overflow-y-auto pr-2 pb-4 space-y-4 flex flex-col">
+                            <div className="flex items-center gap-3 mt-0 mb-2">
+                                <button
+                                    className="btn btn-sm btn-ghost bg-base-200/50 hover:bg-base-200"
+                                    onClick={() => setShowRegions(false)}
+                                >
+                                    ← Toroslar EDAŞ'a Dön
+                                </button>
+                                <div className="divider text-base-content/40 text-sm font-semibold flex-1 m-0">İL BAZLI ÖZET</div>
+                            </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {bolgeList.map((b) => (
                                     <div
