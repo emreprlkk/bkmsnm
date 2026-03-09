@@ -101,7 +101,7 @@ const GirisSlide = ({ setActiveSlideId }) => {
                     </h1>
 
                     <p className="text-sm md:text-lg text-base-content/60 max-w-3xl font-medium leading-relaxed">
-                        TEDAŞ planlı bakım kurallarından S1-S2 denetlemelerine, afet yönetiminden yatırımlara ve CBS entegrasyonlarına kadar uygulamanın tüm modüllerine buradan anında ulaşabilirsiniz.
+                        2025 Yılında yapılan Seviye-1,Seviye-2 ve Seviye-3 Planlı Bakım Faaliyetlerinin Detayları , 2026 Keşif Ve Yükleneci Bilgileri Ve Digitalleşme Süreçleri Hakkında İçerikler Paylaşılacaktır.
                     </p>
                 </section>
 

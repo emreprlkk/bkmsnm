@@ -164,7 +164,7 @@ export const presentationSlides = [
     // { id: 1, title: 'SEVİYE-3 PROJE KAPSAMLARI', type: 'chart_line' },
     { id: 9, title: 'USUL VE ESASLAR DEĞİŞİKLİKLERİ', type: 'usul_esas' },
     { id: 8, title: '2025 YÜKLENİCİ GERÇEKLEŞMELERİ', type: '2025_yuklenici_gerceklesme' },
-    { id: 5, title: 'YER TESLİMİ', type: 'yer_teslimi' },
+    { id: 5, title: '2025 YER TESLİMLERİ', type: 'yer_teslimi' },
     { id: 1, title: 'SEVYE-3 İş Kapsamı-TEDAŞ RAPORLAMA', type: 'chart_pie' },
     { id: 4, title: 'S1-S2 ANALİZİ', type: 'chart_s1_s2' },
     { id: 7, title: 'S1-S2 DENETLEME', type: 's1_s2_denetleme' },
