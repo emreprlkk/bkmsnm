@@ -164,85 +164,87 @@ export default function PlanliBakimDegisiklikler() {
                 ${fs ? 'fixed inset-0 z-50 bg-base-100 overflow-y-auto p-8' : 'h-full overflow-y-auto'}`}
         >
 
-            {/* ── Üst başlık ── */}
-            <div className={`sticky z-50 bg-base-100/95 backdrop-blur-md shadow-sm pb-4 flex flex-col md:flex-row justify-between items-start gap-4 ${fs ? '-top-8 -mt-8 -mx-8 px-8 pt-8' : '-top-8 md:-top-12 -mt-8 md:-mt-12 -mx-8 md:-mx-12 px-8 md:px-12 pt-8 md:pt-12'}`}>
-                <div>
-                    <div className="flex items-center gap-2 mb-1">
-                        <BookOpen className="text-primary" size={fs ? 26 : 20} />
-                        <h2
-                            className="font-extrabold text-base-content"
-                            style={{ fontSize: fs ? 26 : 20 }}
-                        >
-                            Planlı Bakım Usul & Esasları
-                        </h2>
-                        <span className={`badge badge-primary font-bold ${fs ? 'badge-md' : 'badge-sm'}`}>
-                            Yeni Düzenleme
-                        </span>
-                    </div>
-                    <p
-                        className="text-base-content/50 leading-relaxed max-w-xl"
-                        style={{ fontSize: fs ? 14 : 12 }}
-                    >
-                        Elektrik dağıtım şirketlerine ilişkin planlı bakım mevzuatında yapılan
-                        <strong className="text-base-content/70"> 6 temel değişiklik</strong> incelenecektir.
-                    </p>
-                </div>
-
-                <div className="flex items-center gap-3 flex-shrink-0">
-                    {/* İstatistik kartçıkları */}
-                    {[
-                        { label: 'Değişiklik', val: 6, color: '#6366f1' },
-                        { label: 'Seviye', val: '1→3', color: '#10b981' },
-                        { label: 'Yeni Tavan', val: '%110', color: '#ec4899' },
-                    ].map(s => (
-                        <div
-                            key={s.label}
-                            className="rounded-xl border border-base-200 bg-base-100 text-center shadow-sm"
-                            style={{ borderTopColor: s.color, borderTopWidth: 3, padding: fs ? '10px 18px' : '6px 14px' }}
-                        >
-                            <div
-                                className="font-extrabold"
-                                style={{ color: s.color, fontSize: fs ? 22 : 16 }}
-                            >{s.val}</div>
-                            <div
-                                className="text-base-content/40 uppercase tracking-widest font-bold"
-                                style={{ fontSize: fs ? 11 : 9 }}
-                            >{s.label}</div>
+            {/* ── Sabit Üst Başlık & Filtreler ── */}
+            <div className={`sticky z-50 bg-base-100/95 backdrop-blur-md shadow-sm pb-4 flex flex-col gap-4 ${fs ? '-top-8 -mt-8 -mx-8 px-8 pt-8' : '-top-8 md:-top-12 -mt-8 md:-mt-12 -mx-8 md:-mx-12 px-8 md:px-12 pt-8 md:pt-12'}`}>
+                <div className="flex flex-col md:flex-row justify-between items-start gap-4">
+                    <div>
+                        <div className="flex items-center gap-2 mb-1">
+                            <BookOpen className="text-primary" size={fs ? 26 : 20} />
+                            <h2
+                                className="font-extrabold text-base-content"
+                                style={{ fontSize: fs ? 26 : 20 }}
+                            >
+                                Planlı Bakım Usul & Esasları
+                            </h2>
+                            <span className={`badge badge-primary font-bold ${fs ? 'badge-md' : 'badge-sm'}`}>
+                                Yeni Düzenleme
+                            </span>
                         </div>
-                    ))}
+                        <p
+                            className="text-base-content/50 leading-relaxed max-w-xl"
+                            style={{ fontSize: fs ? 14 : 12 }}
+                        >
+                            Elektrik dağıtım şirketlerine ilişkin planlı bakım mevzuatında yapılan
+                            <strong className="text-base-content/70"> 6 temel değişiklik</strong> incelenecektir.
+                        </p>
+                    </div>
 
-                    {/* Tam Ekran butonu */}
-                    <button
-                        className={`btn ${fs ? 'btn-sm' : 'btn-xs'} btn-outline bg-base-100 shadow-sm`}
-                        onClick={toggleFullscreen}
-                        title={fs ? 'Küçült' : 'Tam Ekran'}
-                    >
-                        {fs ? <Minimize size={fs ? 16 : 14} /> : <Maximize size={14} />}
-                        <span className="hidden sm:inline ml-1">{fs ? 'Küçült' : 'Tam Ekran'}</span>
-                    </button>
+                    <div className="flex items-center gap-3 flex-shrink-0">
+                        {/* İstatistik kartçıkları */}
+                        {[
+                            { label: 'Değişiklik', val: 6, color: '#6366f1' },
+                            { label: 'Seviye', val: '1→3', color: '#10b981' },
+                            { label: 'Yeni Tavan', val: '%110', color: '#ec4899' },
+                        ].map(s => (
+                            <div
+                                key={s.label}
+                                className="rounded-xl border border-base-200 bg-base-100 text-center shadow-sm"
+                                style={{ borderTopColor: s.color, borderTopWidth: 3, padding: fs ? '10px 18px' : '6px 14px' }}
+                            >
+                                <div
+                                    className="font-extrabold"
+                                    style={{ color: s.color, fontSize: fs ? 22 : 16 }}
+                                >{s.val}</div>
+                                <div
+                                    className="text-base-content/40 uppercase tracking-widest font-bold"
+                                    style={{ fontSize: fs ? 11 : 9 }}
+                                >{s.label}</div>
+                            </div>
+                        ))}
+
+                        {/* Tam Ekran butonu */}
+                        <button
+                            className={`btn ${fs ? 'btn-sm' : 'btn-xs'} btn-outline bg-base-100 shadow-sm`}
+                            onClick={toggleFullscreen}
+                            title={fs ? 'Küçült' : 'Tam Ekran'}
+                        >
+                            {fs ? <Minimize size={fs ? 16 : 14} /> : <Maximize size={14} />}
+                            <span className="hidden sm:inline ml-1">{fs ? 'Küçült' : 'Tam Ekran'}</span>
+                        </button>
+                    </div>
                 </div>
-            </div>
 
-            {/* ── Filtre butonları ── */}
-            <div className="flex flex-wrap gap-2">
-                {KATEGORILER.map(k => (
-                    <button
-                        key={k}
-                        onClick={() => setAktifKat(k)}
-                        className={`btn rounded-full transition-all ${fs ? 'btn-sm' : 'btn-xs'} ${aktifKat === k
-                            ? 'btn-primary shadow-sm font-bold'
-                            : 'btn-ghost border border-base-300 opacity-60 hover:opacity-100'
-                            }`}
+                {/* ── Filtre butonları ── */}
+                <div className="flex flex-wrap gap-2 pt-2">
+                    {KATEGORILER.map(k => (
+                        <button
+                            key={k}
+                            onClick={() => setAktifKat(k)}
+                            className={`btn rounded-full transition-all ${fs ? 'btn-sm' : 'btn-xs'} ${aktifKat === k
+                                ? 'btn-primary shadow-sm font-bold'
+                                : 'btn-ghost border border-base-300 opacity-60 hover:opacity-100'
+                                }`}
+                        >
+                            {k}
+                        </button>
+                    ))}
+                    <span
+                        className="ml-auto text-base-content/30 self-center"
+                        style={{ fontSize: fs ? 13 : 11 }}
                     >
-                        {k}
-                    </button>
-                ))}
-                <span
-                    className="ml-auto text-base-content/30 self-center"
-                    style={{ fontSize: fs ? 13 : 11 }}
-                >
-                    {goruntu.length} / {CARDS.length} madde
-                </span>
+                        {goruntu.length} / {CARDS.length} madde
+                    </span>
+                </div>
             </div>
 
             {/* ── Kart Grid ── */}
