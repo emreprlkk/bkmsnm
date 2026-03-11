@@ -2,6 +2,7 @@ import React, { useState, useMemo, useRef, useEffect } from 'react';
 import Chart from 'react-apexcharts';
 import { LayoutGrid, Table2, Filter, TrendingUp, FileText, Wallet, AlertCircle, Maximize, Minimize } from 'lucide-react';
 import { contractData } from '../../data/mockData';
+import ExportExcelButton from '../ExportExcelButton';
 
 // ─── helpers ────────────────────────────────────────────────────────────────
 const fmtCurrency = (val) =>
@@ -14,10 +15,18 @@ const fmtCurrency = (val) =>
 
 const fmtShort = (val) => {
     const n = Number(val);
-    if (isNaN(n)) return String(val);      // string gelirse bozmadan döndür
-    if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)} M₺`;
-    if (n >= 1_000) return `${(n / 1_000).toFixed(0)} K₺`;
-    return `${n.toFixed(0)} ₺`;
+    if (isNaN(n)) return String(val);
+
+    if (n >= 1_000_000_000) {
+        return `${(n / 1_000_000_000).toLocaleString('tr-TR', { minimumFractionDigits: 1, maximumFractionDigits: 2 })} Mr ₺`;
+    }
+    if (n >= 1_000_000) {
+        return `${(n / 1_000_000).toLocaleString('tr-TR', { minimumFractionDigits: 1, maximumFractionDigits: 2 })} Mn ₺`;
+    }
+    if (n >= 1_000) {
+        return `${(n / 1_000).toLocaleString('tr-TR', { maximumFractionDigits: 1 })} Bin ₺`;
+    }
+    return `${n.toLocaleString('tr-TR', { maximumFractionDigits: 0 })} ₺`;
 };
 
 const dolulukColor = (d) => {
@@ -69,6 +78,7 @@ export default function YukleniciGerceklesme2025() {
         return () => document.removeEventListener('fullscreenchange', onChange);
     }, []);
 
+    // FIX #1: toggleFs → toggleFullscreen olarak düzeltildi
     const toggleFullscreen = () => {
         if (!document.fullscreenElement) {
             document.getElementById('presentation-fullscreen-wrapper')?.requestFullscreen();
@@ -118,8 +128,7 @@ export default function YukleniciGerceklesme2025() {
         [filtered]);
 
     // ─── Chart serisi: her BM ayrı seri, eşleşmeyenler null ─────────────────
-    // Bu yapı sayesinde ApexCharts built-in legend BM bazında filtre/highlight yapar
-    const BM_KEYS = Object.keys(BM_COLORS); // ['ADANA', 'GAZİANTEP', 'HATAY', 'MERSİN', 'TOROSLAR']
+    const BM_KEYS = Object.keys(BM_COLORS);
 
     const metricLabel = {
         sozlesmeBedeli: 'Sözleşme Bedeli',
@@ -128,7 +137,6 @@ export default function YukleniciGerceklesme2025() {
         doluluk: 'Doluluk (%)',
     };
 
-    // Sol taraftaki sözleşme adı etiketleri için BM renk dizisi
     const yAxisColors = useMemo(() =>
         sorted.map(d => BM_COLORS[d.bm] || '#94a3b8'),
         [sorted]
@@ -148,11 +156,10 @@ export default function YukleniciGerceklesme2025() {
                 horizontal: true,
                 barHeight: isFullscreen ? '72%' : '65%',
                 borderRadius: 6,
-                distributed: false,  // çok serili yapıda false olmalı
+                distributed: false,
                 dataLabels: { position: 'right' },
             },
         },
-        // Her BM serisi kendi rengiyle örtüŜüyor
         colors: BM_KEYS.map(bm => BM_COLORS[bm]),
         fill: {
             type: 'gradient',
@@ -175,9 +182,6 @@ export default function YukleniciGerceklesme2025() {
             style: { fontSize: isFullscreen ? '14px' : '12px', fontWeight: 700, colors: ['#1a1b1dff'] },
             offsetX: 8,
         },
-        // ApexCharts horizontal bar eksen davranışı:
-        // xaxis.labels → ALT değer ekseni (sayı)
-        // yaxis.labels → SOL kategori ekseni (sözleşme adı string'i)
         xaxis: {
             categories: sorted.map(d =>
                 d.sozlesmeAdi.length > 42 ? d.sozlesmeAdi.slice(0, 42) + '…' : d.sozlesmeAdi
@@ -196,7 +200,6 @@ export default function YukleniciGerceklesme2025() {
         yaxis: {
             labels: {
                 style: {
-                    // Her sözleşme adı kendi BM rengiyle görünür
                     colors: yAxisColors,
                     fontSize: isFullscreen ? '12px' : '10px',
                     fontWeight: 700,
@@ -219,7 +222,6 @@ export default function YukleniciGerceklesme2025() {
                 },
             },
         },
-        // ★ ApexCharts built-in legend → BM bazında click=toggle, hover=highlight
         legend: {
             show: true,
             position: 'top',
@@ -239,7 +241,6 @@ export default function YukleniciGerceklesme2025() {
         },
     }), [sorted, chartMetric, isFullscreen, yAxisColors]);
 
-    // Her BM ayrı seri: eşleşmeyen pozisyonlar null
     const chartSeries = useMemo(() =>
         BM_KEYS.map(bm => ({
             name: bm,
@@ -272,7 +273,7 @@ export default function YukleniciGerceklesme2025() {
         </th>
     );
 
-    const fs = isFullscreen; // shorthand
+    const fs = isFullscreen;
 
     return (
         <div
@@ -282,7 +283,7 @@ export default function YukleniciGerceklesme2025() {
                 : 'h-full'
                 }`}
         >
-            {/* ── Başlık ── */}
+            {/* ── Başlık + Filtreler ── */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
                 <div>
                     <h2
@@ -304,18 +305,42 @@ export default function YukleniciGerceklesme2025() {
                         <span className="text-xs font-bold uppercase tracking-wider">Filtre</span>
                     </div>
 
-                    <select
-                        className="select select-bordered bg-base-100 font-semibold"
-                        style={{ fontSize: fs ? 14 : 13, height: fs ? 40 : 32, minWidth: fs ? 160 : 130 }}
-                        value={bmFilter}
-                        onChange={(e) => { setBmFilter(e.target.value); setYukFilter('TÜMÜ'); }}
-                    >
-                        {bmList.map(b => <option key={b} value={b}>{b === 'TÜMÜ' ? 'Tüm BM' : b}</option>)}
-                    </select>
+                    {/* Bölge / BM Filtresi (Pill Buttons) */}
+                    <div className="flex gap-1.5 flex-wrap">
+                        <button
+                            onClick={() => { setBmFilter('TÜMÜ'); setYukFilter('TÜMÜ'); }}
+                            className={`btn btn-xs rounded-full ${bmFilter === 'TÜMÜ' ? 'btn-primary' : 'btn-ghost border border-base-300'}`}
+                        >
+                            Tümü
+                        </button>
+                        {bmList.map((b) => {
+                            if (b === 'TÜMÜ') return null;
+                            const c = BM_COLORS[b] || '#6366f1';
+                            const isSelected = bmFilter === b;
+                            return (
+                                <button
+                                    key={b}
+                                    onClick={() => { setBmFilter(isSelected ? 'TÜMÜ' : b); setYukFilter('TÜMÜ'); }}
+                                    style={isSelected
+                                        ? { background: `${c}22`, color: c, borderColor: c }
+                                        : {}}
+                                    className={`btn btn-xs rounded-full border ${isSelected ? '' : 'btn-ghost border-base-300'}`}
+                                >
+                                    <span
+                                        className="inline-block w-2 h-2 rounded-full mr-1"
+                                        style={{ background: c }}
+                                    />
+                                    {b}
+                                </button>
+                            );
+                        })}
+                    </div>
+
+                    <div className="w-px h-6 bg-base-content/10 mx-1" />
 
                     <select
-                        className="select select-bordered bg-base-100 font-semibold"
-                        style={{ fontSize: fs ? 14 : 13, height: fs ? 40 : 32, minWidth: fs ? 180 : 150 }}
+                        className={`select select-bordered bg-base-100 font-semibold ${fs ? 'select-sm' : 'select-xs'}`}
+                        style={{ minWidth: fs ? 180 : 150 }}
                         value={yukFilter}
                         onChange={(e) => setYukFilter(e.target.value)}
                     >
@@ -342,27 +367,31 @@ export default function YukleniciGerceklesme2025() {
 
                     <div className="w-px h-6 bg-base-content/10 mx-1" />
 
-                    {/* Tam Ekran Butonu */}
-                    <button
-                        className={`btn ${fs ? 'btn-sm' : 'btn-xs'} btn-outline shadow-sm bg-base-100`}
-                        onClick={toggleFullscreen}
-                        title={fs ? 'Küçült' : 'Tam Ekran'}
-                    >
-                        {fs ? <Minimize size={fs ? 16 : 14} /> : <Maximize size={14} />}
-                        <span className="hidden sm:inline ml-1">{fs ? 'Küçült' : 'Tam Ekran'}</span>
-                    </button>
+                    <div className="flex flex-wrap gap-2 pt-2">
+                        <ExportExcelButton data={filtered} fileName="Yuklenici_Gerceklesmeleri_2025" />
+                        {/* FIX #1: toggleFs → toggleFullscreen */}
+                        <button
+                            className={`btn ${fs ? 'btn-sm' : 'btn-sm'} btn-outline bg-base-100 shadow-sm transition-all`}
+                            onClick={toggleFullscreen}
+                            title={fs ? 'Küçült' : 'Tam Ekran'}
+                        >
+                            {fs ? <Minimize size={fs ? 16 : 14} /> : <Maximize size={14} />}
+                            <span className="hidden sm:inline ml-1">{fs ? 'Küçült' : 'Tam Ekran'}</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            {/* ── Özet Stat Kartları ── */}
+            {/* FIX #2: Stat kartları başlık div'inin dışına alındı */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {/* FIX #3: "bBasılan" → "Basılan" yazım hatası düzeltildi */}
                 <StatCard icon={FileText} label="Sözleşme Bedeli" value={fmtShort(totals.bedel)} sub={`${filtered.length} sözleşme`} accent="#6366f1" fs={fs} />
-                <StatCard icon={TrendingUp} label="bBasılan Toplam Hak Ediş" value={fmtShort(totals.hakEdis)} sub={`%${((totals.hakEdis / totals.bedel) * 100 || 0).toFixed(1)} doluluk`} accent="#10b981" fs={fs} />
+                <StatCard icon={TrendingUp} label="Basılan Toplam Hak Ediş" value={fmtShort(totals.hakEdis)} sub={`%${((totals.hakEdis / totals.bedel) * 100 || 0).toFixed(1)} doluluk`} accent="#10b981" fs={fs} />
                 <StatCard icon={Wallet} label="Kalan Hak Ediş" value={fmtShort(totals.kalan)} sub="Kalan Toplam Hakediş Tutarı" accent="#f59e0b" fs={fs} />
                 <StatCard icon={AlertCircle} label="Ort. Sözleşme Doluluk Yüzdesi" value={`%${avgDoluluk.toFixed(1)}`} sub={avgDoluluk >= 90 ? 'Doluluk' : avgDoluluk >= 75 ? 'Doluluk oranı' : 'Doluluk oranı'} accent={dolulukColor(avgDoluluk)} fs={fs} />
             </div>
 
-            {/* ── İçerik ── */}
+            {/* FIX #2: İçerik bloğu da başlık div'inin dışına alındı */}
             <div
                 className="overflow-hidden rounded-2xl border border-base-200 bg-base-100 shadow-md flex flex-col"
                 style={{ flex: 1, minHeight: fs ? 'calc(100vh - 340px)' : 0 }}
@@ -502,9 +531,8 @@ export default function YukleniciGerceklesme2025() {
                                     {label}
                                 </button>
                             ))}
-                            {/* BM lejantı artık ApexCharts built-in legend'dan geliyor — burada sadece bilgi notu */}
                             <span className="ml-auto text-base-content/30 text-xs self-center italic hidden sm:block">
-                                Aşağıdaki kısımdan il bazlı filtrelemelri grafik üzeirnden otomatik yapabilirisinizz
+                                Aşağıdaki kısımdan il bazlı filtremeleri grafik üzerinden otomatik yapabilirsiniz
                             </span>
                         </div>
 

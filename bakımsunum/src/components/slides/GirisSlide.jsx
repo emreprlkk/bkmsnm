@@ -94,15 +94,15 @@ const GirisSlide = ({ setActiveSlideId }) => {
                 {/* 1. HERO SECTION */}
                 <section className={`flex flex-col items-center text-center space-y-4 transition-all duration-1000 ease-out ${isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                     <h1 className="text-4xl md:text-5xl lg:text-7xl font-black text-base-content tracking-tighter leading-[1.1] max-w-5xl">
-                        TOROSLAR EDAŞ Sistem İşletme Müdürlüğü <br />
-                        <span className="bg-gradient-to-r from-primary via-purple-500 to-secondary bg-clip-text text-transparent pb-2 block mt-1">
-                            Bakım Yöneticiliği Operasyon Merkezi Sunumu
-                        </span>
-                    </h1>
 
-                    <p className="text-sm md:text-lg text-base-content/60 max-w-3xl font-medium leading-relaxed">
-                        2025 Yılında yapılan Seviye-1,Seviye-2 ve Seviye-3 Planlı Bakım Faaliyetlerinin Detayları , 2026 Keşif Ve Yükleneci Bilgileri Ve Digitalleşme Süreçleri Hakkında İçerikler Paylaşılacaktır.
-                    </p>
+                        <span className="block">TOROSLAR EDAŞ</span>
+                        <span className="block">SİSTEM İŞLETME MÜDÜRLÜĞÜ</span>
+
+                        <span className="bg-gradient-to-r from-primary via-purple-500 to-secondary bg-clip-text text-transparent pb-2 block mt-1">
+                            BAKIM YÖNETİCİLİĞİ
+                        </span>
+
+                    </h1>
                 </section>
 
                 {/* 2. DYNAMIC AGENDA GRID */}

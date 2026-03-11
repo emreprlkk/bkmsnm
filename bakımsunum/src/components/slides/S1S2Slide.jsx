@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 import Chart from 'react-apexcharts';
 import { Maximize, Minimize, BarChart2, ChevronDown, SlidersHorizontal, Layers, TrendingUp, Sigma } from 'lucide-react';
 import { s1Data, s2Data } from '../../data/mockData';
+import ExportExcelButton from '../ExportExcelButton';
 
 // ─── Küçük yardımcı: Her OM datasından toplam hesapla
 const getTotal = (data) =>
@@ -271,6 +272,13 @@ export default function S1S2Slide() {
 
                     {/* Action Buttons */}
                     <div className="flex items-center gap-2 flex-shrink-0">
+                        <ExportExcelButton
+                            data={[
+                                ...filteredS1Data.map(d => ({ 'Seviye Analizi': 'S1', ...d })),
+                                ...filteredS2Data.map(d => ({ 'Seviye Analizi': 'S2', ...d }))
+                            ]}
+                            fileName="S1_S2_Is_Analizi"
+                        />
                         <button
                             onClick={toggleMainFullscreen}
                             className="btn btn-sm btn-ghost gap-1.5 text-base-content/60 hover:text-base-content hover:bg-base-200"

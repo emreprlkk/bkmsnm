@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Flame, AlertTriangle, Maximize, Minimize } from 'lucide-react';
 import { afetSicaklikOrmanData, afetDepremData } from '../../data/mockData';
+import ExportExcelButton from '../ExportExcelButton';
 
 const fmt = (val) =>
     val == null ? <span className="text-gray-300 select-none">—</span>
@@ -233,6 +234,13 @@ export default function AfetSlide() {
                         </span>
                     </div>
 
+                    <ExportExcelButton
+                        data={[
+                            ...afetSicaklikOrmanData.map(v => ({ 'Afet Tipi': 'Sıcaklık ve Orman Yangını', ...v })),
+                            ...afetDepremData.map(v => ({ 'Afet Tipi': 'Deprem', ...v }))
+                        ]}
+                        fileName="Afet_Hakedisleri_2025"
+                    />
                     {/* Fullscreen Toggle */}
                     <button
                         onClick={toggleFullscreen}

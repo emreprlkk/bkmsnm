@@ -4,6 +4,7 @@ import {
     Sparkles, Shield, Cpu, Layers, TrendingUp, Clock,
     DollarSign, Maximize, Minimize
 } from 'lucide-react';
+import ExportExcelButton from '../ExportExcelButton';
 
 // ─── Veri ───────────────────────────────────────────────────────────────────
 const CARDS = [
@@ -211,6 +212,19 @@ export default function PlanliBakimDegisiklikler() {
                                 >{s.label}</div>
                             </div>
                         ))}
+
+                        <ExportExcelButton
+                            data={CARDS.map(c => ({
+                                Madde: c.madde,
+                                Baslik: c.baslik,
+                                AltBaslik: c.altBaslik,
+                                Kategori: c.kategori,
+                                Ozet: c.ozet,
+                                AnaFark: c.anaFark,
+                                Detay: c.detay
+                            }))}
+                            fileName="Usul_Esas_Degisiklikleri"
+                        />
 
                         {/* Tam Ekran butonu */}
                         <button

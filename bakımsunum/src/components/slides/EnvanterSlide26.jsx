@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { ClipboardList, Maximize, Minimize, ArrowUpDown, ArrowUp, ArrowDown, Search, X } from 'lucide-react';
 import { envanterData, envanterTotal } from '../../data/mockData';
+import ExportExcelButton from '../ExportExcelButton';
 
 // ── Bölge renk haritası ───────────────────────────────────────────────────────
 const BOLGE_COLORS = {
@@ -198,6 +199,7 @@ export default function EnvanterSlide() {
                                 </span>
                             </div>
                         ))}
+                        <ExportExcelButton data={sorted} fileName="Envanter_Sonuclari_2026" />
                         <button
                             onClick={toggleFullscreen}
                             title={isFullscreen ? 'Küçült' : 'Tam Ekran'}

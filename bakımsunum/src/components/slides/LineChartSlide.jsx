@@ -5,6 +5,7 @@ import {
 } from '@mui/material';
 import { BarChart3, TableProperties, Maximize, Minimize } from 'lucide-react';
 import { scopeData, scopeCategories } from '../../data/mockData';
+import ExportExcelButton from '../ExportExcelButton';
 
 const formatCurrency = (val) => {
     if (!val) return '-';
@@ -152,6 +153,14 @@ export default function LineChartSlide() {
                             <TableProperties size={14} /> Tablo
                         </button>
                     </div>
+
+                    <div className="flex bg-base-300/30 rounded-xl border border-white/5 items-center justify-center -ml-1">
+                        <ExportExcelButton
+                            data={scopeData}
+                            fileName="Seviye_3_Proje_Kapsamlari"
+                        />
+                    </div>
+
                     <button
                         onClick={toggleFullscreen}
                         className="flex items-center justify-center w-8 h-8 rounded-lg bg-base-300/30 border border-white/5 text-base-content/40 hover:text-primary hover:border-primary/30 transition-all duration-300"

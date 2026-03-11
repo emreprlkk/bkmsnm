@@ -4,15 +4,14 @@
 
 
 export const scopeCategories = [
-    'AG ENH Bakımı',
-    'YG ENH Bakımı',
-    'İM-DM-TRP-KÖK',
-    'Güç Yükseltimi',
-    'DÜT Bakımı',
+    'AG Havai Hat Bakımı',
+    'YG Enerji Nakil Hattı Bakımı',
+    'İM-DM-TRP-KÖK Bakımı',
     'İlave TR İşi',
+    'DÜT Bakımı',
+    'Güç Yükseltimi',
     'Aydınlatma Bakımı',
     'SDK Bakımı',
-    'Demontaj İşi'
 ];
 
 // data = adet, cost = maliyet (₺) — sütun sırası scopeCategories ile aynı:
@@ -21,120 +20,31 @@ export const scopeCategories = [
 
 
 
-//IndexKategori0AG ENH Bakımı1YG ENH Bakımı2İM-DM-TRP-KÖK3Güç Yükseltimi4DÜT Bakımı5İlave TR İşi6Aydınlatma Bakımı7SDK Bakımı8Demontaj İşi
+// Sütun sırası: [AG Havai Hat, YG ENH, İM-DM-TRP-KÖK, İlave TR, DÜT, Güç Yükseltimi, Aydınlatma, SDK]
 export const scopeData = [
-    {
-        name: 'Adana Kuzey', bolge: 'ADANA',
-        data: [9, 14, 2, 0, 0, 0, 0, 0, 0],
-        cost: [45994313.76, 123102157.42, 2663980.54, 0, 0, 0, 0, 0, 0]
-    },
-    {
-        name: 'Adana Metropol', bolge: 'ADANA',
-        data: [18, 8, 32, 0, 0, 7, 0, 0, 1],
-        cost: [86721373.24, 67402430.39, 19710844.90, 0, 0, 13122001.70, 0, 0, 157252.47]
-    },
-    {
-        name: 'Ceyhan', bolge: 'ADANA',
-        data: [3, 8, 0, 0, 0, 0, 0, 0, 0],
-        cost: [7791484.89, 28710061.41, 0, 0, 0, 0, 0, 0, 0]
-    },
-    {
-        name: 'Düziçi', bolge: 'ADANA',
-        data: [6, 4, 2, 0, 0, 0, 0, 0, 0],
-        cost: [11604329.63, 22191744.57, 202579.91, 0, 0, 0, 0, 0, 0]
-    },
-    {
-        name: 'Kadirli', bolge: 'ADANA',
-        data: [3, 9, 11, 0, 0, 0, 0, 0, 1],
-        cost: [20138569.53, 36605884.69, 2201110.83, 0, 0, 0, 0, 0, 203779.61]
-    },
-    {
-        name: 'Osmaniye', bolge: 'ADANA',
-        data: [16, 8, 13, 0, 0, 0, 0, 0, 0],
-        cost: [62659139.45, 21697348.17, 3355687.54, 0, 0, 0, 0, 0, 0]
-    },
-    {
-        name: 'Anamur', bolge: 'MERSİN',
-        data: [11, 9, 8, 0, 2, 0, 0, 0, 0],
-        cost: [45975641.90, 82452104.21, 3160028.29, 0, 772463.18, 0, 0, 0, 0]
-    },
-    {
-        name: 'Erdemli', bolge: 'MERSİN',
-        data: [16, 8, 2, 0, 1, 0, 0, 0, 0],
-        cost: [37384012.83, 30859602.77, 699255.40, 0, 621868.34, 0, 0, 0, 0]
-    },
-    {
-        name: 'Mersin Metropol', bolge: 'MERSİN',
-        data: [14, 16, 10, 0, 22, 0, 4, 1, 0],
-        cost: [63795370.36, 101800872.94, 4213271.77, 0, 12310370.70, 0, 250020.10, 349959.97, 0]
-    },
-    {
-        name: 'Mut', bolge: 'MERSİN',
-        data: [20, 7, 2, 0, 1, 1, 0, 0, 0],
-        cost: [43360956.65, 34549635.92, 425295.50, 0, 132871.51, 3021114.86, 0, 0, 0]
-    },
-    {
-        name: 'Silifke', bolge: 'MERSİN',
-        data: [19, 2, 10, 0, 0, 1, 0, 0, 0],
-        cost: [122750591.06, 27089279.00, 3631068.15, 0, 0, 5489359.94, 0, 0, 0]
-    },
-    {
-        name: 'Tarsus', bolge: 'MERSİN',
-        data: [30, 6, 3, 3, 5, 0, 0, 0, 0],
-        cost: [82359257.38, 37825746.96, 4099309.84, 2468601.60, 8715280.72, 0, 0, 0, 0]
-    },
-    {
-        name: 'Dörtyol', bolge: 'HATAY',
-        data: [17, 5, 13, 0, 0, 0, 0, 0, 0],
-        cost: [41512908.00, 24549352.43, 6400312.56, 0, 0, 0, 0, 0, 0]
-    },
-    {
-        name: 'Hatay Kırsal', bolge: 'HATAY',
-        data: [18, 9, 0, 1, 0, 3, 0, 0, 0],
-        cost: [111741870.47, 47955726.32, 0, 6234788.50, 0, 13770237.93, 0, 0, 0]
-    },
-    {
-        name: 'Hatay Metropol', bolge: 'HATAY',
-        data: [78, 21, 11, 33, 1, 10, 0, 0, 0],
-        cost: [305309570.45, 55683795.51, 9949278.12, 23453187.06, 398688.32, 20099603.61, 0, 0, 0]
-    },
-    {
-        name: 'İskenderun', bolge: 'HATAY',
-        data: [19, 2, 6, 5, 0, 1, 0, 0, 0],
-        cost: [91836320.38, 1615610.12, 2432788.49, 11583883.49, 0, 5050059.66, 0, 0, 0]
-    },
-    {
-        name: 'Kırıkhan', bolge: 'HATAY',
-        data: [11, 1, 0, 2, 0, 2, 0, 0, 0],
-        cost: [40320376.89, 888664.89, 0, 1785194.71, 0, 12550486.53, 0, 0, 0]
-    },
-    {
-        name: 'Reyhanlı', bolge: 'HATAY',
-        data: [15, 7, 1, 2, 1, 0, 0, 0, 0],
-        cost: [75102476.08, 25223357.74, 159634.87, 1199795.49, 108700.30, 0, 0, 0, 0]
-    },
-    {
-        name: 'Gaziantep Metropol', bolge: 'GAZİANTEP',
-        data: [10, 7, 27, 0, 0, 1, 3, 0, 2],
-        cost: [14621006.87, 37420797.42, 12912968.27, 0, 0, 1972555.96, 9241944.02, 0, 258423.92]
-    },
-    {
-        name: 'İslahiye', bolge: 'GAZİANTEP',
-        data: [8, 4, 2, 0, 0, 0, 0, 0, 0],
-        cost: [12849923.19, 5388584.56, 595979.20, 0, 0, 0, 0, 0, 0]
-    },
-    {
-        name: 'Kilis', bolge: 'GAZİANTEP',
-        data: [18, 5, 5, 0, 0, 0, 0, 0, 0],
-        cost: [28364741.39, 9847882.59, 4044094.34, 0, 0, 0, 0, 0, 0]
-    },
-    {
-        name: 'Nizip', bolge: 'GAZİANTEP',
-        data: [13, 3, 0, 0, 1, 0, 0, 0, 0],
-        cost: [25369766.85, 4496857.53, 0, 0, 176257.79, 0, 0, 0, 0]
-    },
+    { name: 'Adana Kuzey', bolge: 'ADANA', data: [9, 14, 2, 0, 0, 0, 0, 0], cost: [45994313.76, 132331030.56, 2663980.54, 0, 0, 0, 0, 0] },
+    { name: 'Adana Metropol', bolge: 'ADANA', data: [19, 10, 32, 7, 0, 0, 0, 0], cost: [86878625.70, 67402430.39, 19710844.90, 15363512.93, 0, 0, 0, 0] },
+    { name: 'Anamur', bolge: 'MERSİN', data: [11, 9, 8, 0, 2, 0, 0, 0], cost: [45975641.90, 83467447.04, 3160028.29, 0, 772463.18, 0, 0, 0] },
+    { name: 'Ceyhan', bolge: 'ADANA', data: [3, 9, 0, 0, 0, 0, 0, 0], cost: [7791484.89, 28710061.41, 0, 0, 0, 0, 0, 0] },
+    { name: 'Dörtyol', bolge: 'HATAY', data: [18, 5, 13, 0, 0, 0, 0, 0], cost: [53789491.60, 24549352.43, 6927675.00, 0, 0, 0, 0, 0] },
+    { name: 'Düziçi', bolge: 'ADANA', data: [6, 4, 2, 0, 0, 0, 0, 0], cost: [11604329.63, 31539216.22, 202579.91, 0, 0, 0, 0, 0] },
+    { name: 'Erdemli', bolge: 'MERSİN', data: [16, 8, 2, 0, 1, 0, 0, 0], cost: [38975520.08, 40332484.81, 699255.40, 0, 621868.34, 0, 0, 0] },
+    { name: 'Gaziantep Metropol', bolge: 'GAZİANTEP', data: [12, 8, 27, 1, 0, 0, 3, 0], cost: [17306743.79, 47133078.05, 13440330.71, 1972555.96, 0, 0, 9241944.02, 0] },
+    { name: 'Hatay Kırsal', bolge: 'HATAY', data: [18, 9, 0, 3, 0, 1, 0, 0], cost: [111741870.47, 47955726.32, 0, 13770237.93, 0, 6234788.50, 0, 0] },
+    { name: 'Hatay Metropol', bolge: 'HATAY', data: [78, 23, 11, 10, 1, 33, 0, 0], cost: [308075615.66, 56614250.51, 9949278.12, 20099603.61, 398688.32, 23453187.06, 0, 0] },
+    { name: 'İskenderun', bolge: 'HATAY', data: [19, 2, 6, 1, 0, 6, 0, 0], cost: [91836320.38, 3352293.35, 2432788.49, 5050059.66, 0, 12775468.12, 0, 0] },
+    { name: 'İslahiye', bolge: 'GAZİANTEP', data: [11, 6, 2, 0, 0, 0, 0, 0], cost: [14463460.15, 9176539.85, 595979.20, 0, 0, 0, 0, 0] },
+    { name: 'Kadirli', bolge: 'ADANA', data: [3, 12, 11, 0, 0, 0, 0, 0], cost: [20138569.53, 41905027.34, 2201110.83, 0, 0, 0, 0, 0] },
+    { name: 'Kırıkhan', bolge: 'HATAY', data: [11, 1, 0, 2, 0, 2, 0, 0], cost: [46243175.91, 888664.89, 0, 12550486.53, 0, 8350427.75, 0, 0] },
+    { name: 'Kilis', bolge: 'GAZİANTEP', data: [18, 5, 5, 0, 0, 0, 0, 0], cost: [28364741.39, 9847882.59, 4044094.34, 0, 0, 0, 0, 0] },
+    { name: 'Mersin Metropol', bolge: 'MERSİN', data: [14, 16, 10, 0, 22, 0, 4, 1], cost: [64745468.45, 116295123.92, 4213271.77, 0, 12310370.70, 0, 250020.10, 349959.97] },
+    { name: 'Mut', bolge: 'MERSİN', data: [20, 7, 2, 1, 1, 0, 0, 0], cost: [43360956.65, 48613619.93, 425295.50, 3021114.86, 132871.51, 0, 0, 0] },
+    { name: 'Nizip', bolge: 'GAZİANTEP', data: [14, 5, 0, 0, 1, 0, 0, 0], cost: [26103666.04, 7276254.10, 0, 0, 176257.79, 0, 0, 0] },
+    { name: 'Osmaniye', bolge: 'ADANA', data: [16, 8, 13, 0, 0, 0, 0, 0], cost: [62659139.45, 23537878.43, 3355687.54, 0, 0, 0, 0, 0] },
+    { name: 'Reyhanlı', bolge: 'HATAY', data: [15, 7, 1, 0, 1, 2, 0, 0], cost: [75102476.08, 28774344.41, 159634.87, 0, 108700.30, 1199795.49, 0, 0] },
+    { name: 'Silifke', bolge: 'MERSİN', data: [19, 2, 10, 1, 0, 0, 0, 0], cost: [124925691.80, 27089279.00, 3631068.15, 5489359.94, 0, 0, 0, 0] },
+    { name: 'Tarsus', bolge: 'MERSİN', data: [30, 6, 3, 0, 5, 3, 0, 0], cost: [82359257.38, 37825746.96, 4099309.84, 0, 8715280.72, 2468601.60, 0, 0] },
 ];
-
 /*export const revenueData = {
     categories: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran'],
     revenue: [12000, 15000, 14000, 18000, 22000, 25000],
@@ -207,28 +117,28 @@ export const presentationSlides = [
 ];
 
 export const yerTeslimiData = [
-    { "BÖLGE MÜDÜRLÜĞÜ": "ADANA", "OM": "ADANA KUZEY", "Yüklenici": "Kayateknik", "Yer Teslim Sayısı": 27, "Gerçekleşen Proje Sayısı": 25, "Gerçekleşme Tutarı": 171760451.71 },
-    { "BÖLGE MÜDÜRLÜĞÜ": "ADANA", "OM": "ADANA METROPOL", "Yüklenici": "Ayduran", "Yer Teslim Sayısı": 69, "Gerçekleşen Proje Sayısı": 66, "Gerçekleşme Tutarı": 187113902.69 },
-    { "BÖLGE MÜDÜRLÜĞÜ": "MERSİN", "OM": "ANAMUR", "Yüklenici": "Armin", "Yer Teslim Sayısı": 38, "Gerçekleşen Proje Sayısı": 30, "Gerçekleşme Tutarı": 132360237.57 },
-    { "BÖLGE MÜDÜRLÜĞÜ": "ADANA", "OM": "CEYHAN", "Yüklenici": "Erce", "Yer Teslim Sayısı": 36, "Gerçekleşen Proje Sayısı": 11, "Gerçekleşme Tutarı": 36501546.30 },
-    { "BÖLGE MÜDÜRLÜĞÜ": "HATAY", "OM": "DÖRTYOL", "Yüklenici": "Demircan", "Yer Teslim Sayısı": 57, "Gerçekleşen Proje Sayısı": 35, "Gerçekleşme Tutarı": 72462572.99 },
-    { "BÖLGE MÜDÜRLÜĞÜ": "ADANA", "OM": "DÜZİÇİ", "Yüklenici": "Demircan", "Yer Teslim Sayısı": 18, "Gerçekleşen Proje Sayısı": 12, "Gerçekleşme Tutarı": 33998654.11 },
-    { "BÖLGE MÜDÜRLÜĞÜ": "MERSİN", "OM": "ERDEMLİ", "Yüklenici": "Gümüşcü", "Yer Teslim Sayısı": 29, "Gerçekleşen Proje Sayısı": 27, "Gerçekleşme Tutarı": 69564739.34 },
-    { "BÖLGE MÜDÜRLÜĞÜ": "GAZİANTEP", "OM": "GAZİANTEP METROPOL", "Yüklenici": "Armin", "Yer Teslim Sayısı": 52, "Gerçekleşen Proje Sayısı": 50, "Gerçekleşme Tutarı": 76427696.48 },
-    { "BÖLGE MÜDÜRLÜĞÜ": "HATAY", "OM": "HATAY KIRSAL", "Yüklenici": "Demircan", "Yer Teslim Sayısı": 57, "Gerçekleşen Proje Sayısı": 31, "Gerçekleşme Tutarı": 179702623.22 },
-    { "BÖLGE MÜDÜRLÜĞÜ": "HATAY", "OM": "HATAY METROPOL", "Yüklenici": "Demircan", "Yer Teslim Sayısı": 161, "Gerçekleşen Proje Sayısı": 154, "Gerçekleşme Tutarı": 414894123.07 },
-    { "BÖLGE MÜDÜRLÜĞÜ": "HATAY", "OM": "İSKENDERUN", "Yüklenici": "Armin", "Yer Teslim Sayısı": 48, "Gerçekleşen Proje Sayısı": 33, "Gerçekleşme Tutarı": 112518662.13 },
-    { "BÖLGE MÜDÜRLÜĞÜ": "GAZİANTEP", "OM": "ISLAHİYE", "Yüklenici": "Armin", "Yer Teslim Sayısı": 23, "Gerçekleşen Proje Sayısı": 14, "Gerçekleşme Tutarı": 18834486.94 },
-    { "BÖLGE MÜDÜRLÜĞÜ": "ADANA", "OM": "KADİRLİ", "Yüklenici": "Erce", "Yer Teslim Sayısı": 27, "Gerçekleşen Proje Sayısı": 24, "Gerçekleşme Tutarı": 59149344.67 },
-    { "BÖLGE MÜDÜRLÜĞÜ": "HATAY", "OM": "KIRIKHAN", "Yüklenici": "Demircan", "Yer Teslim Sayısı": 19, "Gerçekleşen Proje Sayısı": 16, "Gerçekleşme Tutarı": 55544723.02 },
-    { "BÖLGE MÜDÜRLÜĞÜ": "GAZİANTEP", "OM": "KİLİS", "Yüklenici": "Armin", "Yer Teslim Sayısı": 39, "Gerçekleşen Proje Sayısı": 28, "Gerçekleşme Tutarı": 42256718.33 },
-    { "BÖLGE MÜDÜRLÜĞÜ": "MERSİN", "OM": "MERSİN METROPOL", "Yüklenici": "MLA", "Yer Teslim Sayısı": 71, "Gerçekleşen Proje Sayısı": 67, "Gerçekleşme Tutarı": 182719865.83 },
-    { "BÖLGE MÜDÜRLÜĞÜ": "MERSİN", "OM": "MUT", "Yüklenici": "Dutar", "Yer Teslim Sayısı": 38, "Gerçekleşen Proje Sayısı": 31, "Gerçekleşme Tutarı": 81489874.45 },
-    { "BÖLGE MÜDÜRLÜĞÜ": "GAZİANTEP", "OM": "NİZİP", "Yüklenici": "Armin", "Yer Teslim Sayısı": 35, "Gerçekleşen Proje Sayısı": 17, "Gerçekleşme Tutarı": 30042882.18 },
-    { "BÖLGE MÜDÜRLÜĞÜ": "ADANA", "OM": "OSMANİYE", "Yüklenici": "Demircan", "Yer Teslim Sayısı": 47, "Gerçekleşen Proje Sayısı": 37, "Gerçekleşme Tutarı": 87712175.16 },
-    { "BÖLGE MÜDÜRLÜĞÜ": "HATAY", "OM": "REYHANLI", "Yüklenici": "Demircan", "Yer Teslim Sayısı": 35, "Gerçekleşen Proje Sayısı": 26, "Gerçekleşme Tutarı": 101793964.48 },
-    { "BÖLGE MÜDÜRLÜĞÜ": "MERSİN", "OM": "SİLİFKE", "Yüklenici": "Gümüşcü", "Yer Teslim Sayısı": 38, "Gerçekleşen Proje Sayısı": 32, "Gerçekleşme Tutarı": 158960298.15 },
-    { "BÖLGE MÜDÜRLÜĞÜ": "MERSİN", "OM": "TARSUS", "Yüklenici": "MLA", "Yer Teslim Sayısı": 89, "Gerçekleşen Proje Sayısı": 47, "Gerçekleşme Tutarı": 135468196.49 }
+    { bolge: 'ADANA', om: 'Adana Kuzey', yuklenici: 'Kayateknik', yerTeslimSayisi: 27, tedas: 11, edas: 14, gerceklesenProje: 25, gerceklesmeTutari: 180989324.85 },
+    { bolge: 'ADANA', om: 'Adana Metropol', yuklenici: 'Ayduran', yerTeslimSayisi: 69, tedas: 8, edas: 60, gerceklesenProje: 68, gerceklesmeTutari: 189355413.93 },
+    { bolge: 'ADANA', om: 'Ceyhan', yuklenici: 'Erce', yerTeslimSayisi: 36, tedas: 6, edas: 6, gerceklesenProje: 12, gerceklesmeTutari: 36501546.30 },
+    { bolge: 'ADANA', om: 'Düziçi', yuklenici: 'Demircan', yerTeslimSayisi: 18, tedas: 4, edas: 8, gerceklesenProje: 12, gerceklesmeTutari: 43346125.76 },
+    { bolge: 'ADANA', om: 'Kadirli', yuklenici: 'Erce', yerTeslimSayisi: 27, tedas: 7, edas: 19, gerceklesenProje: 26, gerceklesmeTutari: 64244707.70 },
+    { bolge: 'ADANA', om: 'Osmaniye', yuklenici: 'Demircan', yerTeslimSayisi: 47, tedas: 3, edas: 34, gerceklesenProje: 37, gerceklesmeTutari: 89552705.42 },
+    { bolge: 'GAZİANTEP', om: 'Gaziantep Metropol', yuklenici: 'Armin', yerTeslimSayisi: 52, tedas: 1, edas: 50, gerceklesenProje: 51, gerceklesmeTutari: 89094652.54 },
+    { bolge: 'GAZİANTEP', om: 'İslahiye', yuklenici: 'Armin', yerTeslimSayisi: 23, tedas: 1, edas: 18, gerceklesenProje: 19, gerceklesmeTutari: 24235979.20 },
+    { bolge: 'GAZİANTEP', om: 'Kilis', yuklenici: 'Armin', yerTeslimSayisi: 39, tedas: 0, edas: 28, gerceklesenProje: 28, gerceklesmeTutari: 42256718.33 },
+    { bolge: 'GAZİANTEP', om: 'Nizip', yuklenici: 'Armin', yerTeslimSayisi: 35, tedas: 0, edas: 20, gerceklesenProje: 20, gerceklesmeTutari: 33556177.93 },
+    { bolge: 'HATAY', om: 'Dörtyol', yuklenici: 'Demircan', yerTeslimSayisi: 57, tedas: 0, edas: 36, gerceklesenProje: 36, gerceklesmeTutari: 85266519.03 },
+    { bolge: 'HATAY', om: 'Hatay Kırsal', yuklenici: 'Demircan', yerTeslimSayisi: 57, tedas: 3, edas: 28, gerceklesenProje: 31, gerceklesmeTutari: 179702623.22 },
+    { bolge: 'HATAY', om: 'Hatay Metropol', yuklenici: 'Demircan', yerTeslimSayisi: 161, tedas: 3, edas: 153, gerceklesenProje: 156, gerceklesmeTutari: 418590623.28 },
+    { bolge: 'HATAY', om: 'İskenderun', yuklenici: 'Armin', yerTeslimSayisi: 48, tedas: 0, edas: 34, gerceklesenProje: 34, gerceklesmeTutari: 115446929.99 },
+    { bolge: 'HATAY', om: 'Kırıkhan', yuklenici: 'Demircan', yerTeslimSayisi: 19, tedas: 0, edas: 16, gerceklesenProje: 16, gerceklesmeTutari: 68032755.08 },
+    { bolge: 'HATAY', om: 'Reyhanlı', yuklenici: 'Demircan', yerTeslimSayisi: 35, tedas: 0, edas: 26, gerceklesenProje: 26, gerceklesmeTutari: 105344951.16 },
+    { bolge: 'MERSİN', om: 'Anamur', yuklenici: 'Armin', yerTeslimSayisi: 38, tedas: 2, edas: 28, gerceklesenProje: 30, gerceklesmeTutari: 133375580.41 },
+    { bolge: 'MERSİN', om: 'Erdemli', yuklenici: 'Gümüşcü', yerTeslimSayisi: 29, tedas: 4, edas: 23, gerceklesenProje: 27, gerceklesmeTutari: 80629128.63 },
+    { bolge: 'MERSİN', om: 'Mersin Metropol', yuklenici: 'MLA', yerTeslimSayisi: 71, tedas: 4, edas: 63, gerceklesenProje: 67, gerceklesmeTutari: 198164214.90 },
+    { bolge: 'MERSİN', om: 'Mut', yuklenici: 'Dutar', yerTeslimSayisi: 38, tedas: 3, edas: 28, gerceklesenProje: 31, gerceklesmeTutari: 95553858.46 },
+    { bolge: 'MERSİN', om: 'Silifke', yuklenici: 'Gümüşcü', yerTeslimSayisi: 38, tedas: 3, edas: 29, gerceklesenProje: 32, gerceklesmeTutari: 161135398.89 },
+    { bolge: 'MERSİN', om: 'Tarsus', yuklenici: 'MLA', yerTeslimSayisi: 89, tedas: 2, edas: 45, gerceklesenProje: 47, gerceklesmeTutari: 135468196.49 },
 ];
 
 export const s1Data = [
@@ -279,25 +189,25 @@ export const s2Data = [
     { BOLGE: "MERSİN", OM: "Tarsus OM", BINA: 4, DUT: 3, SDK: 5, AG: 30.4, YG: 13.9 }
 ];
 
-export const yukleniciBilgileriData = [
-    { "OM": "Adana Kuzey", "SÖZLEŞME ADI": "Adana Kuzey Planlı Bakım Seviye - 3", "Sözleşme Bedeli": 171798842.18, "Yüklenici Firma": "EMİ" },
-    { "OM": "Adana Metropol+Ceyhan", "SÖZLEŞME ADI": "Adana Metropol+Ceyhan Planlı Bakım Seviye - 3", "Sözleşme Bedeli": 212799426.99, "Yüklenici Firma": "AYDURAN" },
-    { "OM": "Anamur", "SÖZLEŞME ADI": "Anamur Planlı Bakım Seviye - 3", "Sözleşme Bedeli": 181130537.43, "Yüklenici Firma": "NORTON" },
-    { "OM": "Erdemli", "SÖZLEŞME ADI": "Erdemli Planlı Bakım Seviye - 3", "Sözleşme Bedeli": 118728609.09, "Yüklenici Firma": "KAMERİM" },
-    { "OM": "Gaziantep Metropol", "SÖZLEŞME ADI": "Gaziantep Metropol Planlı Bakım Seviye - 3", "Sözleşme Bedeli": 88947803.53, "Yüklenici Firma": "MLA" },
-    { "OM": "Hatay Kırsal", "SÖZLEŞME ADI": "Hatay Kırsal Planlı Bakım Seviye - 3", "Sözleşme Bedeli": 150579029.63, "Yüklenici Firma": "DEMİRCAN" },
-    { "OM": "Hatay Metropol", "SÖZLEŞME ADI": "Hatay Metropol Planlı Bakım Seviye - 3", "Sözleşme Bedeli": 225337358.85, "Yüklenici Firma": "DEMİRCAN" },
-    { "OM": "İskenderun+Dörtyol+Arsuz", "SÖZLEŞME ADI": "İskenderun+Dörtyol+Arsuz Planlı Bakım Seviye - 3", "Sözleşme Bedeli": 109009025.46, "Yüklenici Firma": "HASAN BULUT" },
-    { "OM": "Kadirli", "SÖZLEŞME ADI": "Kadirli Planlı Bakım Seviye - 3", "Sözleşme Bedeli": 100224627.69, "Yüklenici Firma": "ERSA" },
-    { "OM": "Kırıkhan+Reyhanlı", "SÖZLEŞME ADI": "Kırıkhan+Reyhanlı Planlı Bakım Seviye - 3", "Sözleşme Bedeli": 186173372.78, "Yüklenici Firma": "MTE" },
-    { "OM": "Kilis+Nizip+İslahiye", "SÖZLEŞME ADI": "Kilis+Nizip+İslahiye Planlı Bakım Seviye - 3", "Sözleşme Bedeli": 52145342.72, "Yüklenici Firma": "BİLGE" },
-    { "OM": "Mersin Metropol", "SÖZLEŞME ADI": "Mersin Metropol Planlı Bakım Seviye - 3", "Sözleşme Bedeli": 126073964.24, "Yüklenici Firma": "MLA" },
-    { "OM": "Mut", "SÖZLEŞME ADI": "Mut Planlı Bakım Seviye - 3", "Sözleşme Bedeli": 94005326.14, "Yüklenici Firma": "DUTAR" },
-    { "OM": "Osmaniye+Düziçi", "SÖZLEŞME ADI": "Osmaniye+Düziçi Planlı Bakım Seviye - 3", "Sözleşme Bedeli": 101891087.45, "Yüklenici Firma": "ERSA" },
-    { "OM": "Silifke", "SÖZLEŞME ADI": "Silifke Planlı Bakım Seviye - 3", "Sözleşme Bedeli": 174457150.53, "Yüklenici Firma": "ATAGÜC" },
-    { "OM": "Tarsus", "SÖZLEŞME ADI": "Tarsus Planlı Bakım Seviye - 3", "Sözleşme Bedeli": 142203915.07, "Yüklenici Firma": "MLA" }
-];
 
+export const yukleniciBilgileriData = [
+    { "OM": 'Adana Kuzey', "SÖZLEŞME ADI": 'Adana Kuzey Planlı Bakım Seviye - 3', "Yüklenici Firma": 'EMİ', "Sözleşme Bedeli": 171798842.18 },
+    { "OM": 'Adana Metropol+Ceyhan', "SÖZLEŞME ADI": 'Adana Metropol+Ceyhan Planlı Bakım Seviye - 3', "Yüklenici Firma": 'AYDURAN', "Sözleşme Bedeli": 212799426.99 },
+    { "OM": 'Anamur', "SÖZLEŞME ADI": 'Anamur Planlı Bakım Seviye - 3', "Yüklenici Firma": 'NORTON', "Sözleşme Bedeli": 181130537.43 },
+    { "OM": 'Erdemli', "SÖZLEŞME ADI": 'Erdemli Planlı Bakım Seviye - 3', "Yüklenici Firma": 'KAMERİM', "Sözleşme Bedeli": 118728609.09 },
+    { "OM": 'Gaziantep Metropol', "SÖZLEŞME ADI": 'Gaziantep Metropol Planlı Bakım Seviye - 3', "Yüklenici Firma": 'MLA', "Sözleşme Bedeli": 88947803.53 },
+    { "OM": 'Hatay Kırsal', "SÖZLEŞME ADI": 'Hatay Kırsal Planlı Bakım Seviye - 3', "Yüklenici Firma": 'DEMİRCAN', "Sözleşme Bedeli": 150579029.63 },
+    { "OM": 'Hatay Metropol', "SÖZLEŞME ADI": 'Hatay Metropol Planlı Bakım Seviye - 3', "Yüklenici Firma": 'DEMİRCAN', "Sözleşme Bedeli": 225337358.85 },
+    { "OM": 'İskenderun+Dörtyol+Arsuz', "SÖZLEŞME ADI": 'İskenderun+Dörtyol+Arsuz Planlı Bakım Seviye - 3', "Yüklenici Firma": 'HASAN BULUT', "Sözleşme Bedeli": 109009025.46 },
+    { "OM": 'Kadirli', "SÖZLEŞME ADI": 'Kadirli Planlı Bakım Seviye - 3', "Yüklenici Firma": 'ERSA', "Sözleşme Bedeli": 100224627.69 },
+    { "OM": 'Kırıkhan+Reyhanlı', "SÖZLEŞME ADI": 'Kırıkhan+Reyhanlı Planlı Bakım Seviye - 3', "Yüklenici Firma": 'MTE', "Sözleşme Bedeli": 186173372.78 },
+    { "OM": 'Kilis+Nizip+İslahiye', "SÖZLEŞME ADI": 'Kilis+Nizip+İslahiye Planlı Bakım Seviye - 3', "Yüklenici Firma": 'BİLGE', "Sözleşme Bedeli": 52145342.72 },
+    { "OM": 'Mersin Metropol', "SÖZLEŞME ADI": 'Mersin Metropol Planlı Bakım Seviye - 3', "Yüklenici Firma": 'MLA', "Sözleşme Bedeli": 126073964.24 },
+    { "OM": 'Mut', "SÖZLEŞME ADI": 'Mut Planlı Bakım Seviye - 3', "Yüklenici Firma": 'DUTAR', "Sözleşme Bedeli": 94005326.14 },
+    { "OM": 'Osmaniye+Düziçi', "SÖZLEŞME ADI": 'Osmaniye+Düziçi Planlı Bakım Seviye - 3', "Yüklenici Firma": 'ERSA', "Sözleşme Bedeli": 101891087.45 },
+    { "OM": 'Silifke', "SÖZLEŞME ADI": 'Silifke Planlı Bakım Seviye - 3', "Yüklenici Firma": 'ATAGÜC', "Sözleşme Bedeli": 174457150.53 },
+    { "OM": 'Tarsus', "SÖZLEŞME ADI": 'Tarsus Planlı Bakım Seviye - 3', "Yüklenici Firma": 'MLA', "Sözleşme Bedeli": 142203915.07 },
+];
 export const auditData = [
     { om: 'Ceyhan', tur: 'AG HAT', formSayisi: 11, dogru: 5, yanlis: 6, uygun: 3, uygunsuz: 6, kontrolEdilmedi: 2, s2Duzeltilebilir: 6, s2Disinda: 0 },
     { om: 'Ceyhan', tur: 'YG HAT', formSayisi: 2, dogru: 0, yanlis: 2, uygun: 0, uygunsuz: 2, kontrolEdilmedi: 0, s2Duzeltilebilir: 2, s2Disinda: 0 },
@@ -352,6 +262,7 @@ export const auditData = [
     { om: 'Hatay Metropol', tur: 'YG HAT', formSayisi: 2, dogru: 0, yanlis: 0, uygun: 0, uygunsuz: 0, kontrolEdilmedi: 2, s2Duzeltilebilir: 0, s2Disinda: 0 },
 ];
 
+//2025 yüklenici gerçekleşmeleri
 export const contractData = [
     {
         bm: 'ADANA',
@@ -359,8 +270,8 @@ export const contractData = [
         sozlesmeAdi: 'ADANA KUZEY PLANLI BAKIM SEVİYE-3',
         yuklenici: 'KAYATEKNİK',
         sozlesmeBedeli: 91716583.36,
-        toplamHakEdis: 84743752.06,
-        kalanHakEdis: 6972831.30,
+        toplamHakEdis: 84743752.01,
+        kalanHakEdis: 6972831.35,
         doluluk: 92.40
     },
     {
@@ -369,9 +280,9 @@ export const contractData = [
         sozlesmeAdi: 'ADANA METROPOL PLANLI BAKIM SEVİYE-3',
         yuklenici: 'AYDURAN',
         sozlesmeBedeli: 101127099.48,
-        toplamHakEdis: 95143049.34,
-        kalanHakEdis: 5984050.14,
-        doluluk: 94.08
+        toplamHakEdis: 99456040.53,
+        kalanHakEdis: 1671058.95,
+        doluluk: 98.35
     },
     {
         bm: 'ADANA',
@@ -379,8 +290,8 @@ export const contractData = [
         sozlesmeAdi: 'KADİRLİ+CEYHAN PLANLI BAKIM SEVİYE-3',
         yuklenici: 'ERCE',
         sozlesmeBedeli: 49481860.98,
-        toplamHakEdis: 48509315.33,
-        kalanHakEdis: 972545.65,
+        toplamHakEdis: 48509315.15,
+        kalanHakEdis: 972545.83,
         doluluk: 98.03
     },
     {
@@ -389,9 +300,9 @@ export const contractData = [
         sozlesmeAdi: 'OSMANİYE+DÜZİÇİ PLANLI BAKIM SEVİYE-3',
         yuklenici: 'DEMİRCAN',
         sozlesmeBedeli: 70242195.14,
-        toplamHakEdis: 57968701.19,
-        kalanHakEdis: 12273493.95,
-        doluluk: 82.53
+        toplamHakEdis: 65416342.17,
+        kalanHakEdis: 4825852.97,
+        doluluk: 93.13
     },
     {
         bm: 'GAZİANTEP',
@@ -399,9 +310,9 @@ export const contractData = [
         sozlesmeAdi: 'GAZİANTEP METROPOL PLANLI BAKIM SEVİYE-3',
         yuklenici: 'ARMİN',
         sozlesmeBedeli: 45316526.52,
-        toplamHakEdis: 31074315.42,
-        kalanHakEdis: 14242211.10,
-        doluluk: 68.57
+        toplamHakEdis: 35590753.90,
+        kalanHakEdis: 9725772.62,
+        doluluk: 78.54
     },
     {
         bm: 'GAZİANTEP',
@@ -409,9 +320,9 @@ export const contractData = [
         sozlesmeAdi: 'KİLİS+NİZİP+İSLAHİYE PLANLI BAKIM SEVİYE-3',
         yuklenici: 'ARMİN',
         sozlesmeBedeli: 51842391.83,
-        toplamHakEdis: 34777170.02,
-        kalanHakEdis: 17065221.81,
-        doluluk: 67.08
+        toplamHakEdis: 36717601.18,
+        kalanHakEdis: 15124790.65,
+        doluluk: 70.83
     },
     {
         bm: 'HATAY',
@@ -419,9 +330,9 @@ export const contractData = [
         sozlesmeAdi: 'HATAY METROPOL PLANLI BAKIM SEVİYE-3',
         yuklenici: 'DEMİRCAN',
         sozlesmeBedeli: 288188400.86,
-        toplamHakEdis: 213039354.08,
-        kalanHakEdis: 75149046.78,
-        doluluk: 73.92
+        toplamHakEdis: 233251254.12,
+        kalanHakEdis: 54937146.74,
+        doluluk: 80.94
     },
     {
         bm: 'HATAY',
@@ -429,9 +340,9 @@ export const contractData = [
         sozlesmeAdi: 'HATAY KIRSAL PLANLI BAKIM SEVİYE-3',
         yuklenici: 'DEMİRCAN',
         sozlesmeBedeli: 151132670.74,
-        toplamHakEdis: 98741685.00,
-        kalanHakEdis: 52390985.74,
-        doluluk: 65.33
+        toplamHakEdis: 102026547.52,
+        kalanHakEdis: 49106123.22,
+        doluluk: 67.51
     },
     {
         bm: 'HATAY',
@@ -439,9 +350,9 @@ export const contractData = [
         sozlesmeAdi: 'İSKENDERUN+DÖRTYOL+ARSUZ PLANLI BAKIM SEVİYE-3',
         yuklenici: 'ARMİN',
         sozlesmeBedeli: 137930210.39,
-        toplamHakEdis: 88538517.07,
-        kalanHakEdis: 49391693.32,
-        doluluk: 64.19
+        toplamHakEdis: 94136699.94,
+        kalanHakEdis: 43793510.45,
+        doluluk: 68.25
     },
     {
         bm: 'HATAY',
@@ -449,9 +360,9 @@ export const contractData = [
         sozlesmeAdi: 'KIRIKHAN+REYHANLI PLANLI BAKIM SEVİYE-3',
         yuklenici: 'TOKİŞ',
         sozlesmeBedeli: 87564392.24,
-        toplamHakEdis: 57915404.73,
-        kalanHakEdis: 29648987.51,
-        doluluk: 66.14
+        toplamHakEdis: 60870389.54,
+        kalanHakEdis: 26694002.70,
+        doluluk: 69.52
     },
     {
         bm: 'MERSİN',
@@ -459,9 +370,9 @@ export const contractData = [
         sozlesmeAdi: 'MERSİN METROPOL PLANLI BAKIM SEVİYE-3',
         yuklenici: 'MLA',
         sozlesmeBedeli: 100133296.65,
-        toplamHakEdis: 69711768.93,
-        kalanHakEdis: 30421527.72,
-        doluluk: 69.62
+        toplamHakEdis: 70409778.37,
+        kalanHakEdis: 29723518.28,
+        doluluk: 70.32
     },
     {
         bm: 'MERSİN',
@@ -469,9 +380,9 @@ export const contractData = [
         sozlesmeAdi: 'ERDEMLİ PLANLI BAKIM SEVİYE-3',
         yuklenici: 'GÜMÜŞÇÜ',
         sozlesmeBedeli: 36321184.08,
-        toplamHakEdis: 29670090.91,
-        kalanHakEdis: 6651093.17,
-        doluluk: 81.69
+        toplamHakEdis: 29561815.62,
+        kalanHakEdis: 6759368.46,
+        doluluk: 81.39
     },
     {
         bm: 'MERSİN',
@@ -479,9 +390,9 @@ export const contractData = [
         sozlesmeAdi: 'TARSUS PLANLI BAKIM SEVİYE-3',
         yuklenici: 'MLA',
         sozlesmeBedeli: 94041971.06,
-        toplamHakEdis: 81114101.78,
-        kalanHakEdis: 12927869.28,
-        doluluk: 86.25
+        toplamHakEdis: 84296175.12,
+        kalanHakEdis: 9745795.94,
+        doluluk: 89.64
     },
     {
         bm: 'MERSİN',
@@ -489,8 +400,8 @@ export const contractData = [
         sozlesmeAdi: 'SİLİFKE PLANLI BAKIM SEVİYE-3',
         yuklenici: 'GÜMÜŞÇÜ',
         sozlesmeBedeli: 82717890.77,
-        toplamHakEdis: 72514443.46,
-        kalanHakEdis: 10203447.31,
+        toplamHakEdis: 72514443.42,
+        kalanHakEdis: 10203447.35,
         doluluk: 87.66
     },
     {
@@ -499,9 +410,9 @@ export const contractData = [
         sozlesmeAdi: 'ANAMUR PLANLI BAKIM SEVİYE-3',
         yuklenici: 'ARMİN',
         sozlesmeBedeli: 97731658.26,
-        toplamHakEdis: 76368778.77,
-        kalanHakEdis: 21362879.49,
-        doluluk: 78.14
+        toplamHakEdis: 85210149.65,
+        kalanHakEdis: 12521508.61,
+        doluluk: 87.19
     },
     {
         bm: 'MERSİN',
@@ -509,8 +420,8 @@ export const contractData = [
         sozlesmeAdi: 'MUT PLANLI BAKIM SEVİYE-3',
         yuklenici: 'DUTAR',
         sozlesmeBedeli: 44476726.84,
-        toplamHakEdis: 33252379.23,
-        kalanHakEdis: 11224347.61,
+        toplamHakEdis: 33252379.22,
+        kalanHakEdis: 11224347.62,
         doluluk: 74.76
     },
     {

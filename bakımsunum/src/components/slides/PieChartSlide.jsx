@@ -2,13 +2,24 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 import Chart from 'react-apexcharts';
 import { Maximize, Minimize, MapPin, TrendingUp, Layers } from 'lucide-react';
 import { scopeData, scopeCategories } from '../../data/mockData';
+import ExportExcelButton from '../ExportExcelButton';
 
 const formatCurrencyExact = (val) => {
     return '₺' + val.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 };
 
 const formatCurrencyM = (val) => {
-    return '₺' + (val / 1000000).toLocaleString('tr-TR', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + 'M';
+    if (!val) return '0 Mn ₺';
+    const n = Number(val);
+    if (isNaN(n)) return String(val);
+
+    if (n >= 1_000_000_000) {
+        return `${(n / 1_000_000_000).toLocaleString('tr-TR', { minimumFractionDigits: 1, maximumFractionDigits: 2 })} Mr ₺`;
+    }
+    if (n >= 1_000_000) {
+        return `${(n / 1_000_000).toLocaleString('tr-TR', { minimumFractionDigits: 1, maximumFractionDigits: 2 })} Mn ₺`;
+    }
+    return `${n.toLocaleString('tr-TR', { maximumFractionDigits: 0 })} ₺`;
 };
 
 export default function PieChartSlide() {
@@ -252,13 +263,19 @@ export default function PieChartSlide() {
                     </h2>
                     <p className="text-base-content/60 text-sm md:text-lg">Bölge ve lokasyon bazlı bütçe dağılımları ({formatCurrencyM(grandTotal)})</p>
                 </div>
-                <button
-                    onClick={toggleFullscreen}
-                    className="btn btn-sm btn-outline shadow-sm bg-base-100 flex-shrink-0 ml-4"
-                    title={isFullscreen ? "Küçült" : "Tam Ekran"}
-                >
-                    {isFullscreen ? <Minimize size={16} /> : <Maximize size={16} />}
-                </button>
+                <div className="flex items-center gap-2 flex-shrink-0 ml-4">
+                    <ExportExcelButton
+                        data={scopeData}
+                        fileName="Seviye_3_Kapsam_Verisi"
+                    />
+                    <button
+                        onClick={toggleFullscreen}
+                        className="btn btn-sm btn-outline shadow-sm bg-base-100"
+                        title={isFullscreen ? "Küçült" : "Tam Ekran"}
+                    >
+                        {isFullscreen ? <Minimize size={16} /> : <Maximize size={16} />}
+                    </button>
+                </div>
             </div>
 
             <div

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { Map, Maximize, Minimize, ArrowUpDown, ArrowUp, ArrowDown, Search, X } from 'lucide-react';
 import { cbsdata, koordinatTotal } from '../../data/mockData';
+import ExportExcelButton from '../ExportExcelButton';
 
 // ── Her kolon için min/max hesapla (renklendirme için) ─────────────────────────
 function useColMinMax(data, keys) {
@@ -183,6 +184,7 @@ export default function CBSDurumuSlide() {
                                     <span className="font-extrabold text-base leading-tight">{k.value.toLocaleString('tr-TR')}</span>
                                 </div>
                             ))}
+                            <ExportExcelButton data={sorted} fileName="CBS_Durumu_2026" />
                             <button
                                 onClick={toggleFullscreen}
                                 title={isFullscreen ? 'Küçült' : 'Tam Ekran'}

@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Chart from 'react-apexcharts';
 import { Maximize, Minimize } from 'lucide-react';
 import { regionalSales } from '../../data/mockData';
+import ExportExcelButton from '../ExportExcelButton';
 
 export default function BarChartSlide() {
     const [isFullscreen, setIsFullscreen] = useState(() => !!document.fullscreenElement);
@@ -82,13 +83,22 @@ export default function BarChartSlide() {
                     <h2 className="text-4xl font-extrabold text-base-content mb-2">SÖZLEŞME BİLGİLERİ</h2>
                     <p className="text-base-content/60 text-lg">İllere Göre Dağılım</p>
                 </div>
-                <button
-                    onClick={toggleFullscreen}
-                    className="btn btn-sm btn-outline shadow-sm bg-base-100"
-                    title={isFullscreen ? "Küçült" : "Tam Ekran"}
-                >
-                    {isFullscreen ? <Minimize size={16} /> : <Maximize size={16} />}
-                </button>
+                <div className="flex gap-2">
+                    <ExportExcelButton
+                        data={regionalSales.categories.map((c, i) => ({
+                            İl: c,
+                            Miktar: regionalSales.sales[i]
+                        }))}
+                        fileName="Sozlesme_Bilgileri"
+                    />
+                    <button
+                        onClick={toggleFullscreen}
+                        className="btn btn-sm btn-outline shadow-sm bg-base-100"
+                        title={isFullscreen ? "Küçült" : "Tam Ekran"}
+                    >
+                        {isFullscreen ? <Minimize size={16} /> : <Maximize size={16} />}
+                    </button>
+                </div>
             </div>
 
             <div

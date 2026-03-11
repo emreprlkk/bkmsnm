@@ -26,6 +26,7 @@ import {
 import { X as CloseIcon, Maximize, Minimize, ClipboardCheck, AlertTriangle, ChartBar, ArrowLeft, MapPin } from 'lucide-react';
 import Chart from 'react-apexcharts';
 import { auditData } from '../../data/mockData';
+import ExportExcelButton from '../ExportExcelButton';
 
 const omToIlMap = {
     'Ceyhan': 'ADANA',
@@ -518,6 +519,23 @@ const S1S2DenetlemeSlide = () => {
                         color="primary"
                         variant="soft"
                         sx={{ fontWeight: 800, borderRadius: 2, px: 1, backgroundColor: 'primary.main', color: 'primary.contrastText' }}
+                    />
+
+                    <ExportExcelButton
+                        data={displayedStats.flatMap(stat => stat.items.map(i => ({
+                            Bolge: omToIlMap[stat.om] || 'DİĞER',
+                            OM: stat.om,
+                            FormTipi: i.tur,
+                            KontrolEdilen: i.kontrolEdilen,
+                            KontrolEdilmeyen: i.kontrolEdilmedi,
+                            Uygun: i.uygun,
+                            Uygunsuz: i.uygunsuz,
+                            Dogru: i.dogru,
+                            Yanlis: i.yanlis,
+                            S2Duzeltilebilir: i.s2Duzeltilebilir,
+                            S2Disinda: i.s2Disinda
+                        })))}
+                        fileName="Saha_Denetim_Verileri"
                     />
 
                     <IconButton
