@@ -241,7 +241,7 @@ export default function PieChartSlide() {
         },
         yaxis: [
             {
-                title: { text: 'Maliyet Tutar', style: { color: '#38bdf8', fontSize: '10px', fontWeight: 700 } },
+                title: { text: 'TEDAŞ RAPORLAMA TUTARI', style: { color: '#38bdf8', fontSize: '10px', fontWeight: 700 } },
                 labels: {
                     style: { colors: '#38bdf8', fontSize: '10px', fontFamily: 'inherit', fontWeight: 600 },
                     formatter: (val) => val > 0 ? formatCurrencyM(val) : '0'

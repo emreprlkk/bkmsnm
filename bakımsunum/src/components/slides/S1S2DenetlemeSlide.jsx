@@ -465,7 +465,7 @@ const S1S2DenetlemeSlide = () => {
                     <Box display="flex" alignItems="center" gap={1}>
                         <ClipboardCheck size={28} color={theme.palette.primary.main} />
                         <Typography variant="h5" fontWeight="900" color="primary">
-                            2025 Yılı Seviye-1 Seviye-2 Planlı Bakım Denetleme Süreçleri
+                            Seviye-2 Planlı Bakım Denetleme Süreçleri
                         </Typography>
                     </Box>
 
@@ -585,7 +585,7 @@ const S1S2DenetlemeSlide = () => {
                                     }}>
                                         <Typography variant="subtitle2" fontWeight="800" align="center" mb={1} color="#3b82f6" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
                                             <div style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#3b82f6' }} />
-                                            ENVARTER BAZLI TUTULAN BAKIM FORMUNUN DOĞRULUK DURUMU
+                                            BAKIM FORMUNDAKİ ENVARTERİN DOĞRU İŞLENME DURUMU
                                         </Typography>
                                         <Box display="flex" justifyContent="center" mb={2} flex={1}>
                                             <Chart
@@ -598,7 +598,7 @@ const S1S2DenetlemeSlide = () => {
                                         </Box>
                                         <Box mt="auto" p={1.5} sx={{ backgroundColor: 'rgba(59, 130, 246, 0.08)', borderRadius: 2, borderLeft: '3px solid #3b82f6' }}>
                                             <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.75rem', fontWeight: 500, lineHeight: 1.2 }}>
-                                                Bakım formlarına işlenen verilerin, sahadaki fiili durumla uyuşma istatistiklerini yansıtır.
+                                                OM'nin tuttuğu bakım formunun ,sahadaki duruma uygun işlenip işlenmediğini ifade eder.
                                             </Typography>
                                         </Box>
                                     </Box>
@@ -614,7 +614,7 @@ const S1S2DenetlemeSlide = () => {
                                     }}>
                                         <Typography variant="subtitle2" fontWeight="800" align="center" mb={1} color="#10b981" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
                                             <div style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#10b981' }} />
-                                            BAKIM YAPILAN ENVARTERİN UYGUNLUK DURUMU
+                                            BAKIMI YAPILAN ENVARTERE UYGUN BAKIMIN YAPILMA DURUMU
                                         </Typography>
                                         <Box display="flex" justifyContent="center" mb={2} flex={1}>
                                             <Chart
@@ -627,7 +627,7 @@ const S1S2DenetlemeSlide = () => {
                                         </Box>
                                         <Box mt="auto" p={1.5} sx={{ backgroundColor: 'rgba(16, 185, 129, 0.08)', borderRadius: 2, borderLeft: '3px solid #10b981' }}>
                                             <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.75rem', fontWeight: 500, lineHeight: 1.2 }}>
-                                                Grafik envanterlerin montaj standartı ve fiziki sağlamlık açısından uygunluğunu ifade eder.
+                                                Bakım yapılan envarterele ilişkin bakım sonucundaki durum yönetmelik/mevzuata uygun yapılıp yapılmadığını gösterir
                                             </Typography>
                                         </Box>
                                     </Box>
@@ -656,7 +656,7 @@ const S1S2DenetlemeSlide = () => {
                                         </Box>
                                         <Box mt="auto" p={1.5} sx={{ backgroundColor: 'rgba(139, 92, 246, 0.08)', borderRadius: 2, borderLeft: '3px solid #8b5cf6' }}>
                                             <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.75rem', fontWeight: 500, lineHeight: 1.2 }}>
-                                                Uygunsuz bulunan envarterlerin, Seviye-2 bakım düzeltmesi kapsamında ele alınma kararıdır.
+                                                OM tarafından bakımı yapılan ve uygunsuz olan durumların ideal durumda seviye-2 kapsamında yapılabilirliği hakkındaki analiz
                                             </Typography>
                                         </Box>
                                     </Box>

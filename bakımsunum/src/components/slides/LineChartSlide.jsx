@@ -59,7 +59,7 @@ export default function LineChartSlide() {
             },
         },
         dataLabels: {
-            enabled: false,
+            enabled: true,
         },
         xaxis: {
             categories: scopeData.map(item => item.name),
