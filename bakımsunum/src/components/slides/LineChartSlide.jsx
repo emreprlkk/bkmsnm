@@ -127,9 +127,8 @@ export default function LineChartSlide() {
                 <div>
                     <p className="text-xs font-semibold text-primary/60 uppercase tracking-widest mb-1">Slayt 01</p>
                     <h2 className="text-2xl md:text-3xl font-extrabold text-base-content tracking-tight">
-                        Seviye-3 Proje Kapsamları
+                        2025 Yılı Seviye-3 İşleri
                     </h2>
-                    <p className="text-base-content/40 text-sm mt-1">OM bazında proje adeti ve TEDAŞ raporlama fiyatı dağılımları</p>
                 </div>
 
                 <div className="flex gap-2 self-start md:self-auto">
@@ -179,7 +178,9 @@ export default function LineChartSlide() {
                 {/* Fullscreen header when in fullscreen */}
                 {isFullscreen && (
                     <div className="flex justify-between items-center mb-4">
-                        <h2 className="text-xl font-bold text-base-content">Seviye-3 Proje Kapsamları</h2>
+                        <h2 className="text-xl font-bold text-base-content">
+                            2025 Yılında Yapılan Seviye-3 İşleri
+                        </h2>
                         <button
                             onClick={toggleFullscreen}
                             className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-base-300/30 border border-white/5 text-base-content/60 hover:text-error text-xs"

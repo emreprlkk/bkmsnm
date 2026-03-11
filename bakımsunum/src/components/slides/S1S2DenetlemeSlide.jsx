@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import {
     Box,
     Typography,
@@ -56,6 +56,8 @@ const S1S2DenetlemeSlide = () => {
 
     // activeRegion null ise Bölge Kartlarını gösterir. Dolu ise o bölgenin OM alt kartlarını gösterir.
     const [activeRegion, setActiveRegion] = useState(null);
+
+    const slideRef = useRef(null);
 
     // Filters
     const [ilFilter, setIlFilter] = useState('Tümü');
@@ -492,6 +494,10 @@ const S1S2DenetlemeSlide = () => {
                             label="Bölge Filtresi"
                             onChange={handleIlChange}
                             sx={{ fontWeight: 600, borderRadius: 2 }}
+                            MenuProps={{
+                                container: () => slideRef.current || document.body,
+                                sx: { zIndex: 20000 }
+                            }}
                         >
                             {iller.map(il => (
                                 <MenuItem key={il} value={il} sx={{ fontWeight: 600 }}>{il === 'Tümü' ? 'Tüm Bölgeler' : `${il} BÖLGESİ`}</MenuItem>
@@ -506,6 +512,10 @@ const S1S2DenetlemeSlide = () => {
                             label="Operasyon Merkezi"
                             onChange={handleOmChange}
                             sx={{ fontWeight: 600, borderRadius: 2 }}
+                            MenuProps={{
+                                container: () => slideRef.current || document.body,
+                                sx: { zIndex: 20000 }
+                            }}
                         >
                             {filteredOms.map(o => (
                                 <MenuItem key={o} value={o} sx={{ fontWeight: 600 }}>{o === 'Tümü' ? 'Tüm OM\'ler' : o}</MenuItem>
@@ -712,7 +722,7 @@ const S1S2DenetlemeSlide = () => {
                                                 <Box display="flex" justifyContent="space-around" borderTop={`1px dashed ${theme.palette.divider}`} pt={3}>
                                                     <Box>
                                                         <Typography variant="h6" fontWeight="900" color="primary">{group.totalForms}</Typography>
-                                                        <Typography variant="caption" color="text.secondary" fontWeight={600}>Total Form</Typography>
+                                                        <Typography variant="caption" color="text.secondary" fontWeight={600}>Total Envarter</Typography>
                                                     </Box>
                                                     <Box>
                                                         <Typography variant="h6" fontWeight="900" color="#10b981">{group.uygun}</Typography>
@@ -856,7 +866,10 @@ const S1S2DenetlemeSlide = () => {
     // Modal etc. below
     return (
         <React.Fragment>
-            <div data-theme={isFullscreen ? 'light' : undefined} style={isFullscreen ? { position: 'fixed', inset: 0, zIndex: 9999, background: '#fff', overflowY: 'auto', display: 'flex', flexDirection: 'column' } : { height: '100%' }}>
+            <div
+                ref={slideRef}
+                data-theme={isFullscreen ? 'light' : undefined}
+                style={isFullscreen ? { position: 'fixed', inset: 0, zIndex: 1000, background: '#fff', overflowY: 'auto', display: 'flex', flexDirection: 'column' } : { height: '100%' }}>
                 {slideContent}
             </div>
 
@@ -866,6 +879,8 @@ const S1S2DenetlemeSlide = () => {
                 maxWidth="lg"
                 fullWidth
                 fullScreen={dialogFullScreen}
+                container={() => slideRef.current || document.getElementById('presentation-fullscreen-wrapper') || document.body}
+                sx={{ zIndex: 15000 }}
                 PaperProps={{
                     sx: { borderRadius: dialogFullScreen ? 0 : 4, p: 1, backgroundColor: theme.palette.background.default }
                 }}

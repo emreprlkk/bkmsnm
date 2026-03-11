@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import Chart from 'react-apexcharts';
 import { Maximize, Minimize, MapPin, TrendingUp, Layers } from 'lucide-react';
-import { scopeData, scopeCategories } from '../../data/mockData';
+import { scopeData, scopeCategories, raporlamaData } from '../../data/mockData';
 import ExportExcelButton from '../ExportExcelButton';
 
 const formatCurrencyExact = (val) => {
@@ -30,37 +30,63 @@ export default function PieChartSlide() {
     const containerRef = useRef(null);
 
     // Process scopeData to group by bolge and calculate totals
-    const { bolgeList, grandTotal } = useMemo(() => {
+    const { bolgeList, grandTotal, totalTedarik } = useMemo(() => {
         const map = {};
         let total = 0;
+        let grandTedasSayisi = 0;
+        let grandEdasSayisi = 0;
+        let grandTedasTutar = 0;
+        let grandEdasTutar = 0;
+
         scopeData.forEach(item => {
             const costSum = item.cost.reduce((a, b) => a + b, 0);
             const countSum = item.data.reduce((a, b) => a + b, 0);
             total += costSum;
+
+            const rData = raporlamaData.find(r => r.bolge === item.bolge && r.om === item.name);
+            const tedasSayisi = rData ? rData.tedasSayisi : 0;
+            const edasSayisi = rData ? rData.edasSayisi : 0;
+            const tedasTutar = rData ? rData.tedasTutar : 0;
+            const edasTutar = rData ? rData.edasTutar : 0;
+
+            grandTedasSayisi += tedasSayisi;
+            grandEdasSayisi += edasSayisi;
+            grandTedasTutar += tedasTutar;
+            grandEdasTutar += edasTutar;
 
             if (!map[item.bolge]) {
                 map[item.bolge] = {
                     bolge: item.bolge,
                     totalCost: 0,
                     totalCount: 0,
+                    tedasSayisi: 0,
+                    edasSayisi: 0,
+                    tedasTutar: 0,
+                    edasTutar: 0,
                     districts: []
                 };
             }
             map[item.bolge].totalCost += costSum;
             map[item.bolge].totalCount += countSum;
+            map[item.bolge].tedasSayisi += tedasSayisi;
+            map[item.bolge].edasSayisi += edasSayisi;
+            map[item.bolge].tedasTutar += tedasTutar;
+            map[item.bolge].edasTutar += edasTutar;
+
             map[item.bolge].districts.push({
                 name: item.name,
                 cost: costSum,
                 count: countSum,
                 rawCost: item.cost,
-                rawData: item.data
+                rawData: item.data,
+                tedasSayisi, edasSayisi, tedasTutar, edasTutar
             });
         });
 
         const list = Object.values(map).sort((a, b) => b.totalCost - a.totalCost);
         // Sort districts inside bolge by cost descending
         list.forEach(b => b.districts.sort((x, y) => y.cost - x.cost));
-        return { bolgeList: list, grandTotal: total };
+        return { bolgeList: list, grandTotal: total, totalTedarik: { grandTedasSayisi, grandEdasSayisi, grandTedasTutar, grandEdasTutar } };
     }, []);
 
     // Removed initial active bolge selection so it starts at the region selection view
@@ -259,8 +285,7 @@ export default function PieChartSlide() {
             <div className="mb-6 flex flex-shrink-0 justify-between items-start">
                 <div>
                     <h2 className="text-2xl md:text-3xl font-extrabold text-base-content mb-2 flex items-center gap-3">
-                        SEVİYE-3 İŞ KAPSAMI - TEDAŞ RAPORLAMA
-                    </h2>
+                        2025 Yılında Yapılan Seviye-3 İşleri                    </h2>
                     <p className="text-base-content/60 text-sm md:text-lg">Bölge ve lokasyon bazlı bütçe dağılımları ({formatCurrencyM(grandTotal)})</p>
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0 ml-4">
@@ -349,8 +374,26 @@ export default function PieChartSlide() {
                                     <div className="w-full bg-base-200/50 rounded-2xl p-6 mb-4">
                                         <div className="text-xs text-base-content/50 font-bold uppercase tracking-widest mb-2">GERÇEKLEŞEN TOPLAM BÜTÇE</div>
                                         <div className="text-4xl font-black text-primary">{formatCurrencyM(grandTotal)}</div>
-                                        <div className="mt-3 text-sm font-semibold text-base-content/70">
+                                        <div className="mt-3 text-sm font-semibold text-base-content/70 pb-3 border-b border-base-content/10">
                                             Toplam {bolgeList.reduce((acc, b) => acc + b.totalCount, 0)} Proje
+                                        </div>
+                                        <div className="mt-4 grid grid-cols-2 gap-4 text-left">
+                                            <div className="bg-secondary/10 rounded-xl p-4 shadow-sm border border-secondary/20 flex flex-col relative overflow-hidden group/tedas hover:bg-secondary/15 transition-all">
+                                                <div className="absolute -right-4 -top-2 opacity-10 group-hover/tedas:scale-110 group-hover/tedas:rotate-6 transition-transform"><Layers size={80} /></div>
+                                                <div className="text-[10px] text-secondary font-bold uppercase tracking-wider mb-2 z-10">TEDAŞ PROJELERİ</div>
+                                                <div className="flex justify-between items-end z-10 gap-2">
+                                                    <div className="text-xl font-black text-secondary leading-none">{formatCurrencyM(totalTedarik.grandTedasTutar)}</div>
+                                                    <div className="badge badge-secondary badge-sm font-bold shadow-sm whitespace-nowrap">{totalTedarik.grandTedasSayisi} Adet</div>
+                                                </div>
+                                            </div>
+                                            <div className="bg-accent/10 rounded-xl p-4 shadow-sm border border-accent/20 flex flex-col relative overflow-hidden group/edas hover:bg-accent/15 transition-all">
+                                                <div className="absolute -right-4 -top-2 opacity-10 group-hover/edas:scale-110 group-hover/edas:-rotate-6 transition-transform"><TrendingUp size={80} /></div>
+                                                <div className="text-[10px] text-accent font-bold uppercase tracking-wider mb-2 z-10">EDAŞ PROJELERİ</div>
+                                                <div className="flex justify-between items-end z-10 gap-2">
+                                                    <div className="text-xl font-black text-accent leading-none">{formatCurrencyM(totalTedarik.grandEdasTutar)}</div>
+                                                    <div className="badge badge-accent badge-sm font-bold shadow-sm whitespace-nowrap">{totalTedarik.grandEdasSayisi} Adet</div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <button className="btn btn-primary w-full shadow-lg gap-2 text-primary-content">
@@ -393,6 +436,23 @@ export default function PieChartSlide() {
                                                 <span className="text-2xl font-black text-primary">{formatCurrencyExact(b.totalCost)}</span>
                                             </div>
 
+                                            <div className="mt-3 grid grid-cols-2 gap-2">
+                                                <div className="bg-secondary/5 border border-secondary/10 rounded-lg p-2.5 flex flex-col justify-between hover:bg-secondary/10 transition-colors">
+                                                    <div className="flex justify-between items-center mb-1.5">
+                                                        <span className="text-[10px] text-secondary font-bold uppercase tracking-wider">TEDAŞ</span>
+                                                        <span className="text-[10px] bg-secondary/10 text-secondary font-bold px-1.5 py-0.5 rounded shadow-sm">{b.tedasSayisi} Adet</span>
+                                                    </div>
+                                                    <span className="text-sm font-black text-secondary/90">{formatCurrencyM(b.tedasTutar)}</span>
+                                                </div>
+                                                <div className="bg-accent/5 border border-accent/10 rounded-lg p-2.5 flex flex-col justify-between hover:bg-accent/10 transition-colors">
+                                                    <div className="flex justify-between items-center mb-1.5">
+                                                        <span className="text-[10px] text-accent font-bold uppercase tracking-wider">EDAŞ</span>
+                                                        <span className="text-[10px] bg-accent/10 text-accent font-bold px-1.5 py-0.5 rounded shadow-sm">{b.edasSayisi} Adet</span>
+                                                    </div>
+                                                    <span className="text-sm font-black text-accent/90">{formatCurrencyM(b.edasTutar)}</span>
+                                                </div>
+                                            </div>
+
                                             <div className="flex justify-between items-center mt-4 pt-4 border-t border-base-200">
                                                 <span className="text-xs text-base-content/60 font-medium">Bağlı OM Sayısı: {b.districts.length}</span>
                                                 <span className="text-xs font-bold text-primary flex items-center gap-1 group-hover:translate-x-1 transition-transform">
@@ -430,6 +490,23 @@ export default function PieChartSlide() {
                                         <div className="stat-title text-primary-content/80 font-semibold">{activeBolgeData.bolge} TOPLAM TUTARI</div>
                                         <div className="stat-value text-3xl md:text-4xl">{formatCurrencyExact(activeBolgeData.totalCost)}</div>
                                         <div className="stat-desc text-primary-content/80 mt-1 font-medium">Toplam {activeBolgeData.totalCount} Adet Proje</div>
+
+                                        <div className="mt-4 grid grid-cols-2 gap-4 max-w-md">
+                                            <div className="bg-black/10 rounded-xl p-3 flex flex-col border border-white/10 hover:bg-black/20 transition-all">
+                                                <div className="flex justify-between items-center mb-1.5">
+                                                    <div className="text-[11px] opacity-80 font-bold uppercase tracking-wider">TEDAŞ PROJE</div>
+                                                    <div className="badge badge-sm bg-white/20 border-none font-bold text-white shadow-sm">{activeBolgeData.tedasSayisi} Adet</div>
+                                                </div>
+                                                <div className="text-lg font-bold">{formatCurrencyM(activeBolgeData.tedasTutar)}</div>
+                                            </div>
+                                            <div className="bg-black/10 rounded-xl p-3 flex flex-col border border-white/10 hover:bg-black/20 transition-all">
+                                                <div className="flex justify-between items-center mb-1.5">
+                                                    <div className="text-[11px] opacity-80 font-bold uppercase tracking-wider">EDAŞ PROJE</div>
+                                                    <div className="badge badge-sm bg-white/20 border-none font-bold text-white shadow-sm">{activeBolgeData.edasSayisi} Adet</div>
+                                                </div>
+                                                <div className="text-lg font-bold">{formatCurrencyM(activeBolgeData.edasTutar)}</div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -461,6 +538,23 @@ export default function PieChartSlide() {
                                                     <div className="mt-2 flex flex-col">
                                                         <span className="text-[10px] text-base-content/50 font-bold uppercase tracking-widest mb-1">TEDAŞ RAPORLAMA</span>
                                                         <span className="text-xl font-black text-base-content">{formatCurrencyExact(d.cost)}</span>
+                                                    </div>
+
+                                                    <div className="mt-3 grid grid-cols-2 gap-2">
+                                                        <div className="bg-secondary/5 border border-secondary/10 rounded-lg p-2 flex flex-col justify-between hover:bg-secondary/10 transition-colors">
+                                                            <div className="flex justify-between items-start mb-1.5">
+                                                                <span className="text-[9px] text-secondary font-bold uppercase tracking-wider mt-0.5">TEDAŞ</span>
+                                                                <span className="text-[9px] px-1 py-0.5 rounded bg-secondary/10 text-secondary font-bold shadow-sm">{d.tedasSayisi}</span>
+                                                            </div>
+                                                            <span className="text-[11px] font-bold text-secondary/90 tracking-wide">{formatCurrencyM(d.tedasTutar)}</span>
+                                                        </div>
+                                                        <div className="bg-accent/5 border border-accent/10 rounded-lg p-2 flex flex-col justify-between hover:bg-accent/10 transition-colors">
+                                                            <div className="flex justify-between items-start mb-1.5">
+                                                                <span className="text-[9px] text-accent font-bold uppercase tracking-wider mt-0.5">EDAŞ</span>
+                                                                <span className="text-[9px] px-1 py-0.5 rounded bg-accent/10 text-accent font-bold shadow-sm">{d.edasSayisi}</span>
+                                                            </div>
+                                                            <span className="text-[11px] font-bold text-accent/90 tracking-wide">{formatCurrencyM(d.edasTutar)}</span>
+                                                        </div>
                                                     </div>
 
                                                     <div className="mt-4 w-full bg-base-200 rounded-full h-1.5 overflow-hidden">

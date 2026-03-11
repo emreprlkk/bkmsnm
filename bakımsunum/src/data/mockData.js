@@ -75,7 +75,7 @@ export const presentationSlides = [
     { id: 9, title: 'USUL VE ESASLAR DEĞİŞİKLİKLERİ', type: 'usul_esas' },
     { id: 8, title: '2025 YÜKLENİCİ GERÇEKLEŞMELERİ', type: '2025_yuklenici_gerceklesme' },
     { id: 5, title: '2025 YER TESLİMLERİ', type: 'yer_teslimi' },
-    { id: 1, title: 'SEVYE-3 İş Kapsamı-TEDAŞ RAPORLAMA', type: 'chart_pie' },
+    { id: 1, title: '2025 Yılı Seviye-3 İşleri TOROSLAR EDAŞ - BÖLGE MÜDÜRLÜĞÜ-OM KAPSAMINDA', type: 'chart_pie' },
     { id: 4, title: 'S1-S2 ANALİZİ', type: 'chart_s1_s2' },
     { id: 7, title: 'S1-S2 DENETLEME', type: 's1_s2_denetleme' },
     { id: 10, title: '2025 AFET-HAKEDİŞ VERİLERİ', type: 'afet' },
@@ -534,3 +534,28 @@ export const envanterTotal = {
     direk: 2578, hucreMmhGazli: 12, hucreMmmhHavali: 135, kesiciSf6: 2,
     panoAgDagilim: 313, panoAydinlatma: 27, panoSdk: 48, trafoDagitimHr: 33, genelToplam: 3148
 };
+
+export const raporlamaData = [
+    { bolge: 'ADANA', om: 'Adana Kuzey', tedasSayisi: 11, tedasTutar: 118350129.70, edasSayisi: 14, edasTutar: 62639195.15 },
+    { bolge: 'ADANA', om: 'Adana Metropol', tedasSayisi: 8, tedasTutar: 67101711.97, edasSayisi: 60, edasTutar: 122253701.96 },
+    { bolge: 'ADANA', om: 'Ceyhan', tedasSayisi: 6, tedasTutar: 26322541.85, edasSayisi: 6, edasTutar: 10179004.45 },
+    { bolge: 'ADANA', om: 'Düziçi', tedasSayisi: 4, tedasTutar: 31539216.22, edasSayisi: 8, edasTutar: 11806909.54 },
+    { bolge: 'ADANA', om: 'Kadirli', tedasSayisi: 7, tedasTutar: 33809141.63, edasSayisi: 19, edasTutar: 30435566.07 },
+    { bolge: 'ADANA', om: 'Osmaniye', tedasSayisi: 3, tedasTutar: 19795198.61, edasSayisi: 34, edasTutar: 69757506.81 },
+    { bolge: 'GAZİANTEP', om: 'Gaziantep Metropol', tedasSayisi: 1, tedasTutar: 14381107.38, edasSayisi: 50, edasTutar: 74713545.17 },
+    { bolge: 'GAZİANTEP', om: 'İslahiye', tedasSayisi: 1, tedasTutar: 2434062.90, edasSayisi: 18, edasTutar: 21801916.30 },
+    { bolge: 'GAZİANTEP', om: 'Kilis', tedasSayisi: 0, tedasTutar: 0, edasSayisi: 28, edasTutar: 42256718.33 },
+    { bolge: 'GAZİANTEP', om: 'Nizip', tedasSayisi: 0, tedasTutar: 0, edasSayisi: 20, edasTutar: 33556177.93 },
+    { bolge: 'HATAY', om: 'Dörtyol', tedasSayisi: 0, tedasTutar: 0, edasSayisi: 36, edasTutar: 85266519.03 },
+    { bolge: 'HATAY', om: 'Hatay Kırsal', tedasSayisi: 3, tedasTutar: 35841809.34, edasSayisi: 28, edasTutar: 143860813.88 },
+    { bolge: 'HATAY', om: 'Hatay Metropol', tedasSayisi: 3, tedasTutar: 7614358.73, edasSayisi: 153, edasTutar: 410976264.55 },
+    { bolge: 'HATAY', om: 'İskenderun', tedasSayisi: 0, tedasTutar: 0, edasSayisi: 34, edasTutar: 115446929.99 },
+    { bolge: 'HATAY', om: 'Kırıkhan', tedasSayisi: 0, tedasTutar: 0, edasSayisi: 16, edasTutar: 68032755.08 },
+    { bolge: 'HATAY', om: 'Reyhanlı', tedasSayisi: 0, tedasTutar: 0, edasSayisi: 26, edasTutar: 105344951.16 },
+    { bolge: 'MERSİN', om: 'Anamur', tedasSayisi: 2, tedasTutar: 47961218.23, edasSayisi: 28, edasTutar: 85414362.18 },
+    { bolge: 'MERSİN', om: 'Erdemli', tedasSayisi: 4, tedasTutar: 25491746.59, edasSayisi: 23, edasTutar: 55137382.03 },
+    { bolge: 'MERSİN', om: 'Mersin Metropol', tedasSayisi: 4, tedasTutar: 54281864.95, edasSayisi: 63, edasTutar: 143882349.95 },
+    { bolge: 'MERSİN', om: 'Mut', tedasSayisi: 3, tedasTutar: 31501637.62, edasSayisi: 28, edasTutar: 64052220.84 },
+    { bolge: 'MERSİN', om: 'Silifke', tedasSayisi: 3, tedasTutar: 61672809.21, edasSayisi: 29, edasTutar: 99462589.68 },
+    { bolge: 'MERSİN', om: 'Tarsus', tedasSayisi: 2, tedasTutar: 26847488.05, edasSayisi: 45, edasTutar: 108620708.44 },
+];
