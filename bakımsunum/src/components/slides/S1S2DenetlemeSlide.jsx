@@ -465,12 +465,10 @@ const S1S2DenetlemeSlide = () => {
                     <Box display="flex" alignItems="center" gap={1}>
                         <ClipboardCheck size={28} color={theme.palette.primary.main} />
                         <Typography variant="h5" fontWeight="900" color="primary">
-                            S1-S2 Saha Denetleme İzleme
+                            2025 Yılı Seviye-1 Seviye-2 Planlı Bakım Denetleme Süreçleri
                         </Typography>
                     </Box>
-                    <Typography variant="body2" color="text.secondary" fontWeight="600" mt={0.5}>
-                        Saha çalışmalarının uygunluk ve form verisi çapraz denetimleri
-                    </Typography>
+
                 </Box>
 
                 {/* Filters & Actions Area */}
@@ -574,9 +572,7 @@ const S1S2DenetlemeSlide = () => {
                                 boxShadow: theme.shadows[2]
                             }}
                         >
-                            <Typography variant="subtitle1" fontWeight="900" color="text.primary" mb={2} align="center" sx={{ letterSpacing: 0.5, textTransform: 'uppercase' }}>
-                                {activeRegion ? `${activeRegion} BÖLGESİ KIYAS ANALİZLERİ` : `GENEL Saha Denetleme Kıyas Analizleri`}
-                            </Typography>
+
 
                             <Grid container spacing={3} alignItems="stretch">
                                 {/* DOĞRU YANLIŞ */}
@@ -589,7 +585,7 @@ const S1S2DenetlemeSlide = () => {
                                     }}>
                                         <Typography variant="subtitle2" fontWeight="800" align="center" mb={1} color="#3b82f6" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
                                             <div style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#3b82f6' }} />
-                                            DOĞRU - YANLIŞ BEYAN ORANI
+                                            ENVARTER BAZLI TUTULAN BAKIM FORMUNUN DOĞRULUK DURUMU
                                         </Typography>
                                         <Box display="flex" justifyContent="center" mb={2} flex={1}>
                                             <Chart
@@ -618,7 +614,7 @@ const S1S2DenetlemeSlide = () => {
                                     }}>
                                         <Typography variant="subtitle2" fontWeight="800" align="center" mb={1} color="#10b981" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
                                             <div style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#10b981' }} />
-                                            SAHA UYGUNLUK DURUMU
+                                            BAKIM YAPILAN ENVARTERİN UYGUNLUK DURUMU
                                         </Typography>
                                         <Box display="flex" justifyContent="center" mb={2} flex={1}>
                                             <Chart
@@ -631,7 +627,7 @@ const S1S2DenetlemeSlide = () => {
                                         </Box>
                                         <Box mt="auto" p={1.5} sx={{ backgroundColor: 'rgba(16, 185, 129, 0.08)', borderRadius: 2, borderLeft: '3px solid #10b981' }}>
                                             <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.75rem', fontWeight: 500, lineHeight: 1.2 }}>
-                                                Envanterlerin montaj standartı ve fiziki sağlamlık açısından uygunluk göstergesidir.
+                                                Grafik envanterlerin montaj standartı ve fiziki sağlamlık açısından uygunluğunu ifade eder.
                                             </Typography>
                                         </Box>
                                     </Box>
@@ -647,7 +643,7 @@ const S1S2DenetlemeSlide = () => {
                                     }}>
                                         <Typography variant="subtitle2" fontWeight="800" align="center" mb={1} color="#8b5cf6" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
                                             <div style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#8b5cf6' }} />
-                                            SEVİYE-2 AKSİYON POTANSİYELİ
+                                            Uygunsuzluk Durumunun Seviye-2 Kapsamında Değerlendirilmesi
                                         </Typography>
                                         <Box display="flex" justifyContent="center" mb={2} flex={1}>
                                             <Chart
@@ -660,7 +656,7 @@ const S1S2DenetlemeSlide = () => {
                                         </Box>
                                         <Box mt="auto" p={1.5} sx={{ backgroundColor: 'rgba(139, 92, 246, 0.08)', borderRadius: 2, borderLeft: '3px solid #8b5cf6' }}>
                                             <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.75rem', fontWeight: 500, lineHeight: 1.2 }}>
-                                                Uygunsuz bulunan noktaların, Seviye-2 bakım düzeltmesi kapsamında ele alınma kararıdır.
+                                                Uygunsuz bulunan envarterlerin, Seviye-2 bakım düzeltmesi kapsamında ele alınma kararıdır.
                                             </Typography>
                                         </Box>
                                     </Box>
@@ -888,7 +884,7 @@ const S1S2DenetlemeSlide = () => {
                 <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pb: 2, borderBottom: `1px solid ${theme.palette.divider}`, mb: 2 }}>
                     <Typography variant="h5" fontWeight="900" color="primary" sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
                         <div style={{ width: 12, height: 32, borderRadius: 4, backgroundColor: theme.palette.primary.main }} />
-                        {selectedOm?.om} LOKASYON ANALİZİ
+                        {selectedOm?.om}  ENVARTER BAZLI BAKIM FORM ANALİZLERİ
                     </Typography>
                     <Box display="flex" alignItems="center" gap={1}>
                         <FormControlLabel
@@ -899,7 +895,7 @@ const S1S2DenetlemeSlide = () => {
                                     color="primary"
                                 />
                             }
-                            label={<Typography variant="body2" fontWeight="800">Toplam Toparla</Typography>}
+                            label={<Typography variant="body2" fontWeight="800">Toplam Göster</Typography>}
                             sx={{ mr: 2, background: 'rgba(0,0,0,0.03)', px: 1.5, py: 0.5, borderRadius: 2 }}
                         />
                         <IconButton onClick={() => setDialogFullScreen(!dialogFullScreen)} size="small" sx={{ bgcolor: 'rgba(0,0,0,0.04)' }}>
@@ -923,7 +919,7 @@ const S1S2DenetlemeSlide = () => {
                                     <Box display="flex" alignItems="center" gap={1.5} mb={3}>
                                         <Avatar sx={{ bgcolor: 'primary.main', width: 32, height: 32 }}><ClipboardCheck size={16} /></Avatar>
                                         <Typography variant="subtitle1" fontWeight="900" color="text.primary">
-                                            Denetim Kontrol Yoğunluğu
+                                            SİM Tarafından Yapılan Toplam Denetleme Sayısı
                                         </Typography>
                                     </Box>
                                     <Box flex={1} display="flex" alignItems="center" justifyContent="center">
@@ -937,7 +933,7 @@ const S1S2DenetlemeSlide = () => {
                                     </Box>
                                     <Box mt="auto" pt={2} sx={{ borderTop: `1px dashed ${theme.palette.divider}` }}>
                                         <Typography variant="body2" color="text.secondary" fontWeight={500} align="center">
-                                            Saha form kontrollerinin, hiç kontrol edilmeyenlere olan oranını gösterir.
+                                            Seviye-1 ve Seviye-2 bakım yapılan lokasyonların SİM tarafından denetlenme durumunun göstergesi
                                         </Typography>
                                     </Box>
                                 </Paper>
@@ -977,7 +973,7 @@ const S1S2DenetlemeSlide = () => {
                                             />
                                             <Box mt={2} pt={1.5} sx={{ borderTop: `1px dashed ${theme.palette.divider}` }}>
                                                 <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.75rem', fontWeight: 500, lineHeight: 1.2 }}>
-                                                    Bakım formlarına işlenen verilerin, sahadaki fiili durumla uyuşma istatistiklerini yansıtır.
+                                                    Envarter bazlı tutulan bakım formlarının doğruluk doğru-yanlış tutulma durumunu gösterir
                                                 </Typography>
                                             </Box>
                                         </Paper>

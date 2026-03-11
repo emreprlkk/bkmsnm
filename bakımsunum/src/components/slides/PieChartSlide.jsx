@@ -285,7 +285,7 @@ export default function PieChartSlide() {
             <div className="mb-6 flex flex-shrink-0 justify-between items-start">
                 <div>
                     <h2 className="text-2xl md:text-3xl font-extrabold text-base-content mb-2 flex items-center gap-3">
-                        2025 Yılında Yapılan Seviye-3 İşleri                    </h2>
+                        2025 Yılında Yapılan Seviye-3 Planlı Bakım İşleri                    </h2>
                     <p className="text-base-content/60 text-sm md:text-lg">Bölge ve lokasyon bazlı bütçe dağılımları ({formatCurrencyM(grandTotal)})</p>
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0 ml-4">
@@ -328,13 +328,13 @@ export default function PieChartSlide() {
                                     {activeDistrict ? activeDistrict.name : `${activeBolgeData.bolge} BÖLGESİ`}
                                 </h3>
                                 <p className="text-center text-[10px] text-base-content/50 uppercase tracking-widest mb-2 border-b border-base-200 pb-2">
-                                    Kapsam Bazlı Adet ve Maliyet Analizi
+                                    SEVİYE-3 PROJE SAYISI VE TUTARI
                                 </p>
                                 <div className="flex-1 w-full -ml-3 mt-1">
                                     <Chart
                                         options={districtChartOptions}
                                         series={[
-                                            { name: 'Maliyet Tutarı', type: 'column', data: activeDistrict ? activeDistrict.rawCost : activeBolgeChartData.rawCost },
+                                            { name: 'Proje Bedeli', type: 'column', data: activeDistrict ? activeDistrict.rawCost : activeBolgeChartData.rawCost },
                                             { name: 'Proje Adedi', type: 'line', data: activeDistrict ? activeDistrict.rawData : activeBolgeChartData.rawData }
                                         ]}
                                         type="line"
@@ -439,14 +439,14 @@ export default function PieChartSlide() {
                                             <div className="mt-3 grid grid-cols-2 gap-2">
                                                 <div className="bg-secondary/5 border border-secondary/10 rounded-lg p-2.5 flex flex-col justify-between hover:bg-secondary/10 transition-colors">
                                                     <div className="flex justify-between items-center mb-1.5">
-                                                        <span className="text-[10px] text-secondary font-bold uppercase tracking-wider">TEDAŞ</span>
+                                                        <span className="text-[10px] text-secondary font-bold uppercase tracking-wider">TEDAŞ Projesi</span>
                                                         <span className="text-[10px] bg-secondary/10 text-secondary font-bold px-1.5 py-0.5 rounded shadow-sm">{b.tedasSayisi} Adet</span>
                                                     </div>
                                                     <span className="text-sm font-black text-secondary/90">{formatCurrencyM(b.tedasTutar)}</span>
                                                 </div>
                                                 <div className="bg-accent/5 border border-accent/10 rounded-lg p-2.5 flex flex-col justify-between hover:bg-accent/10 transition-colors">
                                                     <div className="flex justify-between items-center mb-1.5">
-                                                        <span className="text-[10px] text-accent font-bold uppercase tracking-wider">EDAŞ</span>
+                                                        <span className="text-[10px] text-accent font-bold uppercase tracking-wider">EDAŞ Projesi"</span>
                                                         <span className="text-[10px] bg-accent/10 text-accent font-bold px-1.5 py-0.5 rounded shadow-sm">{b.edasSayisi} Adet</span>
                                                     </div>
                                                     <span className="text-sm font-black text-accent/90">{formatCurrencyM(b.edasTutar)}</span>
@@ -536,21 +536,21 @@ export default function PieChartSlide() {
                                                     </div>
 
                                                     <div className="mt-2 flex flex-col">
-                                                        <span className="text-[10px] text-base-content/50 font-bold uppercase tracking-widest mb-1">TEDAŞ RAPORLAMA</span>
+                                                        <span className="text-[10px] text-base-content/50 font-bold uppercase tracking-widest mb-1">TEDAŞ RAPORLAMA BEDELİ</span>
                                                         <span className="text-xl font-black text-base-content">{formatCurrencyExact(d.cost)}</span>
                                                     </div>
 
                                                     <div className="mt-3 grid grid-cols-2 gap-2">
                                                         <div className="bg-secondary/5 border border-secondary/10 rounded-lg p-2 flex flex-col justify-between hover:bg-secondary/10 transition-colors">
                                                             <div className="flex justify-between items-start mb-1.5">
-                                                                <span className="text-[9px] text-secondary font-bold uppercase tracking-wider mt-0.5">TEDAŞ</span>
+                                                                <span className="text-[9px] text-secondary font-bold uppercase tracking-wider mt-0.5">TEDAŞ PROJE SAYISI</span>
                                                                 <span className="text-[9px] px-1 py-0.5 rounded bg-secondary/10 text-secondary font-bold shadow-sm">{d.tedasSayisi}</span>
                                                             </div>
                                                             <span className="text-[11px] font-bold text-secondary/90 tracking-wide">{formatCurrencyM(d.tedasTutar)}</span>
                                                         </div>
                                                         <div className="bg-accent/5 border border-accent/10 rounded-lg p-2 flex flex-col justify-between hover:bg-accent/10 transition-colors">
                                                             <div className="flex justify-between items-start mb-1.5">
-                                                                <span className="text-[9px] text-accent font-bold uppercase tracking-wider mt-0.5">EDAŞ</span>
+                                                                <span className="text-[9px] text-accent font-bold uppercase tracking-wider mt-0.5">EDAŞ PROJE SAYISI</span>
                                                                 <span className="text-[9px] px-1 py-0.5 rounded bg-accent/10 text-accent font-bold shadow-sm">{d.edasSayisi}</span>
                                                             </div>
                                                             <span className="text-[11px] font-bold text-accent/90 tracking-wide">{formatCurrencyM(d.edasTutar)}</span>
@@ -565,7 +565,7 @@ export default function PieChartSlide() {
                                                     </div>
 
                                                     <div className="flex justify-between items-center mt-2">
-                                                        <span className="text-[10px] text-base-content/40 font-medium">İl'deki yüzdesi</span>
+                                                        <span className="text-[10px] text-base-content/40 font-medium">İl'deki raporlama yüzdesi</span>
                                                         <span className={`text-[11px] font-bold ${idx === 0 || isActive ? 'text-primary' : 'text-base-content/60'}`}>
                                                             %{percentage.toFixed(1)}
                                                         </span>

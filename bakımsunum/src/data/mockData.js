@@ -535,6 +535,8 @@ export const envanterTotal = {
     panoAgDagilim: 313, panoAydinlatma: 27, panoSdk: 48, trafoDagitimHr: 33, genelToplam: 3148
 };
 
+
+//2025 seviye-3 projelerinin edas tedas kırılımlı hali
 export const raporlamaData = [
     { bolge: 'ADANA', om: 'Adana Kuzey', tedasSayisi: 11, tedasTutar: 118350129.70, edasSayisi: 14, edasTutar: 62639195.15 },
     { bolge: 'ADANA', om: 'Adana Metropol', tedasSayisi: 8, tedasTutar: 67101711.97, edasSayisi: 60, edasTutar: 122253701.96 },

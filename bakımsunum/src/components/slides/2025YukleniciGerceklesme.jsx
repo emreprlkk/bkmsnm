@@ -406,7 +406,7 @@ export default function YukleniciGerceklesme2025() {
                                     </th>
                                     <Th label="Sözleşme Adı" col="sozlesmeAdi" />
                                     <Th label="Yüklenici" col="yuklenici" />
-                                    <Th label="Bedel" col="sozlesmeBedeli" align="right" />
+                                    <Th label="Sözleşme Bedeli" col="sozlesmeBedeli" align="right" />
                                     <Th label="Hak Ediş" col="toplamHakEdis" align="right" />
                                     <Th label="Kalan" col="kalanHakEdis" align="right" />
                                     <Th label="Doluluk" col="doluluk" align="right" />
