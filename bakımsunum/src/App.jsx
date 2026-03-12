@@ -22,6 +22,7 @@ import EnvanterSlide from './components/slides/EnvanterSlide26';
 import GirisSlide from './components/slides/GirisSlide';
 import VideoSlide from './components/slides/VideoSlide';
 import AgacDirekSlide from './components/slides/AgacDirekSlide';
+import BinaIyilestirmeSlide from './components/slides/BinaIyilestirmeSlide';
 import { X, GripHorizontal, Eye } from 'lucide-react';
 
 const TimelineOverlay = ({ slides, activeSlideId }) => {
@@ -318,6 +319,8 @@ function App() {
         return <EnvanterSlide />;
       case 'agac_direk':
         return <AgacDirekSlide />;
+      case 'bina_iyilestirme':
+        return <BinaIyilestirmeSlide />;
       case 'giris':
         return <GirisSlide setActiveSlideId={setActiveSlideId} />;
       default:

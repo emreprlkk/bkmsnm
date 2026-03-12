@@ -86,6 +86,7 @@ export const presentationSlides = [
 
     { id: 6, title: '2026 YÜKLENİCİ BİLGİLERİ', type: 'yuklenici_bilgileri' },
     { id: 13, title: 'AĞAÇ DİREK ENVANTERİ', type: 'agac_direk' },
+    { id: 14, title: 'BİNA İYİLEŞTİRME ÇALIŞMALARI', type: 'bina_iyilestirme' },
 
 
     { id: 101, group: 'Fotoğraflar', title: 'Bina Yenileme İşi', titleShort: 'Bina', type: 'photo_bina' },
@@ -606,4 +607,39 @@ export const agacDirekBolgeData = [
   { bolge: 'HATAY',     dikilen: 516 },
   { bolge: 'MERSİN',    dikilen: 895 },
   { bolge: 'GAZİANTEP', dikilen: 125 },
+];
+
+export const kesifButceBinaData26 = [
+  { om: 'ADANA KUZEY',        butce: 3526571.10  },
+  { om: 'ADANA METROPOL',     butce: 17270189.76 },
+  { om: 'ANAMUR',             butce: 673809.56   },
+  { om: 'CEYHAN',             butce: 2590195.01  },
+  { om: 'DÖRTYOL',            butce: 1035314.60  },
+  { om: 'DÜZİÇİ',             butce: 484984.48   },
+  { om: 'ERDEMLİ',            butce: 5954743.13  },
+  { om: 'GAZİANTEP METROPOL', butce: 23622135.76 },
+  { om: 'HATAY METROPOL',     butce: 5524884.62  },
+  { om: 'İSKENDERUN',         butce: 5687688.33  },
+  { om: 'İSLAHİYE',           butce: 1671328.89  },
+  { om: 'KADİRLİ',            butce: 1297059.24  },
+  { om: 'KIRIKHAN',           butce: 728084.92   },
+  { om: 'KİLİS',              butce: 1779028.97  },
+  { om: 'MERSİN METROPOL',    butce: 22920555.04 },
+  { om: 'MUT',                butce: 522085.23   },
+  { om: 'NİZİP',              butce: 1125759.94  },
+  { om: 'OSMANİYE',           butce: 1844798.27  },
+  { om: 'REYHANLI',           butce: 1750662.92  },
+  { om: 'SİLİFKE',            butce: 4406567.41  },
+  { om: 'TARSUS',             butce: 7583364.96  },
+];
+
+export const binaIsiData25 = [
+  { om: 'Adana Metropol',  hakedis: 1241219.61, binaAdedi: 6  },
+  { om: 'Ceyhan',          hakedis: 1413862.26, binaAdedi: 15 },
+  { om: 'Dörtyol',         hakedis: 108021.21,  binaAdedi: 1  },
+  { om: 'Erdemli',         hakedis: 3012074.15, binaAdedi: 21 },
+  { om: 'Mersin Metropol', hakedis: 3274297.69, binaAdedi: 32 },
+  { om: 'Mut',             hakedis: 2000548.92, binaAdedi: 10 },
+  { om: 'Silifke',         hakedis: 3787354.55, binaAdedi: 22 },
+  { om: 'Tarsus',          hakedis: 257474.69,  binaAdedi: 2  },
 ];
