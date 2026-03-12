@@ -15,6 +15,37 @@ const fmtNum = (val) =>
 const isTotal = (row) =>
     (row.om || '').toUpperCase().includes('GENEL TOPLAM');
 
+const omToBm = {
+    'ADANA KUZEY': 'ADANA',
+    'ADANA METROPOL': 'ADANA',
+    'ANAMUR': 'MERSİN',
+    'CEYHAN': 'ADANA',
+    'DÖRTYOL': 'HATAY',
+    'DÜZİÇİ': 'OSMANİYE',
+    'ERDEMLİ': 'MERSİN',
+    'GAZİANTEP METROPOL': 'GAZİANTEP',
+    'HATAY METROPOL': 'HATAY',
+    'İSKENDERUN': 'HATAY',
+    'İSLAHİYE': 'GAZİANTEP',
+    'KADİRLİ': 'OSMANİYE',
+    'KIRIKHAN': 'HATAY',
+    'KİLİS': 'KİLİS',
+    'MERSİN METROPOL': 'MERSİN',
+    'MUT': 'MERSİN',
+    'NİZİP': 'GAZİANTEP',
+    'OSMANİYE': 'OSMANİYE',
+    'REYHANLI': 'HATAY',
+    'SİLİFKE': 'MERSİN',
+    'TARSUS': 'MERSİN',
+};
+
+const getBm = (om) => {
+    if (!om) return '—';
+    // Use Turkish locale for proper i->İ conversion
+    const normalized = om.toLocaleUpperCase('tr-TR').trim();
+    return omToBm[normalized] || '—';
+};
+
 // ─── Reusable Table Shell ─────────────────────────────────────────────────────
 function BinaTable({ title, icon: Icon, iconColor, headerColor, children, columns, subtitle, onSort, sortConfig }) {
     return (
@@ -99,14 +130,26 @@ const useSortableData = (items, config = null) => {
 };
 
 // ─── Table 1: 2026 Bütçesi ────────────────────────────────────────────────────
-function Butce2026Table() {
+function Butce2026Table({ filters = { bm: 'TÜMÜ', om: 'TÜMÜ' } }) {
     const cols = [
+        { label: 'BM', align: 'left', key: 'bm' },
         { label: 'Operasyon Merkezi', align: 'left', key: 'om' },
         { label: 'Talep Edilen Bütçe (₺)', align: 'right', key: 'butce' },
     ];
 
-    const { items, requestSort, sortConfig } = useSortableData(kesifButceBinaData26, { key: 'butce', direction: 'desc' });
-    const totalButce = kesifButceBinaData26.reduce((acc, curr) => acc + curr.butce, 0);
+    const filteredData = React.useMemo(() => {
+        let data = kesifButceBinaData26.map(row => ({ ...row, bm: getBm(row.om) }));
+        if (filters.bm !== 'TÜMÜ') {
+            data = data.filter(d => d.bm === filters.bm);
+        }
+        if (filters.om !== 'TÜMÜ') {
+            data = data.filter(d => d.om === filters.om);
+        }
+        return data;
+    }, [filters]);
+
+    const { items, requestSort, sortConfig } = useSortableData(filteredData, { key: 'butce', direction: 'desc' });
+    const totalButce = filteredData.reduce((acc, curr) => acc + curr.butce, 0);
 
     return (
         <BinaTable
@@ -128,6 +171,9 @@ function Butce2026Table() {
                         hover:bg-indigo-50/40
                     `}
                 >
+                    <td className="px-6 py-3 font-bold text-indigo-900 italic">
+                        {row.bm}
+                    </td>
                     <td className="px-6 py-3 font-bold text-indigo-900 border-l-4 border-transparent hover:border-indigo-400">
                         {row.om}
                     </td>
@@ -137,7 +183,7 @@ function Butce2026Table() {
                 </tr>
             ))}
             <tr className="bg-indigo-600 text-white font-black">
-                <td className="px-6 py-4 uppercase tracking-widest text-sm">TOPLAM BÜTÇE</td>
+                <td colSpan={2} className="px-6 py-4 uppercase tracking-widest text-sm">TOPLAM BÜTÇE</td>
                 <td className="px-6 py-4 text-right tabular-nums font-mono text-base">{fmt(totalButce)}</td>
             </tr>
         </BinaTable>
@@ -145,16 +191,28 @@ function Butce2026Table() {
 }
 
 // ─── Table 2: 2025 Hakediş ────────────────────────────────────────────────────
-function Hakedis2025Table() {
+function Hakedis2025Table({ filters = { bm: 'TÜMÜ', om: 'TÜMÜ' } }) {
     const cols = [
+        { label: 'BM', align: 'left', key: 'bm' },
         { label: 'Operasyon Merkezi', align: 'left', key: 'om' },
         { label: 'Bina Adedi', align: 'right', key: 'binaAdedi' },
         { label: 'Gerçekleşen Hakediş (₺)', align: 'right', key: 'hakedis' },
     ];
 
-    const { items, requestSort, sortConfig } = useSortableData(binaIsiData25, { key: 'hakedis', direction: 'desc' });
-    const totalHakedis = binaIsiData25.reduce((acc, curr) => acc + curr.hakedis, 0);
-    const totalBina = binaIsiData25.reduce((acc, curr) => acc + curr.binaAdedi, 0);
+    const filteredData = React.useMemo(() => {
+        let data = binaIsiData25.map(row => ({ ...row, bm: getBm(row.om) }));
+        if (filters.bm !== 'TÜMÜ') {
+            data = data.filter(d => d.bm === filters.bm);
+        }
+        if (filters.om !== 'TÜMÜ') {
+            data = data.filter(d => d.om === filters.om);
+        }
+        return data;
+    }, [filters]);
+
+    const { items, requestSort, sortConfig } = useSortableData(filteredData, { key: 'hakedis', direction: 'desc' });
+    const totalHakedis = filteredData.reduce((acc, curr) => acc + curr.hakedis, 0);
+    const totalBina = filteredData.reduce((acc, curr) => acc + curr.binaAdedi, 0);
 
     return (
         <BinaTable
@@ -176,6 +234,9 @@ function Hakedis2025Table() {
                         hover:bg-emerald-50/40
                     `}
                 >
+                    <td className="px-6 py-3 font-bold text-emerald-900 italic">
+                        {row.bm}
+                    </td>
                     <td className="px-6 py-3 font-bold text-emerald-900 border-l-4 border-transparent hover:border-emerald-400">
                         {row.om}
                     </td>
@@ -188,7 +249,7 @@ function Hakedis2025Table() {
                 </tr>
             ))}
             <tr className="bg-emerald-600 text-white font-black">
-                <td className="px-6 py-4 uppercase tracking-widest text-sm">TOPLAM</td>
+                <td colSpan={2} className="px-6 py-4 uppercase tracking-widest text-sm">TOPLAM</td>
                 <td className="px-6 py-4 text-right tabular-nums text-base">{totalBina} Bina</td>
                 <td className="px-6 py-4 text-right tabular-nums font-mono text-base">{fmt(totalHakedis)}</td>
             </tr>
@@ -201,6 +262,7 @@ export default function BinaIyilestirmeSlide() {
     const [isFullscreen, setIsFullscreen] = useState(() => !!document.fullscreenElement);
     const [viewMode, setViewMode] = useState('slider'); // 'grid' or 'slider'
     const [activeTab, setActiveTab] = useState(0); // 0: 2026 Bütçe, 1: 2025 Hakediş
+    const [filters, setFilters] = useState({ bm: 'TÜMÜ', om: 'TÜMÜ' });
     const containerRef = useRef(null);
 
     useEffect(() => {
@@ -217,22 +279,57 @@ export default function BinaIyilestirmeSlide() {
         }
     };
 
-    const totalButce = kesifButceBinaData26.reduce((acc, curr) => acc + curr.butce, 0);
-    const totalHakedis = binaIsiData25.reduce((acc, curr) => acc + curr.hakedis, 0);
+    const globalTotalButce = React.useMemo(() => 
+        kesifButceBinaData26.reduce((acc, curr) => acc + curr.butce, 0), 
+    []);
+    const globalTotalHakedis = React.useMemo(() => 
+        binaIsiData25.reduce((acc, curr) => acc + curr.hakedis, 0), 
+    []);
+
+    const totalButce = React.useMemo(() => {
+        let data = kesifButceBinaData26.map(row => ({ ...row, bm: getBm(row.om) }));
+        if (filters.bm !== 'TÜMÜ') data = data.filter(d => d.bm === filters.bm);
+        if (filters.om !== 'TÜMÜ') data = data.filter(d => d.om === filters.om);
+        return data.reduce((acc, curr) => acc + curr.butce, 0);
+    }, [filters]);
+
+    const totalHakedis = React.useMemo(() => {
+        let data = binaIsiData25.map(row => ({ ...row, bm: getBm(row.om) }));
+        if (filters.bm !== 'TÜMÜ') data = data.filter(d => d.bm === filters.bm);
+        if (filters.om !== 'TÜMÜ') data = data.filter(d => d.om === filters.om);
+        return data.reduce((acc, curr) => acc + curr.hakedis, 0);
+    }, [filters]);
+
+    const percentButce = globalTotalButce > 0 ? (totalButce / globalTotalButce) * 100 : 0;
+    const percentHakedis = globalTotalHakedis > 0 ? (totalHakedis / globalTotalHakedis) * 100 : 0;
+
+    const bmOptions = React.useMemo(() => {
+        const bms = new Set(Object.values(omToBm));
+        return ['TÜMÜ', ...Array.from(bms).sort()];
+    }, []);
+
+    const omOptions = React.useMemo(() => {
+        const oms = new Set([...kesifButceBinaData26, ...binaIsiData25].map(d => d.om.toLocaleUpperCase('tr-TR')));
+        let list = Array.from(oms).sort();
+        if (filters.bm !== 'TÜMÜ') {
+            list = list.filter(om => getBm(om) === filters.bm);
+        }
+        return ['TÜMÜ', ...list];
+    }, [filters.bm]);
 
     const fmtCurrency = (v) =>
         v == null ? '—' : new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', maximumFractionDigits: 0 }).format(v).replace('TRY', '₺');
 
     const tables = [
-        { id: 0, component: <Butce2026Table />, title: '2026 Bütçesi' },
-        { id: 1, component: <Hakedis2025Table />, title: '2025 Hakedişi' }
+        { id: 0, component: <Butce2026Table filters={filters} />, title: '2026 Bütçesi' },
+        { id: 1, component: <Hakedis2025Table filters={filters} />, title: '2025 Hakedişi' }
     ];
 
     return (
         <div
             ref={containerRef}
-            className={`flex flex-col overflow-hidden ${isFullscreen 
-                ? 'fixed inset-0 z-50 bg-white p-12' 
+            className={`flex flex-col overflow-hidden ${isFullscreen
+                ? 'fixed inset-0 z-50 bg-white p-12'
                 : 'h-full w-full p-4'}`}
         >
             {/* Header Area & Quick Stats - FIXED (No scroll) */}
@@ -253,24 +350,46 @@ export default function BinaIyilestirmeSlide() {
                     </div>
 
                     <div className="flex items-center gap-3">
-                         <div className="join bg-base-200 p-1 rounded-xl border border-base-300">
+                        <div className="flex items-center gap-2 bg-slate-100 p-1 rounded-xl border border-slate-200 shadow-inner">
+                            <select
+                                value={filters.bm}
+                                onChange={(e) => setFilters(prev => ({ ...prev, bm: e.target.value, om: 'TÜMÜ' }))}
+                                className="select select-xs select-ghost font-bold text-slate-700 focus:outline-none"
+                            >
+                                {bmOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                            </select>
+                            <div className="w-[1px] h-4 bg-slate-300" />
+                            <select
+                                value={filters.om}
+                                onChange={(e) => setFilters(prev => ({ ...prev, om: e.target.value }))}
+                                className="select select-xs select-ghost font-bold text-slate-700 focus:outline-none"
+                            >
+                                {omOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                            </select>
+                        </div>
+
+                        <div className="join bg-base-200 p-1 rounded-xl border border-base-300">
                             <button
                                 onClick={() => setViewMode('grid')}
                                 className={`join-item btn btn-xs px-4 rounded-lg transition-all ${viewMode === 'grid' ? 'btn-primary shadow-lg' : 'btn-ghost opacity-50'}`}
                             >
-                                Liste
+                                ÇİFT TABLO
                             </button>
                             <button
                                 onClick={() => setViewMode('slider')}
                                 className={`join-item btn btn-xs px-4 rounded-lg transition-all ${viewMode === 'slider' ? 'btn-primary shadow-lg' : 'btn-ghost opacity-50'}`}
                             >
-                                Slider
+                                TEK TABLO
                             </button>
                         </div>
                         <ExportExcelButton
                             data={[
-                                ...kesifButceBinaData26.map(v => ({ 'Rapor': '2026 Bütçe', ...v })),
-                                ...binaIsiData25.map(v => ({ 'Rapor': '2025 Hakediş', ...v }))
+                                ...kesifButceBinaData26
+                                    .map(v => ({ ...v, bm: getBm(v.om), Rapor: '2026 Bütçe' }))
+                                    .filter(d => (filters.bm === 'TÜMÜ' || d.bm === filters.bm) && (filters.om === 'TÜMÜ' || d.om.toLocaleUpperCase('tr-TR') === filters.om)),
+                                ...binaIsiData25
+                                    .map(v => ({ ...v, bm: getBm(v.om), Rapor: '2025 Hakediş' }))
+                                    .filter(d => (filters.bm === 'TÜMÜ' || d.bm === filters.bm) && (filters.om === 'TÜMÜ' || d.om.toLocaleUpperCase('tr-TR') === filters.om))
                             ]}
                             fileName="Bina_Iyilestirme_Raporu"
                         />
@@ -282,27 +401,41 @@ export default function BinaIyilestirmeSlide() {
 
                 {/* Quick Stats Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div 
+                    <div
                         className={`group relative overflow-hidden flex flex-col p-6 rounded-3xl border transition-all cursor-pointer ${activeTab === 0 && viewMode === 'slider' ? 'bg-indigo-600 border-indigo-500 scale-[1.02] shadow-xl shadow-indigo-200' : 'bg-white border-slate-200 hover:border-indigo-300'}`}
                         onClick={() => { if (viewMode === 'slider') setActiveTab(0) }}
                     >
                         <div className={`absolute top-0 right-0 p-8 opacity-10 transition-transform group-hover:scale-110 ${activeTab === 0 && viewMode === 'slider' ? 'text-white' : 'text-indigo-600'}`}>
                             <TrendingUp size={80} />
                         </div>
-                        <span className={`text-[10px] font-black uppercase tracking-[0.2em] ${activeTab === 0 && viewMode === 'slider' ? 'text-indigo-100' : 'text-slate-400'}`}>2026 Keşif Bütçesi</span>
+                        <span className={`text-[10px] font-black uppercase tracking-[0.2em] ${activeTab === 0 && viewMode === 'slider' ? 'text-indigo-100' : 'text-slate-400'}`}>
+                            2026 Keşif Bütçesi
+                            {filters.bm !== 'TÜMÜ' || filters.om !== 'TÜMÜ' ? (
+                                <span className={`ml-2 px-1.5 py-0.5 rounded-md text-[9px] ${activeTab === 0 && viewMode === 'slider' ? 'bg-white/20 text-white' : 'bg-indigo-100 text-indigo-700'}`}>
+                                    %{percentButce.toFixed(1)}
+                                </span>
+                            ) : null}
+                        </span>
                         <span className={`text-2xl font-black mt-2 tracking-tighter ${activeTab === 0 && viewMode === 'slider' ? 'text-white' : 'text-indigo-700'}`}>
                             {fmtCurrency(totalButce)}
                         </span>
                     </div>
 
-                    <div 
+                    <div
                         className={`group relative overflow-hidden flex flex-col p-6 rounded-3xl border transition-all cursor-pointer ${activeTab === 1 && viewMode === 'slider' ? 'bg-emerald-600 border-emerald-500 scale-[1.02] shadow-xl shadow-emerald-200' : 'bg-white border-slate-200 hover:border-emerald-300'}`}
                         onClick={() => { if (viewMode === 'slider') setActiveTab(1) }}
                     >
-                         <div className={`absolute top-0 right-0 p-8 opacity-10 transition-transform group-hover:scale-110 ${activeTab === 1 && viewMode === 'slider' ? 'text-white' : 'text-emerald-600'}`}>
+                        <div className={`absolute top-0 right-0 p-8 opacity-10 transition-transform group-hover:scale-110 ${activeTab === 1 && viewMode === 'slider' ? 'text-white' : 'text-emerald-600'}`}>
                             <CheckCircle2 size={80} />
                         </div>
-                        <span className={`text-[10px] font-black uppercase tracking-[0.2em] ${activeTab === 1 && viewMode === 'slider' ? 'text-emerald-100' : 'text-slate-400'}`}>2025 Toplam Hakediş</span>
+                        <span className={`text-[10px] font-black uppercase tracking-[0.2em] ${activeTab === 1 && viewMode === 'slider' ? 'text-emerald-100' : 'text-slate-400'}`}>
+                            2025 Toplam Hakediş
+                            {filters.bm !== 'TÜMÜ' || filters.om !== 'TÜMÜ' ? (
+                                <span className={`ml-2 px-1.5 py-0.5 rounded-md text-[9px] ${activeTab === 1 && viewMode === 'slider' ? 'bg-white/20 text-white' : 'bg-emerald-100 text-emerald-700'}`}>
+                                    %{percentHakedis.toFixed(1)}
+                                </span>
+                            ) : null}
+                        </span>
                         <span className={`text-2xl font-black mt-2 tracking-tighter ${activeTab === 1 && viewMode === 'slider' ? 'text-white' : 'text-emerald-700'}`}>
                             {fmtCurrency(totalHakedis)}
                         </span>
@@ -314,8 +447,8 @@ export default function BinaIyilestirmeSlide() {
             <div className="flex-1 overflow-hidden min-h-0">
                 {viewMode === 'grid' ? (
                     <div className="h-full grid grid-cols-1 xl:grid-cols-2 gap-8 animate-in slide-in-from-bottom-4 duration-700">
-                        <Butce2026Table />
-                        <Hakedis2025Table />
+                        <Butce2026Table filters={filters} />
+                        <Hakedis2025Table filters={filters} />
                     </div>
                 ) : (
                     <div className="h-full flex flex-col gap-4 animate-in slide-in-from-right-4 duration-700">

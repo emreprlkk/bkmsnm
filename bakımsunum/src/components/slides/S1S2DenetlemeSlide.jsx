@@ -219,6 +219,15 @@ const S1S2DenetlemeSlide = () => {
                 markers: { radius: 12 }
             },
             stroke: { show: true, colors: ['transparent'], width: 2 },
+            dataLabels: {
+                enabled: true,
+                style: { fontSize: '11px', fontWeight: 800, colors: ['#fff'] },
+                dropShadow: { enabled: true, top: 1, left: 1, blur: 2, color: '#000', opacity: 0.7 },
+                formatter: (val, opts) => {
+                    const seriesValue = opts.w.config.series[opts.seriesIndex];
+                    return [seriesValue, `%${val.toFixed(1)}`];
+                }
+            },
             plotOptions: {
                 pie: {
                     donut: {
@@ -234,14 +243,11 @@ const S1S2DenetlemeSlide = () => {
                                 }
                             }
                         }
+                    },
+                    dataLabels: {
+                        minAngleToShowLabel: 15
                     }
                 }
-            },
-            dataLabels: {
-                enabled: true,
-                style: { fontSize: '14px', fontWeight: 800, colors: ['#fff'] },
-                dropShadow: { enabled: true, top: 1, left: 1, blur: 2, color: '#000', opacity: 0.7 },
-                formatter: (val, opts) => opts.w.config.series[opts.seriesIndex] // Show absolute values on pie slices
             },
             fill: {
                 type: 'gradient',
@@ -437,14 +443,20 @@ const S1S2DenetlemeSlide = () => {
                                     }
                                 }
                             }
+                        },
+                        dataLabels: {
+                            minAngleToShowLabel: 15
                         }
                     }
                 },
                 dataLabels: {
                     enabled: true,
-                    style: { fontSize: '12px', fontWeight: 800, colors: ['#fff'] },
+                    style: { fontSize: '10px', fontWeight: 800, colors: ['#fff'] },
                     dropShadow: { enabled: true, top: 1, left: 1, blur: 2, color: '#000', opacity: 0.7 },
-                    formatter: (val, opts) => opts.w.config.series[opts.seriesIndex]
+                    formatter: (val, opts) => {
+                        const seriesValue = opts.w.config.series[opts.seriesIndex];
+                        return [seriesValue, `%${val.toFixed(1)}`];
+                    }
                 },
                 fill: { type: 'gradient' }
             },

@@ -43,21 +43,21 @@ const safeNumber = (value) => Number(value || 0);
 
 function StatCard({ title, value, subValue, icon: Icon, tone = 'text-info' }) {
     return (
-        <div className="rounded-2xl border border-base-200 bg-base-100 shadow-sm">
-            <div className="flex items-start justify-between gap-3 p-4 md:p-5">
+        <div className="rounded-2xl border border-base-200 bg-base-100 shadow-sm transition-all hover:shadow-md">
+            <div className="flex items-start justify-between gap-2 p-3 md:p-4">
                 <div className="min-w-0">
-                    <div className="mb-1 text-[10px] md:text-xs font-bold uppercase tracking-widest text-base-content/60">
+                    <div className="mb-0.5 text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-base-content/60">
                         {title}
                     </div>
-                    <div className={`text-2xl md:text-3xl font-extrabold leading-none ${tone}`}>
+                    <div className={`text-lg md:text-xl font-black leading-none ${tone}`}>
                         {value}
                     </div>
                     {subValue ? (
-                        <div className="mt-1 text-xs text-base-content/50">{subValue}</div>
+                        <div className="mt-0.5 text-[10px] text-base-content/40 truncate">{subValue}</div>
                     ) : null}
                 </div>
-                <div className={`shrink-0 rounded-2xl bg-base-200 p-3 ${tone}`}>
-                    <Icon size={20} />
+                <div className={`shrink-0 rounded-xl bg-base-200 p-2 md:p-2.5 ${tone}`}>
+                    <Icon size={16} />
                 </div>
             </div>
         </div>
@@ -690,16 +690,16 @@ export default function YerTeslimiSlide() {
                 }`}
         >
             <div
-                className={`sticky top-0 z-40 bg-base-100/95 backdrop-blur-md border-b border-base-200 shadow-sm pb-5 ${isFullscreen ? 'pt-6 px-6 md:pt-8 md:px-8' : 'pt-2'
+                className={`sticky top-0 z-40 bg-base-100/95 backdrop-blur-md border-b border-base-200 shadow-sm pb-3 ${isFullscreen ? 'pt-4 px-6 md:pt-6 md:px-8' : 'pt-1'
                     }`}
             >
-                <div className="mb-5 flex flex-col gap-4 px-1 md:flex-row md:items-end md:justify-between">
+                <div className="mb-3 flex flex-col gap-2 px-1 md:flex-row md:items-end md:justify-between">
                     <div>
                         <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-base-200 bg-base-200/60 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-base-content/60">
                             <LayoutGrid size={13} />
                             Yer Teslim Dashboard
                         </div>
-                        <h2 className="text-2xl font-extrabold tracking-tight text-base-content md:text-3xl">
+                        <h2 className="text-xl font-extrabold tracking-tight text-base-content md:text-2xl">
                             2025 Yılı Yer Teslim İstatistikleri
                         </h2>
                         <p className="mt-1 text-sm text-base-content/60">
@@ -739,7 +739,7 @@ export default function YerTeslimiSlide() {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-4 px-1 sm:grid-cols-2 xl:grid-cols-4">
+                <div className="grid grid-cols-2 gap-3 px-1 xl:grid-cols-4">
                     <StatCard
                         title="OM Sayısı"
                         value={filteredData.length}
@@ -774,8 +774,8 @@ export default function YerTeslimiSlide() {
                 </div>
             </div>
 
-            <div className={`flex flex-1 flex-col gap-6 ${isFullscreen ? 'p-6 md:p-8' : 'pt-6'}`}>
-                <div className="rounded-2xl border border-base-200 bg-base-200/50 p-4 md:p-5">
+            <div className={`flex flex-1 flex-col gap-4 ${isFullscreen ? 'p-4 md:p-6' : 'pt-3'}`}>
+                <div className="rounded-2xl border border-base-200 bg-base-200/50 p-3 md:p-4">
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
                         <FilterSelect
                             label="Bölge Müdürlüğü"
@@ -815,17 +815,17 @@ export default function YerTeslimiSlide() {
                     </div>
                 </div>
 
-                <div className="rounded-2xl border border-base-200 bg-base-100 p-4 shadow-sm">
-                    <div className="mb-2 flex items-center justify-between gap-3">
-                        <div className="text-sm font-bold text-base-content">
+                <div className="rounded-2xl border border-base-200 bg-base-100 p-3 shadow-sm">
+                    <div className="mb-1.5 flex items-center justify-between gap-3">
+                        <div className="text-[11px] font-bold text-base-content opacity-70">
                             {getDynamicFilterText('İlerlemesi')}
                         </div>
-                        <div className="text-sm font-semibold text-base-content/60">
+                        <div className="text-[11px] font-black text-success">
                             %{totals.gerceklesmeOrani}
                         </div>
                     </div>
                     <progress
-                        className="progress progress-success w-full"
+                        className="progress progress-success w-full h-1.5"
                         value={Number(totals.gerceklesmeOrani)}
                         max="100"
                     />
