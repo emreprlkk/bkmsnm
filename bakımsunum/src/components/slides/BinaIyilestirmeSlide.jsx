@@ -279,12 +279,12 @@ export default function BinaIyilestirmeSlide() {
         }
     };
 
-    const globalTotalButce = React.useMemo(() => 
-        kesifButceBinaData26.reduce((acc, curr) => acc + curr.butce, 0), 
-    []);
-    const globalTotalHakedis = React.useMemo(() => 
-        binaIsiData25.reduce((acc, curr) => acc + curr.hakedis, 0), 
-    []);
+    const globalTotalButce = React.useMemo(() =>
+        kesifButceBinaData26.reduce((acc, curr) => acc + curr.butce, 0),
+        []);
+    const globalTotalHakedis = React.useMemo(() =>
+        binaIsiData25.reduce((acc, curr) => acc + curr.hakedis, 0),
+        []);
 
     const totalButce = React.useMemo(() => {
         let data = kesifButceBinaData26.map(row => ({ ...row, bm: getBm(row.om) }));
