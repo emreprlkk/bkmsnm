@@ -301,7 +301,7 @@ export default function AfetSlide() {
 
     const totalSicaklikOrman = afetSicaklikOrmanData.find(r => isTotal(r));
     const totalDeprem = afetDepremData.find(r => isTotal(r));
-    const totalKisAfetDirek = hatayYatirimData.reduce((acc, curr) => acc + curr.dikileDirek, 0);
+    const grandTotalAfet = (totalSicaklikOrman?.genel_toplam || 0) + (totalDeprem?.deprem_hakedis || 0);
 
     const fmtCurrency = (v) =>
         v == null ? '—' : new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', maximumFractionDigits: 2 }).format(v);
@@ -334,19 +334,23 @@ export default function AfetSlide() {
                                 onClick={() => setViewMode('grid')}
                                 className={`join-item btn btn-xs px-4 rounded-lg transition-all ${viewMode === 'grid' ? 'btn-primary shadow-lg' : 'btn-ghost opacity-50'}`}
                             >
-                                Liste Görünümü
+                                Çoklu Tablo Görünümü
                             </button>
                             <button
                                 onClick={() => setViewMode('slider')}
                                 className={`join-item btn btn-xs px-4 rounded-lg transition-all ${viewMode === 'slider' ? 'btn-primary shadow-lg' : 'btn-ghost opacity-50'}`}
                             >
-                                Slider Modu
+                                Tekli Tablo Görünümü
                             </button>
                         </div>
                     </div>
                 </div>
 
                 <div className="flex gap-3 flex-wrap items-center">
+                    <div className="flex flex-col items-end border rounded-xl px-4 py-2 min-w-[140px] bg-slate-100 border-slate-300 shadow-sm ring-1 ring-slate-400/20">
+                        <span className="text-[9px] font-bold uppercase tracking-widest text-slate-600">Toplam Afet Hakediş</span>
+                        <span className="font-black text-slate-800 text-sm leading-tight">{fmtCurrency(grandTotalAfet)}</span>
+                    </div>
                     <div className={`flex flex-col items-end border rounded-xl px-4 py-2 min-w-[140px] transition-all cursor-pointer ${activeTab === 0 && viewMode === 'slider' ? 'bg-amber-100 border-amber-400 scale-105 shadow-md' : 'bg-amber-50 border-amber-200'}`} onClick={() => { if (viewMode === 'slider') setActiveTab(0) }}>
                         <span className="text-[9px] font-bold uppercase tracking-widest text-amber-500">Orman &amp; Sıcaklık</span>
                         <span className="font-black text-amber-700 text-sm leading-tight">{fmtCurrency(totalSicaklikOrman?.genel_toplam)}</span>
@@ -356,8 +360,8 @@ export default function AfetSlide() {
                         <span className="font-black text-red-700 text-sm leading-tight">{fmtCurrency(totalDeprem?.deprem_hakedis)}</span>
                     </div>
                     <div className={`flex flex-col items-end border rounded-xl px-4 py-2 min-w-[140px] transition-all cursor-pointer ${activeTab === 2 && viewMode === 'slider' ? 'bg-blue-100 border-blue-400 scale-105 shadow-md' : 'bg-blue-50 border-blue-200'}`} onClick={() => { if (viewMode === 'slider') setActiveTab(2) }}>
-                        <span className="text-[9px] font-bold uppercase tracking-widest text-blue-500">Kış Afeti (Direk)</span>
-                        <span className="font-black text-blue-700 text-sm leading-tight">{totalKisAfetDirek} Adet</span>
+                        <span className="text-[9px] font-bold uppercase tracking-widest text-blue-500">Kış Afeti</span>
+                        <span className="font-black text-blue-700 text-sm leading-tight">2025</span>
                     </div>
 
                     <ExportExcelButton
