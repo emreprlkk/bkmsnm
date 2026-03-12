@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Flame, AlertTriangle, Maximize, Minimize } from 'lucide-react';
-import { afetSicaklikOrmanData, afetDepremData } from '../../data/mockData';
+import { Flame, AlertTriangle, Maximize, Minimize, Snowflake, CheckCircle2 } from 'lucide-react';
+import { afetSicaklikOrmanData, afetDepremData, hatayYatirimData } from '../../data/mockData';
 import ExportExcelButton from '../ExportExcelButton';
 
 const fmt = (val) =>
@@ -13,18 +13,21 @@ const fmtNum = (val) =>
     val == null ? <span className="text-gray-300 select-none">—</span> : val;
 
 const isTotal = (row) =>
-    (row.om || '').toUpperCase().includes('GENEL TOPLAM');
+    (row.om || row.ilce || '').toUpperCase().includes('GENEL TOPLAM');
 
 // ─── Reusable Table Shell ─────────────────────────────────────────────────────
-function AfetTable({ title, icon: Icon, iconColor, accentColor, headerColor, children, columns }) {
+function AfetTable({ title, icon: Icon, iconColor, headerColor, children, columns, subtitle }) {
     return (
         <div className="flex flex-col rounded-2xl overflow-hidden border border-base-200 shadow-md bg-base-100">
             {/* Table Header */}
-            <div className={`flex items-center gap-3 px-5 py-3 ${headerColor}`}>
-                <Icon size={18} className={iconColor} />
-                <span className="font-extrabold tracking-wide text-sm uppercase text-base-content">
-                    {title}
-                </span>
+            <div className={`flex flex-col gap-0.5 px-5 py-3 ${headerColor}`}>
+                <div className="flex items-center gap-3">
+                    <Icon size={18} className={iconColor} />
+                    <span className="font-extrabold tracking-wide text-sm uppercase text-base-content">
+                        {title}
+                    </span>
+                </div>
+                {subtitle && <p className="text-[10px] opacity-60 ml-7 font-semibold">{subtitle}</p>}
             </div>
 
             <div className="overflow-x-auto">
@@ -162,9 +165,67 @@ function DepremTable() {
     );
 }
 
+// ─── Table 3: Kış Afeti (Hatay Yatırım) ──────────────────────────────────────
+function KisAfetTable() {
+    const cols = [
+        { label: 'İlçe', align: 'left' },
+        { label: 'İlave TR', align: 'right' },
+        { label: 'Güç Yüls.', align: 'right' },
+        { label: 'Bölge Ayr.', align: 'right' },
+        { label: 'Kesit Art.', align: 'right' },
+        { label: 'Hücre Değiş.', align: 'right' },
+        { label: 'Dikilen Direk', align: 'right' },
+        { label: 'İletken Ara', align: 'right' },
+    ];
+
+    return (
+        <AfetTable
+            title="Kış Afeti Kapsamında Yapılan İyileştirmeler — Hatay Bölgesi"
+            subtitle="Fırtına ve kar yağışı sonrası şebeke dayanıklılığını artırmak amacıyla yapılan yatırımlar."
+            icon={Snowflake}
+            iconColor="text-blue-500"
+            headerColor="bg-blue-50 border-b border-blue-100"
+            columns={cols}
+        >
+            {hatayYatirimData.map((row, i) => (
+                <tr
+                    key={i}
+                    className={`
+                        border-b border-base-200 transition-colors duration-150
+                        ${i % 2 === 0 ? 'bg-base-100' : 'bg-base-200/30'}
+                        hover:bg-blue-50/40
+                    `}
+                >
+                    <td className="px-4 py-2.5 font-bold text-blue-700">{row.ilce}</td>
+                    <td className="px-4 py-2.5 text-right font-semibold">{row.ilaveTR > 0 ? <span className="text-orange-600">{row.ilaveTR}</span> : '0'}</td>
+                    <td className="px-4 py-2.5 text-right">{row.gucYukseltimi}</td>
+                    <td className="px-4 py-2.5 text-right">{row.bolgeAyrimi}</td>
+                    <td className="px-4 py-2.5 text-right">{row.kesitArttirimi}</td>
+                    <td className="px-4 py-2.5 text-right">{row.hucreDeğisimi}</td>
+                    <td className="px-4 py-2.5 text-right font-bold text-green-600">{row.dikileDirek}</td>
+                    <td className="px-4 py-2.5 text-right text-base-content/70">{row.iletkenAra}</td>
+                </tr>
+            ))}
+            {/* Toplam Satırı */}
+            <tr className="bg-blue-600 text-white font-black">
+                <td className="px-4 py-3 uppercase tracking-wider">GENEL TOPLAM</td>
+                <td className="px-4 py-3 text-right">{hatayYatirimData.reduce((acc, curr) => acc + (curr.ilaveTR || 0), 0)}</td>
+                <td className="px-4 py-3 text-right">{hatayYatirimData.reduce((acc, curr) => acc + (curr.gucYukseltimi || 0), 0)}</td>
+                <td className="px-4 py-3 text-right">{hatayYatirimData.reduce((acc, curr) => acc + (curr.bolgeAyrimi || 0), 0)}</td>
+                <td className="px-4 py-3 text-right">{hatayYatirimData.reduce((acc, curr) => acc + (curr.kesitArttirimi || 0), 0)}</td>
+                <td className="px-4 py-3 text-right">{hatayYatirimData.reduce((acc, curr) => acc + (curr.hucreDeğisimi || 0), 0)}</td>
+                <td className="px-4 py-3 text-right">{hatayYatirimData.reduce((acc, curr) => acc + (curr.dikileDirek || 0), 0)}</td>
+                <td className="px-4 py-3 text-right">{hatayYatirimData.reduce((acc, curr) => acc + (curr.iletkenAra || 0), 0)}</td>
+            </tr>
+        </AfetTable>
+    );
+}
+
 // ─── Main Slide ───────────────────────────────────────────────────────────────
 export default function AfetSlide() {
     const [isFullscreen, setIsFullscreen] = useState(() => !!document.fullscreenElement);
+    const [viewMode, setViewMode] = useState('slider'); // 'grid' or 'slider'
+    const [activeTab, setActiveTab] = useState(0); // 0: Orman, 1: Deprem, 2: Kış
     const containerRef = useRef(null);
 
     useEffect(() => {
@@ -183,78 +244,137 @@ export default function AfetSlide() {
 
     const totalSicaklikOrman = afetSicaklikOrmanData.find(r => isTotal(r));
     const totalDeprem = afetDepremData.find(r => isTotal(r));
+    const totalKisAfetDirek = hatayYatirimData.reduce((acc, curr) => acc + curr.dikileDirek, 0);
 
     const fmtCurrency = (v) =>
         v == null ? '—' : new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', maximumFractionDigits: 2 }).format(v);
 
+    const tables = [
+        { id: 0, component: <SicaklikOrmanTable />, title: 'Orman & Sıcaklık' },
+        { id: 1, component: <DepremTable />, title: 'Deprem Analizi' },
+        { id: 2, component: <KisAfetTable />, title: 'Kış Afeti' }
+    ];
+
     return (
         <div
             ref={containerRef}
-            className={`flex flex-col gap-6 ${isFullscreen
-                ? 'fixed inset-0 z-50 bg-white overflow-y-auto p-8'
-                : 'h-full w-full overflow-y-auto'
+            className={`flex flex-col gap-8 ${isFullscreen
+                ? 'fixed inset-0 z-50 bg-white overflow-y-auto p-12'
+                : 'h-full w-full overflow-y-auto p-2'
                 }`}
         >
 
             {/* Header */}
-            <div className="sticky -top-8 -mt-8 -mx-8 px-8 pt-8 pb-4 z-50 bg-base-100/95 backdrop-blur-md shadow-sm border-b border-base-200 mb-6 flex items-start justify-between gap-4 flex-wrap">
-                <div>
-                    <h2 className="text-3xl font-black text-base-content leading-tight">
-                        2025 TOROSLAR EDAŞ - AFET KAPSAMINDA YAPILAN HAKEDİŞLER VE DETAYLARI
+            <div className="sticky -top-8 -mt-8 -mx-8 px-8 pt-8 pb-4 z-50 bg-base-100/95 backdrop-blur-md shadow-sm border-b border-base-200 mb-2 flex items-start justify-between gap-4 flex-wrap">
+                <div className="flex-1 min-w-[300px]">
+                    <h2 className="text-3xl font-black text-base-content leading-tight uppercase">
+                        2025 TOROSLAR EDAŞ — AFET KAPSAMINDA YAPILAN ÇALIŞMALAR
                     </h2>
-                    <p className="text-base-content/50 text-sm mt-1">
-                        Sıcaklık , orman yangını  ve deprem afetleri kapsamında gerçekleşen hakedişler operasyon merkezi bazında gösterilmektedir..
-                    </p>
+                    <div className="flex items-center gap-4 mt-2">
+
+                        <div className="join bg-base-200 p-1 rounded-xl border border-base-300 transform scale-90">
+                            <button
+                                onClick={() => setViewMode('grid')}
+                                className={`join-item btn btn-xs px-4 rounded-lg transition-all ${viewMode === 'grid' ? 'btn-primary shadow-lg' : 'btn-ghost opacity-50'}`}
+                            >
+                                Liste Görünümü
+                            </button>
+                            <button
+                                onClick={() => setViewMode('slider')}
+                                className={`join-item btn btn-xs px-4 rounded-lg transition-all ${viewMode === 'slider' ? 'btn-primary shadow-lg' : 'btn-ghost opacity-50'}`}
+                            >
+                                Slider Modu
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
-                {/* KPI Cards + Fullscreen Button */}
                 <div className="flex gap-3 flex-wrap items-center">
-                    <div className="flex flex-col items-end bg-amber-50 border border-amber-200 rounded-xl px-4 py-2.5 min-w-[160px]">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-amber-500 flex items-center gap-1">
-                            <Flame size={11} /> Sıcaklık &amp; Orman
-                        </span>
-                        <span className="font-extrabold text-amber-700 text-base leading-tight">
-                            {fmtCurrency(totalSicaklikOrman?.genel_toplam)}
-                        </span>
+                    <div className={`flex flex-col items-end border rounded-xl px-4 py-2 min-w-[140px] transition-all cursor-pointer ${activeTab === 0 && viewMode === 'slider' ? 'bg-amber-100 border-amber-400 scale-105 shadow-md' : 'bg-amber-50 border-amber-200'}`} onClick={() => { if (viewMode === 'slider') setActiveTab(0) }}>
+                        <span className="text-[9px] font-bold uppercase tracking-widest text-amber-500">Orman &amp; Sıcaklık</span>
+                        <span className="font-black text-amber-700 text-sm leading-tight">{fmtCurrency(totalSicaklikOrman?.genel_toplam)}</span>
                     </div>
-                    <div className="flex flex-col items-end bg-red-50 border border-red-200 rounded-xl px-4 py-2.5 min-w-[160px]">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-red-500 flex items-center gap-1">
-                            <AlertTriangle size={11} /> Deprem
-                        </span>
-                        <span className="font-extrabold text-red-700 text-base leading-tight">
-                            {fmtCurrency(totalDeprem?.deprem_hakedis)}
-                        </span>
+                    <div className={`flex flex-col items-end border rounded-xl px-4 py-2 min-w-[140px] transition-all cursor-pointer ${activeTab === 1 && viewMode === 'slider' ? 'bg-red-100 border-red-400 scale-105 shadow-md' : 'bg-red-50 border-red-200'}`} onClick={() => { if (viewMode === 'slider') setActiveTab(1) }}>
+                        <span className="text-[9px] font-bold uppercase tracking-widest text-red-500">Deprem Hkd.</span>
+                        <span className="font-black text-red-700 text-sm leading-tight">{fmtCurrency(totalDeprem?.deprem_hakedis)}</span>
                     </div>
-                    <div className="flex flex-col items-end bg-base-200 border border-base-300 rounded-xl px-4 py-2.5 min-w-[160px]">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-base-content/50">
-                            Genel Toplam
-                        </span>
-                        <span className="font-extrabold text-base-content text-base leading-tight">
-                            {fmtCurrency((totalSicaklikOrman?.genel_toplam ?? 0) + (totalDeprem?.deprem_hakedis ?? 0))}
-                        </span>
+                    <div className={`flex flex-col items-end border rounded-xl px-4 py-2 min-w-[140px] transition-all cursor-pointer ${activeTab === 2 && viewMode === 'slider' ? 'bg-blue-100 border-blue-400 scale-105 shadow-md' : 'bg-blue-50 border-blue-200'}`} onClick={() => { if (viewMode === 'slider') setActiveTab(2) }}>
+                        <span className="text-[9px] font-bold uppercase tracking-widest text-blue-500">Kış Afeti (Direk)</span>
+                        <span className="font-black text-blue-700 text-sm leading-tight">{totalKisAfetDirek} Adet</span>
                     </div>
 
                     <ExportExcelButton
                         data={[
-                            ...afetSicaklikOrmanData.map(v => ({ 'Afet Tipi': 'Sıcaklık ve Orman Yangını', ...v })),
-                            ...afetDepremData.map(v => ({ 'Afet Tipi': 'Deprem', ...v }))
+                            ...afetSicaklikOrmanData.map(v => ({ 'Grup': 'Sıcaklık/Orman', ...v })),
+                            ...afetDepremData.map(v => ({ 'Grup': 'Deprem', ...v })),
+                            ...hatayYatirimData.map(v => ({ 'Grup': 'Kış Afeti', ...v }))
                         ]}
-                        fileName="Afet_Hakedisleri_2025"
+                        fileName="Afet_Katalog_2025"
                     />
-                    {/* Fullscreen Toggle */}
-                    <button
-                        onClick={toggleFullscreen}
-                        title={isFullscreen ? 'Küçült' : 'Tam Ekran'}
-                        className="btn btn-sm btn-outline shadow-sm bg-base-100 self-center"
-                    >
+                    <button onClick={toggleFullscreen} className="btn btn-sm btn-ghost border border-base-300">
                         {isFullscreen ? <Minimize size={16} /> : <Maximize size={16} />}
                     </button>
                 </div>
             </div>
 
-            {/* Tables */}
-            <SicaklikOrmanTable />
-            <DepremTable />
+            {/* Content Area */}
+            {viewMode === 'grid' ? (
+                <div className="grid grid-cols-1 gap-8 mb-12 animate-in fade-in duration-500">
+                    <SicaklikOrmanTable />
+                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                        <DepremTable />
+                        <KisAfetTable />
+                    </div>
+                </div>
+            ) : (
+                <div className="flex-1 flex flex-col gap-6 animate-in slide-in-from-right-4 duration-500">
+                    <div className="flex items-center justify-between px-2">
+                        <div className="flex gap-2">
+                            {tables.map((t, idx) => (
+                                <div
+                                    key={idx}
+                                    className={`h-1.5 w-12 rounded-full transition-all duration-300 ${activeTab === idx ? 'bg-primary w-20' : 'bg-base-300'}`}
+                                />
+                            ))}
+                        </div>
+                        <div className="flex gap-2">
+                            <button
+                                onClick={() => setActiveTab(prev => Math.max(0, prev - 1))}
+                                disabled={activeTab === 0}
+                                className="btn btn-circle btn-sm btn-outline btn-primary"
+                            >
+                                <ChevronLeft size={20} />
+                            </button>
+                            <button
+                                onClick={() => setActiveTab(prev => Math.min(tables.length - 1, prev + 1))}
+                                disabled={activeTab === tables.length - 1}
+                                className="btn btn-circle btn-sm btn-outline btn-primary"
+                            >
+                                <ChevronRight size={20} />
+                            </button>
+                        </div>
+                    </div>
+                    <div className="flex-1 relative min-h-[500px]">
+                        {tables[activeTab].component}
+                    </div>
+                </div>
+            )}
+
+            {/* Quick Summary Footer */}
+            <div className="flex items-center gap-4 p-4 bg-emerald-50 border border-emerald-100 rounded-2xl mb-6">
+                <CheckCircle2 className="text-emerald-500" size={24} />
+                <p className="text-emerald-900 text-sm font-medium">
+                    2025 Yılında yaşanılan afetlerden müşterilerimizin minimum şekilde etkilenmesi için gerekli çalışmalar yapılmıştır.
+                </p>
+            </div>
         </div>
     );
 }
+
+// Chevron icons for the slider
+const ChevronLeft = ({ size }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>
+);
+const ChevronRight = ({ size }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+);

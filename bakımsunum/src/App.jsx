@@ -21,6 +21,7 @@ import CBSDurumuSlide from './components/slides/CBSDurumuSlide';
 import EnvanterSlide from './components/slides/EnvanterSlide26';
 import GirisSlide from './components/slides/GirisSlide';
 import VideoSlide from './components/slides/VideoSlide';
+import AgacDirekSlide from './components/slides/AgacDirekSlide';
 import { X, GripHorizontal, Eye } from 'lucide-react';
 
 const TimelineOverlay = ({ slides, activeSlideId }) => {
@@ -150,18 +151,20 @@ function App() {
   const handleNext = useCallback(() => {
     setActiveSlideId((prevId) => {
       const idx = presentationSlides.findIndex(s => s.id === prevId);
+      if (idx === -1) return presentationSlides[0]?.id ?? prevId;
       const nextIdx = Math.min(idx + 1, presentationSlides.length - 1);
       return presentationSlides[nextIdx].id;
     });
-  }, []);
+  }, [presentationSlides]);
 
   const handlePrev = useCallback(() => {
     setActiveSlideId((prevId) => {
       const idx = presentationSlides.findIndex(s => s.id === prevId);
+      if (idx === -1) return presentationSlides[0]?.id ?? prevId;
       const prevIdx = Math.max(idx - 1, 0);
       return presentationSlides[prevIdx].id;
     });
-  }, []);
+  }, [presentationSlides]);
 
   // ── Klavye navigasyonu ──────────────────────────────────────────────────────
   useEffect(() => {
@@ -313,6 +316,8 @@ function App() {
         />;
       case 'kesif_ozeti':
         return <EnvanterSlide />;
+      case 'agac_direk':
+        return <AgacDirekSlide />;
       case 'giris':
         return <GirisSlide setActiveSlideId={setActiveSlideId} />;
       default:

@@ -83,6 +83,11 @@ export const presentationSlides = [
     { id: 12, title: '2026 KEŞİF ÖZETİ', type: 'kesif_ozeti' },
     //  { id: 3, title: 'SÖZLEŞME BİLGLERİ', type: 'chart_bar' },
     //  { id: 4, title: 'YÜKLENİCİ BİLGİLERİ', type: 'table' },
+
+    { id: 6, title: '2026 YÜKLENİCİ BİLGİLERİ', type: 'yuklenici_bilgileri' },
+    { id: 13, title: 'AĞAÇ DİREK ENVANTERİ', type: 'agac_direk' },
+
+
     { id: 101, group: 'Fotoğraflar', title: 'Bina Yenileme İşi', titleShort: 'Bina', type: 'photo_bina' },
     { id: 102, group: 'Fotoğraflar', title: 'Ağaç Budama İşi', titleShort: 'Budama', type: 'photo_budama' },
     { id: 103, group: 'Fotoğraflar', title: 'YG Koridor Açma', titleShort: 'Koridor', type: 'photo_koridor' },
@@ -92,8 +97,6 @@ export const presentationSlides = [
     { id: 106, group: 'Dijital Süreçler', title: 'Yüklenici Takip: Keşif Modülü', titleShort: 'Keşif', type: 'video_kesif' },
     { id: 107, group: 'Dijital Süreçler', title: 'Yüklenici Takip: Yer Teslimi', titleShort: 'Yer Teslimi', type: 'video_yerteslimi' },
     { id: 108, group: 'Dijital Süreçler', title: 'Excel Makro Süreçleri', titleShort: 'Makrolar', type: 'video_makro' },
-
-    { id: 6, title: '2026 YÜKLENİCİ BİLGİLERİ', type: 'yuklenici_bilgileri' },
 
 
 
@@ -114,6 +117,17 @@ export const presentationSlides = [
     
     
     */
+];
+
+export const hatayYatirimData = [
+  { ilce: 'ALTINÖZÜ',  ilaveTR: 0,  gucYukseltimi: 1,  bolgeAyrimi: 0,  kesitArttirimi: 0,  hucreDeğisimi: 0, dikileDirek: 28,  iletkenAra: 22,  trafoDeğisimi: 0, panoDeğisimi: 0 },
+  { ilce: 'ANTAKYA',   ilaveTR: 7,  gucYukseltimi: 23, bolgeAyrimi: 27, kesitArttirimi: 13, hucreDeğisimi: 7, dikileDirek: 11,  iletkenAra: 152, trafoDeğisimi: 3, panoDeğisimi: 1 },
+  { ilce: 'DEFNE',     ilaveTR: 5,  gucYukseltimi: 14, bolgeAyrimi: 8,  kesitArttirimi: 18, hucreDeğisimi: 2, dikileDirek: 22,  iletkenAra: 11,  trafoDeğisimi: 0, panoDeğisimi: 0 },
+  { ilce: 'HASSA',     ilaveTR: 0,  gucYukseltimi: 0,  bolgeAyrimi: 2,  kesitArttirimi: 0,  hucreDeğisimi: 0, dikileDirek: 0,   iletkenAra: 0,   trafoDeğisimi: 0, panoDeğisimi: 0 },
+  { ilce: 'KIRIKHAN',  ilaveTR: 0,  gucYukseltimi: 0,  bolgeAyrimi: 3,  kesitArttirimi: 0,  hucreDeğisimi: 0, dikileDirek: 0,   iletkenAra: 0,   trafoDeğisimi: 0, panoDeğisimi: 0 },
+  { ilce: 'REYHANLI',  ilaveTR: 0,  gucYukseltimi: 3,  bolgeAyrimi: 0,  kesitArttirimi: 0,  hucreDeğisimi: 0, dikileDirek: 0,   iletkenAra: 0,   trafoDeğisimi: 0, panoDeğisimi: 0 },
+  { ilce: 'SAMANDAĞ',  ilaveTR: 26, gucYukseltimi: 14, bolgeAyrimi: 7,  kesitArttirimi: 11, hucreDeğisimi: 0, dikileDirek: 39,  iletkenAra: 44,  trafoDeğisimi: 0, panoDeğisimi: 6 },
+  { ilce: 'YAYLADAĞI', ilaveTR: 0,  gucYukseltimi: 0,  bolgeAyrimi: 0,  kesitArttirimi: 0,  hucreDeğisimi: 0, dikileDirek: 167, iletkenAra: 437, trafoDeğisimi: 0, panoDeğisimi: 1 },
 ];
 
 export const yerTeslimiData = [
@@ -560,4 +574,29 @@ export const raporlamaData = [
     { bolge: 'MERSİN', om: 'Mut', tedasSayisi: 3, tedasTutar: 31501637.62, edasSayisi: 28, edasTutar: 64052220.84 },
     { bolge: 'MERSİN', om: 'Silifke', tedasSayisi: 3, tedasTutar: 61672809.21, edasSayisi: 29, edasTutar: 99462589.68 },
     { bolge: 'MERSİN', om: 'Tarsus', tedasSayisi: 2, tedasTutar: 26847488.05, edasSayisi: 45, edasTutar: 108620708.44 },
+];
+
+export const agacDirekData = [
+    { om: 'ADANA', agacDirekSayisi: 121 },
+    { om: 'ANAMUR', agacDirekSayisi: 242 },
+    { om: 'ARSUZ', agacDirekSayisi: 15 },
+    { om: 'CEYHAN', agacDirekSayisi: 22 },
+    { om: 'DÖRTYOL', agacDirekSayisi: 50 },
+    { om: 'DÜZİÇİ', agacDirekSayisi: 52 },
+    { om: 'ERDEMLİ', agacDirekSayisi: 85 },
+    { om: 'GAZİANTEP', agacDirekSayisi: 77 },
+    { om: 'HATAY', agacDirekSayisi: 288 },
+    { om: 'ISLAHIYE', agacDirekSayisi: 22 },
+    { om: 'İSKENDERUN', agacDirekSayisi: 99 },
+    { om: 'KADİRLİ', agacDirekSayisi: 145 },
+    { om: 'KIRIKHAN', agacDirekSayisi: 45 },
+    { om: 'KİLİS', agacDirekSayisi: 6 },
+    { om: 'KOZAN', agacDirekSayisi: 253 },
+    { om: 'MERSİN', agacDirekSayisi: 105 },
+    { om: 'MUT', agacDirekSayisi: 117 },
+    { om: 'NİZİP', agacDirekSayisi: 20 },
+    { om: 'OSMANİYE', agacDirekSayisi: 61 },
+    { om: 'REYHANLI', agacDirekSayisi: 19 },
+    { om: 'SİLİFKE', agacDirekSayisi: 250 },
+    { om: 'TARSUS', agacDirekSayisi: 96 },
 ];
