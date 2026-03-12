@@ -1,13 +1,14 @@
 import React, { useMemo, useState, useEffect, useRef } from 'react';
-import { Box, Typography, Paper, useTheme, Grid, Card, CardContent, IconButton } from '@mui/material';
+import { Box, Typography, Paper, useTheme, Grid, Card, CardContent, IconButton, Tabs, Tab, Chip, Tooltip } from '@mui/material';
 import Chart from 'react-apexcharts';
-import { agacDirekData } from '../../data/mockData';
-import { TreePine, BarChart3, TrendingUp, Info, Maximize, Minimize } from 'lucide-react';
+import { agacDirekData, agacDirekBolgeData } from '../../data/mockData';
+import { TreePine, BarChart3, TrendingUp, Maximize, Minimize, Map, Filter } from 'lucide-react';
 
 const AgacDirekSlide = () => {
     const theme = useTheme();
     const slideRef = useRef(null);
     const [isFullscreen, setIsFullscreen] = useState(() => !!document.fullscreenElement);
+    const [selectedBolge, setSelectedBolge] = useState('HEPSİ');
 
     useEffect(() => {
         const handler = () => setIsFullscreen(!!document.fullscreenElement);
@@ -23,35 +24,47 @@ const AgacDirekSlide = () => {
         }
     };
 
-    // Veriyi azalan sıraya göre sıralayalım
-    const sortedData = useMemo(() => {
-        return [...agacDirekData].sort((a, b) => b.agacDirekSayisi - a.agacDirekSayisi);
+    const handleBolgeChange = (event, newValue) => {
+        setSelectedBolge(newValue);
+    };
+
+    // Veriyi filtreleyelim ve azalan sıraya göre sıralayalım
+    const filteredAndSortedData = useMemo(() => {
+        let sorted = [...agacDirekData];
+        if (selectedBolge !== 'HEPSİ') {
+            sorted = sorted.filter(item => item.bolge === selectedBolge);
+        }
+        return sorted.sort((a, b) => b.agacDirekSayisi - a.agacDirekSayisi);
+    }, [selectedBolge]);
+
+    const companyTotal = useMemo(() => {
+        return agacDirekBolgeData.reduce((acc, curr) => acc + curr.dikilen, 0);
     }, []);
 
     const totalCount = useMemo(() => {
-        return sortedData.reduce((acc, curr) => acc + curr.agacDirekSayisi, 0);
-    }, [sortedData]);
+        return filteredAndSortedData.reduce((acc, curr) => acc + curr.agacDirekSayisi, 0);
+    }, [filteredAndSortedData]);
 
-    const averageCount = Math.round(totalCount / sortedData.length);
+    const averageCount = filteredAndSortedData.length > 0
+        ? Math.round(totalCount / filteredAndSortedData.length)
+        : 0;
+
+    const regionPercentage = useMemo(() => {
+        return companyTotal > 0 ? ((totalCount / companyTotal) * 100).toFixed(1) : 0;
+    }, [totalCount, companyTotal]);
 
     const chartOptions = {
         chart: {
             type: 'bar',
-            height: isFullscreen ? 600 : 550,
+            height: isFullscreen ? 600 : 450,
             toolbar: { show: true },
             fontFamily: theme.typography.fontFamily,
             animations: {
                 enabled: true,
                 easing: 'easeinout',
                 speed: 800,
-                animateGradually: {
-                    enabled: true,
-                    delay: 150
-                },
-                dynamicAnimation: {
-                    enabled: true,
-                    speed: 350
-                }
+                animateGradually: { enabled: true, delay: 150 },
+                dynamicAnimation: { enabled: true, speed: 350 }
             }
         },
         plotOptions: {
@@ -59,18 +72,14 @@ const AgacDirekSlide = () => {
                 borderRadius: 6,
                 borderRadiusApplication: 'end',
                 horizontal: false,
-                columnWidth: '60%',
+                columnWidth: '55%',
                 distributed: true,
-                dataLabels: {
-                    position: 'top',
-                },
+                dataLabels: { position: 'top' },
             }
         },
         dataLabels: {
             enabled: true,
-            formatter: function (val) {
-                return val;
-            },
+            formatter: (val) => val,
             offsetY: -25,
             style: {
                 fontSize: '12px',
@@ -79,17 +88,13 @@ const AgacDirekSlide = () => {
             }
         },
         colors: [
-            '#059669',/* '#10b981', '#34d399', '#6ee7b7', '#a7f3d0',
+            '#059669'/*, '#10b981', '#34d399', '#6ee7b7', '#a7f3d0',
             '#0d9488', '#14b8a6', '#2dd4bf', '#5eead4', '#99f6e4',
             '#0891b2', '#06b6d4', '#22d3ee', '#67e8f9', '#a5f3fc'*/
         ],
-        stroke: {
-            show: true,
-            width: 2,
-            colors: ['transparent']
-        },
+        stroke: { show: true, width: 2, colors: ['transparent'] },
         xaxis: {
-            categories: sortedData.map(item => item.om),
+            categories: filteredAndSortedData.map(item => item.om),
             labels: {
                 style: {
                     colors: theme.palette.text.secondary,
@@ -97,7 +102,7 @@ const AgacDirekSlide = () => {
                     fontWeight: 700
                 },
                 rotate: -45,
-                rotateAlways: true,
+                rotateAlways: filteredAndSortedData.length > 10,
             },
             axisBorder: { show: false },
             axisTicks: { show: false }
@@ -105,16 +110,10 @@ const AgacDirekSlide = () => {
         yaxis: {
             title: {
                 text: 'Ağaç Direk Sayısı',
-                style: {
-                    color: theme.palette.text.secondary,
-                    fontWeight: 700
-                }
+                style: { color: theme.palette.text.secondary, fontWeight: 700 }
             },
             labels: {
-                style: {
-                    colors: theme.palette.text.secondary,
-                    fontWeight: 600
-                }
+                style: { colors: theme.palette.text.secondary, fontWeight: 600 }
             }
         },
         fill: {
@@ -123,59 +122,40 @@ const AgacDirekSlide = () => {
                 shade: 'light',
                 type: "vertical",
                 shadeIntensity: 0.25,
-                gradientToColors: undefined,
                 inverseColors: true,
                 opacityFrom: 0.85,
                 opacityTo: 1,
-                stops: [50, 0, 100, 100]
+                stops: [0, 100]
             }
         },
         tooltip: {
             theme: theme.palette.mode === 'dark' ? 'dark' : 'light',
-            y: {
-                formatter: function (val) {
-                    return val + " Adet"
-                }
-            },
-            marker: {
-                show: true,
-            },
+            y: { formatter: (val) => val + " Adet" },
+            marker: { show: true },
         },
         grid: {
             borderColor: theme.palette.divider,
             strokeDashArray: 4,
-            yaxis: {
-                lines: { show: true }
-            }
+            yaxis: { lines: { show: true } }
         },
-        legend: {
-            show: false
-        },
+        legend: { show: false },
         title: {
-            text: 'OM Bazlı Seviye-2 den Montajı Yapılan ağaç Direk Sayıları',
+            text: `${selectedBolge === 'HEPSİ' ? 'Tüm' : selectedBolge} Bölgeler — OM Bazlı Dikilen Ağaç Direk`,
             align: 'left',
             style: {
                 fontSize: isFullscreen ? '22px' : '18px',
                 fontWeight: 900,
                 color: theme.palette.primary.main
             }
-        },
-        subtitle: {
-            text: '2025 Yılı Dikilen Ağaç Direkler',
-            align: 'left',
-            style: {
-                fontSize: isFullscreen ? '16px' : '14px',
-                color: theme.palette.text.secondary
-            }
         }
     };
 
     const chartSeries = [{
         name: 'Ağaç Direk Sayısı',
-        data: sortedData.map(item => item.agacDirekSayisi)
+        data: filteredAndSortedData.map(item => item.agacDirekSayisi)
     }];
 
-    const slideContent = (
+    return (
         <Box
             sx={{
                 p: isFullscreen ? { xs: 2, md: 4 } : 4,
@@ -186,6 +166,7 @@ const AgacDirekSlide = () => {
                 overflowY: 'auto'
             }}
         >
+            {/* Header */}
             <Box display="flex" justifyContent="space-between" alignItems="center" mb={isFullscreen ? 3 : 4}>
                 <Box display="flex" alignItems="center" gap={2}>
                     <Box
@@ -201,10 +182,10 @@ const AgacDirekSlide = () => {
                     </Box>
                     <Box>
                         <Typography variant={isFullscreen ? "h3" : "h4"} fontWeight="900" color="primary">
-                            Seviye-2 Kapsamında Dikilen Ağaç Direkler
+                            2025 Yılı- SEVİYE 2 AĞAÇ DİREK MONTAJI
                         </Typography>
                         <Typography variant={isFullscreen ? "h6" : "subtitle1"} color="text.secondary" fontWeight="600">
-                            Montaj Edilen Ağaç Direklerin OM Bazlı Dağılımı
+                            Bölge ve OM Bazlı Montaj Edilen Ağaç Direk Sayıları
                         </Typography>
                     </Box>
                 </Box>
@@ -225,59 +206,156 @@ const AgacDirekSlide = () => {
                 </IconButton>
             </Box>
 
-            <Grid container spacing={3} mb={isFullscreen ? 3 : 4}>
-                <Grid item xs={12} md={4}>
-                    <Card sx={{ borderRadius: 4, border: '1px solid', borderColor: 'divider', boxShadow: 'none', background: 'rgba(16, 185, 129, 0.03)' }}>
-                        <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2, p: isFullscreen ? 3 : 2 }}>
-                            <Box sx={{ p: 1.5, borderRadius: 2, bgcolor: 'rgba(16, 185, 129, 0.1)', color: '#10b981' }}>
-                                <TrendingUp size={isFullscreen ? 32 : 24} />
+            {/* Bölge Seçimi ve Özet */}
+            <Paper
+                elevation={0}
+                sx={{
+                    p: 2,
+                    mb: 3,
+                    borderRadius: 4,
+                    border: '1px solid',
+                    borderColor: 'divider',
+                    background: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.01)'
+                }}
+            >
+                <Grid container spacing={2} alignItems="center">
+                    <Grid item xs={12} lg={7}>
+                        <Box display="flex" alignItems="center" gap={2} mb={1}>
+                            <Filter size={18} color={theme.palette.primary.main} />
+                            <Typography variant="subtitle2" fontWeight="800" color="text.secondary" sx={{ textTransform: 'uppercase' }}>Bölge Filtresi</Typography>
+                        </Box>
+                        <Tabs
+                            value={selectedBolge}
+                            onChange={handleBolgeChange}
+                            variant="scrollable"
+                            scrollButtons="auto"
+                            sx={{
+                                '& .MuiTabs-indicator': { height: 3, borderRadius: '3px' },
+                                '& .MuiTab-root': { fontWeight: 800, fontSize: '0.85rem', minHeight: 48 }
+                            }}
+                        >
+                            <Tab label="TOROSLAR EDAŞ" value="HEPSİ" />
+                            {agacDirekBolgeData.map(b => (
+                                <Tab key={b.bolge} label={b.bolge} value={b.bolge} />
+                            ))}
+                        </Tabs>
+                    </Grid>
+                    <Grid item xs={12} lg={5}>
+                        <Box display="flex" flexWrap="wrap" justifyContent={{ xs: 'center', lg: 'flex-end' }} gap={1}>
+                            {agacDirekBolgeData.map(b => (
+                                <Tooltip key={b.bolge} title={`${b.bolge} Bölgesi Toplam`}>
+                                    <Chip
+                                        label={`${b.bolge}: ${b.dikilen}`}
+                                        onClick={() => setSelectedBolge(b.bolge)}
+                                        color={selectedBolge === b.bolge ? "primary" : "default"}
+                                        variant={selectedBolge === b.bolge ? "filled" : "outlined"}
+                                        sx={{
+                                            fontWeight: 700,
+                                            borderRadius: 2,
+                                            height: 32,
+                                            cursor: 'pointer',
+                                            transition: 'all 0.2s',
+                                            '&:hover': { transform: 'translateY(-2px)', boxShadow: 2 }
+                                        }}
+                                    />
+                                </Tooltip>
+                            ))}
+                        </Box>
+                    </Grid>
+                </Grid>
+            </Paper>
+
+            {/* KPI Cards */}
+            <Grid container spacing={1} mb={isFullscreen ? 2 : 2}>
+                <Grid item xs={12} sm={6} md={4} lg={2.4} sx={{ display: 'flex' }}>
+                    <Card sx={{ flex: 1, borderRadius: 3, border: '1px solid', borderColor: 'divider', boxShadow: 'none', background: 'rgba(5, 150, 105, 0.05)' }}>
+                        <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: isFullscreen ? 2 : 1.5 }}>
+                            <Box sx={{ p: 1, borderRadius: 2, bgcolor: 'rgba(5, 150, 105, 0.1)', color: '#059669' }}>
+                                <TreePine size={isFullscreen ? 24 : 18} />
                             </Box>
                             <Box>
-                                <Typography variant="caption" fontWeight="800" color="text.secondary" sx={{ textTransform: 'uppercase', fontSize: isFullscreen ? '0.85rem' : '0.75rem' }}>Toplam Envanter</Typography>
-                                <Typography variant={isFullscreen ? "h4" : "h5"} fontWeight="900" color="#10b981">{totalCount} Adet</Typography>
+                                <Typography variant="caption" fontWeight="800" color="text.secondary" sx={{ textTransform: 'uppercase', fontSize: '0.65rem', lineHeight: 1.2 }}>
+                                    TOROSLAR Toplamı
+                                </Typography>
+                                <Typography variant={isFullscreen ? "h5" : "h6"} fontWeight="900" color="#059669" sx={{ lineHeight: 1.2 }}>{companyTotal} Adet</Typography>
                             </Box>
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={12} md={4}>
-                    <Card sx={{ borderRadius: 4, border: '1px solid', borderColor: 'divider', boxShadow: 'none', background: 'rgba(59, 130, 246, 0.03)' }}>
-                        <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2, p: isFullscreen ? 3 : 2 }}>
-                            <Box sx={{ p: 1.5, borderRadius: 2, bgcolor: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6' }}>
-                                <BarChart3 size={isFullscreen ? 32 : 24} />
+                <Grid item xs={12} sm={6} md={4} lg={2.4} sx={{ display: 'flex' }}>
+                    <Card sx={{ flex: 1, borderRadius: 3, border: '1px solid', borderColor: 'divider', boxShadow: 'none', background: 'rgba(16, 185, 129, 0.03)' }}>
+                        <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: isFullscreen ? 2 : 1.5 }}>
+                            <Box sx={{ p: 1, borderRadius: 2, bgcolor: 'rgba(16, 185, 129, 0.1)', color: '#10b981' }}>
+                                <TrendingUp size={isFullscreen ? 24 : 18} />
                             </Box>
                             <Box>
-                                <Typography variant="caption" fontWeight="800" color="text.secondary" sx={{ textTransform: 'uppercase', fontSize: isFullscreen ? '0.85rem' : '0.75rem' }}>OM Başına Ortalama</Typography>
-                                <Typography variant={isFullscreen ? "h4" : "h5"} fontWeight="900" color="#3b82f6">{averageCount} Adet</Typography>
+                                <Typography variant="caption" fontWeight="800" color="text.secondary" sx={{ textTransform: 'uppercase', fontSize: '0.65rem', lineHeight: 1.2 }}>
+                                    {selectedBolge === 'HEPSİ' ? 'Bölge' : selectedBolge} Toplam
+                                </Typography>
+                                <Typography variant={isFullscreen ? "h5" : "h6"} fontWeight="900" color="#10b981" sx={{ lineHeight: 1.2 }}>{totalCount} Adet</Typography>
                             </Box>
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={12} md={4}>
-                    <Card sx={{ borderRadius: 4, border: '1px solid', borderColor: 'divider', boxShadow: 'none', background: 'rgba(245, 158, 11, 0.03)' }}>
-                        <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2, p: isFullscreen ? 3 : 2 }}>
-                            <Box sx={{ p: 1.5, borderRadius: 2, bgcolor: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b' }}>
-                                <Info size={isFullscreen ? 32 : 24} />
+                <Grid item xs={12} sm={6} md={4} lg={2.4} sx={{ display: 'flex' }}>
+                    <Card sx={{ flex: 1, borderRadius: 3, border: '1px solid', borderColor: 'divider', boxShadow: 'none', background: 'rgba(139, 92, 246, 0.03)' }}>
+                        <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: isFullscreen ? 2 : 1.5 }}>
+                            <Box sx={{ p: 1, borderRadius: 2, bgcolor: 'rgba(139, 92, 246, 0.1)', color: '#8b5cf6' }}>
+                                <BarChart3 size={isFullscreen ? 24 : 18} />
                             </Box>
                             <Box>
-                                <Typography variant="caption" fontWeight="800" color="text.secondary" sx={{ textTransform: 'uppercase', fontSize: isFullscreen ? '0.85rem' : '0.75rem' }}>En Yüksek OM</Typography>
-                                <Typography variant={isFullscreen ? "h4" : "h5"} fontWeight="900" color="#f59e0b">{sortedData[0].om} ({sortedData[0].agacDirekSayisi})</Typography>
+                                <Typography variant="caption" fontWeight="800" color="text.secondary" sx={{ textTransform: 'uppercase', fontSize: '0.65rem', lineHeight: 1.2 }}>
+                                    TOROSLAR Oranı
+                                </Typography>
+                                <Typography variant={isFullscreen ? "h5" : "h6"} fontWeight="900" color="#8b5cf6" sx={{ lineHeight: 1.2 }}>%{regionPercentage}</Typography>
+                            </Box>
+                        </CardContent>
+                    </Card>
+                </Grid>
+                <Grid item xs={12} sm={6} md={6} lg={2.4} sx={{ display: 'flex' }}>
+                    <Card sx={{ flex: 1, borderRadius: 3, border: '1px solid', borderColor: 'divider', boxShadow: 'none', background: 'rgba(59, 130, 246, 0.03)' }}>
+                        <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: isFullscreen ? 2 : 1.5 }}>
+                            <Box sx={{ p: 1, borderRadius: 2, bgcolor: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6' }}>
+                                <BarChart3 size={isFullscreen ? 24 : 18} />
+                            </Box>
+                            <Box>
+                                <Typography variant="caption" fontWeight="800" color="text.secondary" sx={{ textTransform: 'uppercase', fontSize: '0.65rem', lineHeight: 1.2 }}>
+                                    OM Başına Ağaç Direk
+                                </Typography>
+                                <Typography variant={isFullscreen ? "h5" : "h6"} fontWeight="900" color="#3b82f6" sx={{ lineHeight: 1.2 }}>{averageCount} Adet</Typography>
+                            </Box>
+                        </CardContent>
+                    </Card>
+                </Grid>
+                <Grid item xs={12} sm={6} md={6} lg={2.4} sx={{ display: 'flex' }}>
+                    <Card sx={{ flex: 1, borderRadius: 3, border: '1px solid', borderColor: 'divider', boxShadow: 'none', background: 'rgba(245, 158, 11, 0.03)' }}>
+                        <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: isFullscreen ? 2 : 1.5 }}>
+                            <Box sx={{ p: 1, borderRadius: 2, bgcolor: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b' }}>
+                                <Map size={isFullscreen ? 24 : 18} />
+                            </Box>
+                            <Box>
+                                <Typography variant="caption" fontWeight="800" color="text.secondary" sx={{ textTransform: 'uppercase', fontSize: '0.65rem', lineHeight: 1.2 }}>
+                                    OM Sayısı
+                                </Typography>
+                                <Typography variant={isFullscreen ? "h5" : "h6"} fontWeight="900" color="#f59e0b" sx={{ lineHeight: 1.2 }}>{filteredAndSortedData.length} Adet</Typography>
                             </Box>
                         </CardContent>
                     </Card>
                 </Grid>
             </Grid>
 
+            {/* Main Chart */}
             <Paper
                 elevation={0}
                 sx={{
-                    p: isFullscreen ? 4 : 4,
+                    p: 4,
                     borderRadius: 5,
                     border: '1px solid',
                     borderColor: 'divider',
                     background: 'linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 100%)',
                     position: 'relative',
                     flex: 1,
-                    minHeight: isFullscreen ? 500 : 600,
+                    minHeight: 500,
                     display: 'flex',
                     flexDirection: 'column'
                 }}
@@ -291,32 +369,14 @@ const AgacDirekSlide = () => {
             </Paper>
 
             {!isFullscreen && (
-                <Box mt={4} p={3} sx={{ bgcolor: 'rgba(0,0,0,0.02)', borderRadius: 4, border: '1px dashed', borderColor: 'divider' }}>
-                    <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic', fontWeight: 500 }}>
-                        2025 Yılında Seviye-2 Kapsamında Dikilen Ağaç Direkler
+                <Box mt={3} p={2} sx={{ bgcolor: 'rgba(0,0,0,0.02)', borderRadius: 3, border: '1px dashed', borderColor: 'divider' }}>
+                    <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic', fontWeight: 500, display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Map size={14} /> 2025 Yılı Seviye-2 Denetimleri Kapsamında Montajı Tamamlanan Ağaç Direklerin Dağılımıdır.
                     </Typography>
                 </Box>
             )}
         </Box>
     );
-
-    return (
-        <div
-            ref={slideRef}
-            data-theme={isFullscreen ? 'light' : undefined}
-            style={isFullscreen ? {
-                position: 'fixed',
-                inset: 0,
-                zIndex: 1000,
-                background: '#fff',
-                overflowY: 'auto',
-                display: 'flex',
-                flexDirection: 'column'
-            } : { height: '100%' }}>
-            {slideContent}
-        </div>
-    );
 };
 
 export default AgacDirekSlide;
-

@@ -16,7 +16,7 @@ const isTotal = (row) =>
     (row.om || row.ilce || '').toUpperCase().includes('GENEL TOPLAM');
 
 // ─── Reusable Table Shell ─────────────────────────────────────────────────────
-function AfetTable({ title, icon: Icon, iconColor, headerColor, children, columns, subtitle }) {
+function AfetTable({ title, icon: Icon, iconColor, headerColor, children, columns, subtitle, onSort, sortConfig }) {
     return (
         <div className="flex flex-col rounded-2xl overflow-hidden border border-base-200 shadow-md bg-base-100">
             {/* Table Header */}
@@ -37,9 +37,19 @@ function AfetTable({ title, icon: Icon, iconColor, headerColor, children, column
                             {columns.map((col, i) => (
                                 <th
                                     key={i}
-                                    className={`px-4 py-2.5 font-bold border-b border-base-300 ${col.align === 'right' ? 'text-right' : 'text-left'}`}
+                                    onClick={() => col.key && onSort && onSort(col.key)}
+                                    className={`px-4 py-2.5 font-bold border-b border-base-300 transition-colors 
+                                        ${col.key ? 'cursor-pointer hover:bg-base-300/50' : ''} 
+                                        ${col.align === 'right' ? 'text-right' : 'text-left'}`}
                                 >
-                                    {col.label}
+                                    <div className={`flex items-center gap-1 ${col.align === 'right' ? 'justify-end' : 'justify-start'}`}>
+                                        {col.label}
+                                        {col.key && sortConfig?.key === col.key && (
+                                            <span className="text-primary text-[10px]">
+                                                {sortConfig.direction === 'asc' ? '▲' : '▼'}
+                                            </span>
+                                        )}
+                                    </div>
                                 </th>
                             ))}
                         </tr>
@@ -51,18 +61,55 @@ function AfetTable({ title, icon: Icon, iconColor, headerColor, children, column
     );
 }
 
+// ─── Sort Helper ──────────────────────────────────────────────────────────────
+const useSortableData = (items, config = null) => {
+    const [sortConfig, setSortConfig] = useState(config);
+
+    const sortedItems = React.useMemo(() => {
+        let sortableItems = [...items];
+        if (sortConfig !== null) {
+            sortableItems.sort((a, b) => {
+                // Her zaman toplam satırını sonda tut
+                if (isTotal(a)) return 1;
+                if (isTotal(b)) return -1;
+
+                if (a[sortConfig.key] < b[sortConfig.key]) {
+                    return sortConfig.direction === 'asc' ? -1 : 1;
+                }
+                if (a[sortConfig.key] > b[sortConfig.key]) {
+                    return sortConfig.direction === 'asc' ? 1 : -1;
+                }
+                return 0;
+            });
+        }
+        return sortableItems;
+    }, [items, sortConfig]);
+
+    const requestSort = (key) => {
+        let direction = 'asc';
+        if (sortConfig && sortConfig.key === key && sortConfig.direction === 'asc') {
+            direction = 'desc';
+        }
+        setSortConfig({ key, direction });
+    };
+
+    return { items: sortedItems, requestSort, sortConfig };
+};
+
 // ─── Table 1: Sıcaklık & Orman Yangını ────────────────────────────────────────
 function SicaklikOrmanTable() {
     const cols = [
-        { label: 'OM', align: 'left' },
-        { label: 'Ort. Personel', align: 'right' },
-        { label: 'Ort. Araç', align: 'right' },
-        { label: 'Ort. Vinç', align: 'right' },
-        { label: 'Ort. Kepçe', align: 'right' },
-        { label: 'Orman Yangını (₺)', align: 'right' },
-        { label: 'Sıcaklık (₺)', align: 'right' },
-        { label: 'Genel Toplam (₺)', align: 'right' },
+        { label: 'OM', align: 'left', key: 'om' },
+        { label: 'Ort. Personel', align: 'right', key: 'ort_gun_personel' },
+        { label: 'Ort. Araç', align: 'right', key: 'ort_gun_arac' },
+        { label: 'Ort. Vinç', align: 'right', key: 'ort_gun_vinc' },
+        { label: 'Ort. Kepçe', align: 'right', key: 'ort_gun_kepce' },
+        { label: 'Orman Yangını (₺)', align: 'right', key: 'orman_yangini' },
+        { label: 'Sıcaklık (₺)', align: 'right', key: 'sicaklik' },
+        { label: 'Genel Toplam (₺)', align: 'right', key: 'genel_toplam' },
     ];
+
+    const { items, requestSort, sortConfig } = useSortableData(afetSicaklikOrmanData);
 
     return (
         <AfetTable
@@ -71,8 +118,10 @@ function SicaklikOrmanTable() {
             iconColor="text-amber-500"
             headerColor="bg-amber-50 border-b border-amber-100"
             columns={cols}
+            onSort={requestSort}
+            sortConfig={sortConfig}
         >
-            {afetSicaklikOrmanData.map((row, i) => {
+            {items.map((row, i) => {
                 const total = isTotal(row);
                 return (
                     <tr
@@ -117,13 +166,15 @@ function SicaklikOrmanTable() {
 // ─── Table 2: Deprem ──────────────────────────────────────────────────────────
 function DepremTable() {
     const cols = [
-        { label: 'OM', align: 'left' },
-        { label: 'Ort. Personel', align: 'right' },
-        { label: 'Ort. Araç', align: 'right' },
-        { label: 'Ort. Vinç', align: 'right' },
-        { label: 'Ort. Kepçe', align: 'right' },
-        { label: 'Deprem Hakediş (₺)', align: 'right' },
+        { label: 'OM', align: 'left', key: 'om' },
+        { label: 'Ort. Personel', align: 'right', key: 'ort_gun_personel' },
+        { label: 'Ort. Araç', align: 'right', key: 'ort_gun_arac' },
+        { label: 'Ort. Vinç', align: 'right', key: 'ort_gun_vinc' },
+        { label: 'Ort. Kepçe', align: 'right', key: 'ort_gun_kepce' },
+        { label: 'Deprem Hakediş (₺)', align: 'right', key: 'deprem_hakedis' },
     ];
+
+    const { items, requestSort, sortConfig } = useSortableData(afetDepremData);
 
     return (
         <AfetTable
@@ -132,8 +183,10 @@ function DepremTable() {
             iconColor="text-red-500"
             headerColor="bg-red-50 border-b border-red-100"
             columns={cols}
+            onSort={requestSort}
+            sortConfig={sortConfig}
         >
-            {afetDepremData.map((row, i) => {
+            {items.map((row, i) => {
                 const total = isTotal(row);
                 return (
                     <tr
@@ -168,26 +221,30 @@ function DepremTable() {
 // ─── Table 3: Kış Afeti (Hatay Yatırım) ──────────────────────────────────────
 function KisAfetTable() {
     const cols = [
-        { label: 'İlçe', align: 'left' },
-        { label: 'İlave TR', align: 'right' },
-        { label: 'Güç Yüls.', align: 'right' },
-        { label: 'Bölge Ayr.', align: 'right' },
-        { label: 'Kesit Art.', align: 'right' },
-        { label: 'Hücre Değiş.', align: 'right' },
-        { label: 'Dikilen Direk', align: 'right' },
-        { label: 'İletken Ara', align: 'right' },
+        { label: 'İlçe', align: 'left', key: 'ilce' },
+        { label: 'İlave TR', align: 'right', key: 'ilaveTR' },
+        { label: 'Güç Yüls.', align: 'right', key: 'gucYukseltimi' },
+        { label: 'Bölge Ayr.', align: 'right', key: 'bolgeAyrimi' },
+        { label: 'Kesit Art.', align: 'right', key: 'kesitArttirimi' },
+        { label: 'Hücre Değiş.', align: 'right', key: 'hucreDeğisimi' },
+        { label: 'Dikilen Direk', align: 'right', key: 'dikileDirek' },
+        { label: 'İletken Ara', align: 'right', key: 'iletkenAra' },
     ];
+
+    const { items, requestSort, sortConfig } = useSortableData(hatayYatirimData);
 
     return (
         <AfetTable
             title="Kış Afeti Kapsamında Yapılan İyileştirmeler — Hatay Bölgesi"
-            subtitle="Fırtına ve kar yağışı sonrası şebeke dayanıklılığını artırmak amacıyla yapılan yatırımlar."
+            subtitle="Fırtına ve kar yağışı sonrası şebeke dayanıklılığını artırmak amacıyla yapılan bakım çalışmaları."
             icon={Snowflake}
             iconColor="text-blue-500"
             headerColor="bg-blue-50 border-b border-blue-100"
             columns={cols}
+            onSort={requestSort}
+            sortConfig={sortConfig}
         >
-            {hatayYatirimData.map((row, i) => (
+            {items.map((row, i) => (
                 <tr
                     key={i}
                     className={`
