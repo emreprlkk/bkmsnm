@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { ClipboardList, Maximize, Minimize, ArrowUpDown, ArrowUp, ArrowDown, Search, X } from 'lucide-react';
-import { envanterData, envanterTotal } from '../../data/mockData';
+import { envanterS3Data } from '../../data/mockData';
 import ExportExcelButton from '../ExportExcelButton';
 
 // ── Bölge renk haritası ───────────────────────────────────────────────────────
@@ -13,16 +13,12 @@ const BOLGE_COLORS = {
 
 // ── Sütun tanımları ────────────────────────────────────────────────────────────
 const COLUMNS = [
-    { key: 'bolge', label: 'Bölge', align: 'left', numeric: false },
-    { key: 'om', label: 'OM', align: 'left', numeric: false },
-    { key: 'direk', label: 'Direk', align: 'right', numeric: true },
-    { key: 'hucreMmhGazli', label: 'Hücre MMH Gazlı', align: 'right', numeric: true },
-    { key: 'hucreMmmhHavali', label: 'Hücre MMMH Havalı', align: 'right', numeric: true },
-    { key: 'kesiciSf6', label: 'Kesici SF6', align: 'right', numeric: true },
-    { key: 'panoAgDagilim', label: 'Pano AG Dağılım', align: 'right', numeric: true },
-    { key: 'panoAydinlatma', label: 'Pano Aydınlatma', align: 'right', numeric: true },
-    { key: 'panoSdk', label: 'Pano SDK', align: 'right', numeric: true },
-    { key: 'trafoDagitimHr', label: 'Trafo Dağıtım HR', align: 'right', numeric: true },
+    { key: 'bolge', label: 'Bölge', align: 'left', numeric: false, sortable: true },
+    { key: 'om', label: 'OM', align: 'left', numeric: false, sortable: true },
+    { key: 'direkler', label: 'Direkler', align: 'right', numeric: true },
+    { key: 'hucreler', label: 'Hücreler', align: 'right', numeric: true },
+    { key: 'panolar', label: 'Panolar', align: 'right', numeric: true },
+    { key: 'trafolar', label: 'Trafolar', align: 'right', numeric: true },
     { key: 'genelToplam', label: 'Genel Toplam', align: 'right', numeric: true },
 ];
 
@@ -56,7 +52,7 @@ function getCellStyle(key, value, minMax) {
             fontWeight: 700,
         };
     }
-    if (key === 'direk') {
+    if (key === 'direkler') {
         if (value === 0) return { color: '#9ca3af' };
         const a = 0.06 + ratio * 0.22;
         return {
@@ -86,9 +82,9 @@ function SortIcon({ column, sortKey, sortDir }) {
 // ── KPI Kartları ──────────────────────────────────────────────────────────────
 const KPI_ITEMS = [
     { label: 'Genel Toplam', key: 'genelToplam', color: 'bg-indigo-50 border-indigo-200 text-indigo-700' },
-    { label: 'Direk', key: 'direk', color: 'bg-emerald-50 border-emerald-200 text-emerald-700' },
-    { label: 'Pano AG', key: 'panoAgDagilim', color: 'bg-orange-50 border-orange-200 text-orange-700' },
-    { label: 'Hücre Havalı', key: 'hucreMmmhHavali', color: 'bg-sky-50 border-sky-200 text-sky-700' },
+    { label: 'Direkler', key: 'direkler', color: 'bg-emerald-50 border-emerald-200 text-emerald-700' },
+    { label: 'Panolar', key: 'panolar', color: 'bg-orange-50 border-orange-200 text-orange-700' },
+    { label: 'Hücreler', key: 'hucreler', color: 'bg-sky-50 border-sky-200 text-sky-700' },
 ];
 
 // ── Ana bileşen ───────────────────────────────────────────────────────────────
@@ -100,9 +96,16 @@ export default function EnvanterSlide() {
     const [isFullscreen, setIsFullscreen] = useState(() => !!document.fullscreenElement);
     const containerRef = useRef(null);
 
+    const dataWithTotals = useMemo(() => {
+        return envanterS3Data.map(row => ({
+            ...row,
+            genelToplam: (row.direkler || 0) + (row.hucreler || 0) + (row.panolar || 0) + (row.trafolar || 0)
+        }));
+    }, []);
+
     const uniqueBolgeler = useMemo(
-        () => [...new Set(envanterData.map((r) => r.bolge))].sort(),
-        []
+        () => [...new Set(dataWithTotals.map((r) => r.bolge))].sort(),
+        [dataWithTotals]
     );
 
     useEffect(() => {
@@ -119,32 +122,45 @@ export default function EnvanterSlide() {
         }
     };
 
-    const minMax = useColMinMax(envanterData, NUMERIC_KEYS);
+    const minMax = useColMinMax(dataWithTotals, NUMERIC_KEYS);
 
     const handleSort = (key) => {
-        if (!COLUMNS.find((c) => c.key === key)?.numeric) return;
+        const col = COLUMNS.find((c) => c.key === key);
+        if (!col || (!col.numeric && !col.sortable)) return;
         if (sortKey === key) {
             setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'));
         } else {
             setSortKey(key);
-            setSortDir('desc');
+            setSortDir(col.numeric ? 'desc' : 'asc');
         }
     };
 
     const filtered = useMemo(() => {
-        let rows = envanterData;
+        let rows = dataWithTotals;
         if (bolgeFilter) rows = rows.filter((r) => r.bolge === bolgeFilter);
         const q = search.trim().toLowerCase();
         if (q) rows = rows.filter((r) => r.om.toLowerCase().includes(q) || r.bolge.toLowerCase().includes(q));
         return rows;
-    }, [search, bolgeFilter]);
+    }, [dataWithTotals, search, bolgeFilter]);
 
     const sorted = useMemo(() => {
         if (!sortKey) return filtered;
+        const col = COLUMNS.find(c => c.key === sortKey);
         return [...filtered].sort((a, b) => {
-            const av = a[sortKey] ?? -Infinity;
-            const bv = b[sortKey] ?? -Infinity;
-            return sortDir === 'asc' ? av - bv : bv - av;
+            const av = a[sortKey];
+            const bv = b[sortKey];
+            
+            if (col?.numeric) {
+                const nA = av ?? -Infinity;
+                const nB = bv ?? -Infinity;
+                return sortDir === 'asc' ? nA - nB : nB - nA;
+            } else {
+                const sA = String(av ?? '');
+                const sB = String(bv ?? '');
+                return sortDir === 'asc' 
+                    ? sA.localeCompare(sB, 'tr') 
+                    : sB.localeCompare(sA, 'tr');
+            }
         });
     }, [filtered, sortKey, sortDir]);
 
@@ -270,7 +286,7 @@ export default function EnvanterSlide() {
                         </button>
                     )}
                     <span className="text-xs text-base-content/40 ml-auto">
-                        {sorted.length} / {envanterData.length} kayıt · Sıralamak için başlığa tıkla
+                        {sorted.length} / {dataWithTotals.length} kayıt · Sıralamak için başlığa tıkla
                     </span>
                 </div>
 
@@ -286,17 +302,17 @@ export default function EnvanterSlide() {
                                         return (
                                             <th
                                                 key={col.key}
-                                                onClick={() => col.numeric && handleSort(col.key)}
+                                                onClick={() => (col.numeric || col.sortable) && handleSort(col.key)}
                                                 className={`
                                                     px-3 py-3 font-bold border-b border-base-300 whitespace-nowrap bg-base-200
                                                     ${col.align === 'right' ? 'text-right' : 'text-left'}
-                                                    ${col.numeric ? 'cursor-pointer select-none hover:bg-base-300/60 transition-colors' : ''}
+                                                    ${(col.numeric || col.sortable) ? 'cursor-pointer select-none hover:bg-base-300/60 transition-colors' : ''}
                                                     ${isSticky1 ? 'sticky left-0 z-30 min-w-[120px] w-[120px]' : ''}
                                                     ${isSticky2 ? 'sticky left-[120px] z-30 min-w-[200px] w-[200px] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]' : ''}
                                                 `}
                                             >
-                                                <span className="inline-flex items-center gap-1 justify-end w-full">
-                                                    {col.align === 'right' && col.numeric && (
+                                                <span className={`inline-flex items-center gap-1 ${col.align === 'right' ? 'justify-end w-full' : 'justify-start'}`}>
+                                                    {col.align === 'right' && (col.numeric || col.sortable) && (
                                                         <SortIcon column={col.key} sortKey={sortKey} sortDir={sortDir} />
                                                     )}
                                                     {col.label}

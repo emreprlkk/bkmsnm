@@ -520,35 +520,30 @@ export const koordinatTotal = {
 
 // ── 2026 Keşif Envanteri ──────────────────────────────────────────────────────
 
-export const envanterData = [
-    { bolge: 'ADANA', om: 'Adana Metropol', direk: 250, hucreMmhGazli: 2, hucreMmmhHavali: 75, kesiciSf6: 0, panoAgDagilim: 202, panoAydinlatma: 0, panoSdk: 2, trafoDagitimHr: 10, genelToplam: 541 },
-    { bolge: 'MERSİN', om: 'Anamur', direk: 113, hucreMmhGazli: 0, hucreMmmhHavali: 0, kesiciSf6: 0, panoAgDagilim: 0, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 0, genelToplam: 113 },
-    { bolge: 'HATAY', om: 'Antakya Metropol', direk: 373, hucreMmhGazli: 6, hucreMmmhHavali: 9, kesiciSf6: 0, panoAgDagilim: 18, panoAydinlatma: 0, panoSdk: 25, trafoDagitimHr: 2, genelToplam: 433 },
-    { bolge: 'MERSİN', om: 'Arsuz', direk: 6, hucreMmhGazli: 0, hucreMmmhHavali: 0, kesiciSf6: 0, panoAgDagilim: 0, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 0, genelToplam: 6 },
-    { bolge: 'ADANA', om: 'Ceyhan', direk: 56, hucreMmhGazli: 0, hucreMmmhHavali: 0, kesiciSf6: 0, panoAgDagilim: 8, panoAydinlatma: 1, panoSdk: 1, trafoDagitimHr: 0, genelToplam: 66 },
-    { bolge: 'HATAY', om: 'Dörtyol', direk: 117, hucreMmhGazli: 0, hucreMmmhHavali: 2, kesiciSf6: 0, panoAgDagilim: 5, panoAydinlatma: 0, panoSdk: 5, trafoDagitimHr: 4, genelToplam: 133 },
-    { bolge: 'ADANA', om: 'Düziçi', direk: 66, hucreMmhGazli: 0, hucreMmmhHavali: 2, kesiciSf6: 0, panoAgDagilim: 0, panoAydinlatma: 7, panoSdk: 0, trafoDagitimHr: 0, genelToplam: 75 },
-    { bolge: 'MERSİN', om: 'Erdemli', direk: 120, hucreMmhGazli: 4, hucreMmmhHavali: 2, kesiciSf6: 2, panoAgDagilim: 0, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 0, genelToplam: 128 },
-    { bolge: 'GAZİANTEP', om: 'Gaziantep Metropol', direk: 139, hucreMmhGazli: 0, hucreMmmhHavali: 8, kesiciSf6: 0, panoAgDagilim: 10, panoAydinlatma: 10, panoSdk: 7, trafoDagitimHr: 1, genelToplam: 175 },
-    { bolge: 'GAZİANTEP', om: 'Islahiye', direk: 21, hucreMmhGazli: 0, hucreMmmhHavali: 0, kesiciSf6: 0, panoAgDagilim: 0, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 0, genelToplam: 21 },
-    { bolge: 'HATAY', om: 'İskenderun', direk: 43, hucreMmhGazli: 0, hucreMmmhHavali: 3, kesiciSf6: 0, panoAgDagilim: 4, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 2, genelToplam: 52 },
-    { bolge: 'ADANA', om: 'Kadirli', direk: 138, hucreMmhGazli: 0, hucreMmmhHavali: 4, kesiciSf6: 0, panoAgDagilim: 11, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 0, genelToplam: 153 },
-    { bolge: 'HATAY', om: 'Kırıkhan', direk: 118, hucreMmhGazli: 0, hucreMmmhHavali: 0, kesiciSf6: 0, panoAgDagilim: 0, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 0, genelToplam: 118 },
-    { bolge: 'GAZİANTEP', om: 'Kilis', direk: 8, hucreMmhGazli: 0, hucreMmmhHavali: 15, kesiciSf6: 0, panoAgDagilim: 0, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 0, genelToplam: 23 },
-    { bolge: 'ADANA', om: 'Kozan', direk: 93, hucreMmhGazli: 0, hucreMmmhHavali: 0, kesiciSf6: 0, panoAgDagilim: 11, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 0, genelToplam: 104 },
-    { bolge: 'MERSİN', om: 'Mersin Metropol', direk: 127, hucreMmhGazli: 0, hucreMmmhHavali: 0, kesiciSf6: 0, panoAgDagilim: 0, panoAydinlatma: 1, panoSdk: 8, trafoDagitimHr: 0, genelToplam: 136 },
-    { bolge: 'MERSİN', om: 'Mut', direk: 143, hucreMmhGazli: 0, hucreMmmhHavali: 0, kesiciSf6: 0, panoAgDagilim: 0, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 0, genelToplam: 143 },
-    { bolge: 'GAZİANTEP', om: 'Nizip', direk: 45, hucreMmhGazli: 0, hucreMmmhHavali: 0, kesiciSf6: 0, panoAgDagilim: 0, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 0, genelToplam: 45 },
-    { bolge: 'ADANA', om: 'Osmaniye', direk: 148, hucreMmhGazli: 0, hucreMmmhHavali: 3, kesiciSf6: 0, panoAgDagilim: 6, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 0, genelToplam: 157 },
-    { bolge: 'HATAY', om: 'Reyhanlı', direk: 114, hucreMmhGazli: 0, hucreMmmhHavali: 12, kesiciSf6: 0, panoAgDagilim: 15, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 2, genelToplam: 143 },
-    { bolge: 'MERSİN', om: 'Silifke', direk: 151, hucreMmhGazli: 0, hucreMmmhHavali: 0, kesiciSf6: 0, panoAgDagilim: 0, panoAydinlatma: 0, panoSdk: 0, trafoDagitimHr: 6, genelToplam: 157 },
-    { bolge: 'MERSİN', om: 'Tarsus', direk: 189, hucreMmhGazli: 0, hucreMmmhHavali: 0, kesiciSf6: 0, panoAgDagilim: 23, panoAydinlatma: 8, panoSdk: 0, trafoDagitimHr: 6, genelToplam: 226 },
+export const envanterS3Data = [
+  { bolge: 'ADANA',     om: 'Adana Metropol OM',    hucreler: 99, direkler: 2355,  panolar: 382, trafolar: 10 },
+  { bolge: 'MERSİN',    om: 'Anamur OM',            hucreler: 0,  direkler: 27809, panolar: 0,   trafolar: 0  },
+  { bolge: 'HATAY',     om: 'Antakya Metropol OM',  hucreler: 19, direkler: 4173,  panolar: 333, trafolar: 2  },
+  { bolge: 'HATAY',     om: 'Arsuz OM',             hucreler: 0,  direkler: 67,    panolar: 0,   trafolar: 0  },
+  { bolge: 'ADANA',     om: 'Ceyhan OM',            hucreler: 0,  direkler: 436,   panolar: 10,  trafolar: 0  },
+  { bolge: 'HATAY',     om: 'Dörtyol OM',           hucreler: 4,  direkler: 932,   panolar: 10,  trafolar: 4  },
+  { bolge: 'ADANA',     om: 'Düziçi OM',            hucreler: 9,  direkler: 474,   panolar: 7,   trafolar: 0  },
+  { bolge: 'MERSİN',    om: 'Erdemli OM',           hucreler: 8,  direkler: 1227,  panolar: 0,   trafolar: 0  },
+  { bolge: 'GAZİANTEP', om: 'Gaziantep Metropol OM',hucreler: 10, direkler: 1074,  panolar: 66,  trafolar: 1  },
+  { bolge: 'GAZİANTEP', om: 'Islahiye OM',          hucreler: 0,  direkler: 302,   panolar: 0,   trafolar: 0  },
+  { bolge: 'HATAY',     om: 'İskenderun OM',        hucreler: 6,  direkler: 325,   panolar: 4,   trafolar: 2  },
+  { bolge: 'ADANA',     om: 'Kadirli OM',           hucreler: 5,  direkler: 15784, panolar: 11,  trafolar: 0  },
+  { bolge: 'HATAY',     om: 'Kırıkhan OM',          hucreler: 0,  direkler: 32590, panolar: 0,   trafolar: 0  },
+  { bolge: 'GAZİANTEP', om: 'Kilis OM',             hucreler: 18, direkler: 71,    panolar: 0,   trafolar: 0  },
+  { bolge: 'ADANA',     om: 'Kozan OM',             hucreler: 0,  direkler: 2237,  panolar: 11,  trafolar: 0  },
+  { bolge: 'MERSİN',    om: 'Mersin Metropol OM',   hucreler: 0,  direkler: 1096,  panolar: 22,  trafolar: 0  },
+  { bolge: 'MERSİN',    om: 'Mut OM',               hucreler: 0,  direkler: 3854,  panolar: 0,   trafolar: 0  },
+  { bolge: 'GAZİANTEP', om: 'Nizip OM',             hucreler: 0,  direkler: 327,   panolar: 0,   trafolar: 0  },
+  { bolge: 'ADANA',     om: 'Osmaniye OM',          hucreler: 4,  direkler: 1084,  panolar: 6,   trafolar: 0  },
+  { bolge: 'HATAY',     om: 'Reyhanlı OM',          hucreler: 20, direkler: 12518, panolar: 15,  trafolar: 2  },
+  { bolge: 'MERSİN',    om: 'Silifke OM',           hucreler: 0,  direkler: 2247,  panolar: 0,   trafolar: 6  },
+  { bolge: 'MERSİN',    om: 'Tarsus OM',            hucreler: 0,  direkler: 1496,  panolar: 33,  trafolar: 6  },
 ];
-
-export const envanterTotal = {
-    direk: 2578, hucreMmhGazli: 12, hucreMmmhHavali: 135, kesiciSf6: 2,
-    panoAgDagilim: 313, panoAydinlatma: 27, panoSdk: 48, trafoDagitimHr: 33, genelToplam: 3148
-};
 
 
 //2025 seviye-3 projelerinin edas tedas kırılımlı hali
@@ -577,36 +572,23 @@ export const raporlamaData = [
     { bolge: 'MERSİN', om: 'Tarsus', tedasSayisi: 2, tedasTutar: 26847488.05, edasSayisi: 45, edasTutar: 108620708.44 },
 ];
 
-export const agacDirekData = [
-    { om: 'ADANA', agacDirekSayisi: 121, bolge: 'ADANA' },
-    { om: 'ANAMUR', agacDirekSayisi: 242, bolge: 'MERSİN' },
-    { om: 'ARSUZ', agacDirekSayisi: 15, bolge: 'HATAY' },
-    { om: 'CEYHAN', agacDirekSayisi: 22, bolge: 'ADANA' },
-    { om: 'DÖRTYOL', agacDirekSayisi: 50, bolge: 'HATAY' },
-    { om: 'DÜZİÇİ', agacDirekSayisi: 52, bolge: 'ADANA' },
-    { om: 'ERDEMLİ', agacDirekSayisi: 85, bolge: 'MERSİN' },
-    { om: 'GAZİANTEP', agacDirekSayisi: 77, bolge: 'GAZİANTEP' },
-    { om: 'HATAY', agacDirekSayisi: 288, bolge: 'HATAY' },
-    { om: 'ISLAHIYE', agacDirekSayisi: 22, bolge: 'GAZİANTEP' },
-    { om: 'İSKENDERUN', agacDirekSayisi: 99, bolge: 'HATAY' },
-    { om: 'KADİRLİ', agacDirekSayisi: 145, bolge: 'ADANA' },
-    { om: 'KIRIKHAN', agacDirekSayisi: 45, bolge: 'HATAY' },
-    { om: 'KİLİS', agacDirekSayisi: 6, bolge: 'GAZİANTEP' },
-    { om: 'KOZAN', agacDirekSayisi: 253, bolge: 'ADANA' },
-    { om: 'MERSİN', agacDirekSayisi: 105, bolge: 'MERSİN' },
-    { om: 'MUT', agacDirekSayisi: 117, bolge: 'MERSİN' },
-    { om: 'NİZİP', agacDirekSayisi: 20, bolge: 'GAZİANTEP' },
-    { om: 'OSMANİYE', agacDirekSayisi: 61, bolge: 'ADANA' },
-    { om: 'REYHANLI', agacDirekSayisi: 19, bolge: 'HATAY' },
-    { om: 'SİLİFKE', agacDirekSayisi: 250, bolge: 'MERSİN' },
-    { om: 'TARSUS', agacDirekSayisi: 96, bolge: 'MERSİN' },
-];
-
-export const agacDirekBolgeData = [
-    { bolge: 'ADANA', dikilen: 654 },
-    { bolge: 'HATAY', dikilen: 516 },
-    { bolge: 'MERSİN', dikilen: 895 },
-    { bolge: 'GAZİANTEP', dikilen: 125 },
+export const agacDirekOmData = [
+  { bm: 'ADANA',     om: 'Adana OM',      agacDirekSayisi: 16 },
+  { bm: 'MERSİN',    om: 'Anamur OM',     agacDirekSayisi: 96 },
+  { bm: 'HATAY',     om: 'Dörtyol OM',    agacDirekSayisi: 6  },
+  { bm: 'OSMANİYE',  om: 'Düziçi OM',     agacDirekSayisi: 1  },
+  { bm: 'MERSİN',    om: 'Erdemli OM',    agacDirekSayisi: 5  },
+  { bm: 'GAZİANTEP', om: 'Gaziantep OM',  agacDirekSayisi: 27 },
+  { bm: 'HATAY',     om: 'Hatay OM',      agacDirekSayisi: 14 },
+  { bm: 'GAZİANTEP', om: 'Islahiye OM',   agacDirekSayisi: 2  },
+  { bm: 'HATAY',     om: 'İskenderun OM', agacDirekSayisi: 46 },
+  { bm: 'ADANA',     om: 'Kadirli OM',    agacDirekSayisi: 10 },
+  { bm: 'ADANA',     om: 'Kozan OM',      agacDirekSayisi: 43 },
+  { bm: 'MERSİN',    om: 'Mersin OM',     agacDirekSayisi: 5  },
+  { bm: 'MERSİN',    om: 'Mut OM',        agacDirekSayisi: 1  },
+  { bm: 'OSMANİYE',  om: 'Osmaniye OM',   agacDirekSayisi: 15 },
+  { bm: 'MERSİN',    om: 'Silifke OM',    agacDirekSayisi: 32 },
+  { bm: 'MERSİN',    om: 'Tarsus OM',     agacDirekSayisi: 28 },
 ];
 
 export const kesifButceBinaData26 = [

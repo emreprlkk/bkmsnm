@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect, useRef } from 'react';
 import { Box, Typography, Paper, useTheme, Grid, Card, CardContent, IconButton, Tabs, Tab, Chip, Tooltip } from '@mui/material';
 import Chart from 'react-apexcharts';
-import { agacDirekData, agacDirekBolgeData } from '../../data/mockData';
+import { agacDirekOmData } from '../../data/mockData';
 import { TreePine, BarChart3, TrendingUp, Maximize, Minimize, Map, Filter } from 'lucide-react';
 
 const AgacDirekSlide = () => {
@@ -28,17 +28,29 @@ const AgacDirekSlide = () => {
         setSelectedBolge(newValue);
     };
 
+    // Bölge bazlı özet veriyi dinamik olarak hesaplayalım
+    const agacDirekBolgeData = useMemo(() => {
+        const summaries = {};
+        agacDirekOmData.forEach(item => {
+            if (!summaries[item.bm]) {
+                summaries[item.bm] = { bolge: item.bm, dikilen: 0 };
+            }
+            summaries[item.bm].dikilen += item.agacDirekSayisi;
+        });
+        return Object.values(summaries).sort((a, b) => a.bolge.localeCompare(b.bolge, 'tr-TR'));
+    }, []);
+
     // Veriyi filtreleyelim ve azalan sıraya göre sıralayalım
     const filteredAndSortedData = useMemo(() => {
-        let sorted = [...agacDirekData];
+        let sorted = [...agacDirekOmData];
         if (selectedBolge !== 'HEPSİ') {
-            sorted = sorted.filter(item => item.bolge === selectedBolge);
+            sorted = sorted.filter(item => item.bm === selectedBolge);
         }
         return sorted.sort((a, b) => b.agacDirekSayisi - a.agacDirekSayisi);
     }, [selectedBolge]);
 
     const companyTotal = useMemo(() => {
-        return agacDirekBolgeData.reduce((acc, curr) => acc + curr.dikilen, 0);
+        return agacDirekOmData.reduce((acc, curr) => acc + curr.agacDirekSayisi, 0);
     }, []);
 
     const totalCount = useMemo(() => {
