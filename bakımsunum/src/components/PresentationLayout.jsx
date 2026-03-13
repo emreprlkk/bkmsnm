@@ -81,7 +81,11 @@ export default function PresentationLayout({
                         </div>
 
                         {/* Slide Body */}
-                        <div className="flex-1 p-8 md:p-12 overflow-y-auto w-full relative z-10 flex flex-col">
+                        <div className={`flex-1 w-full relative z-10 flex flex-col ${
+                            slides.find(s => s.id === activeSlideId)?.full 
+                            ? 'p-0 overflow-hidden' 
+                            : 'p-8 md:p-12 overflow-y-auto'
+                        }`}>
                             {children}
                         </div>
 

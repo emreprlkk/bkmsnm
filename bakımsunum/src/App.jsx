@@ -17,7 +17,7 @@ import S1S2DenetlemeSlide from './components/slides/S1S2DenetlemeSlide';
 import YukleniciGerceklesme2025 from './components/slides/2025YukleniciGerceklesme';
 import PlanliBakimDegisiklikler from './components/slides/usulesas';
 import AfetSlide from './components/slides/AfetSlide';
-import CBSDurumuSlide from './components/slides/CBSDurumuSlide';
+import CBSKabul from './components/slides/CBSKabul';
 import EnvanterSlide from './components/slides/EnvanterSlide26';
 import GirisSlide from './components/slides/GirisSlide';
 import VideoSlide from './components/slides/VideoSlide';
@@ -214,9 +214,23 @@ function App() {
           items={[
             {
               title: "Bina Yenileme İşi",
-              afterUrl: "https://res.cloudinary.com/diol6whsz/image/upload/v1773091772/bina_yenilme_%C3%B6ncesi1_awffvg.jpg",
+              afterUrl: "https://res.cloudinary.com/diol6whsz/image/upload/v1773382287/PHOTO-2024-12-11-10-31-55_qbvlmu.jpg",
 
-              beforeUrl: "https://res.cloudinary.com/diol6whsz/image/upload/v1773091772/binayenilemesonras%C4%B11_iedcyf.jpg",
+              beforeUrl: "https://res.cloudinary.com/diol6whsz/image/upload/v1773382294/PHOTO-2024-12-11-10-32-31_eo0hen.jpg",
+              notes: "Dağıtım merkezleri ve trafo binalarında kapsamlı dış cephe yenileme, sıva ve boyama çalışmaları gerçekleştirilmiş, binaların fiziksel dayanımı artırılmıştır."
+            },
+            {
+              title: "Bina Yenileme İşi",
+              afterUrl: "https://res.cloudinary.com/diol6whsz/image/upload/v1773381466/TCU_078_BOYA_10_n2ygit.jpg",
+
+              beforeUrl: "https://res.cloudinary.com/diol6whsz/image/upload/v1773381537/TCU_078_BOYA_4_zjd1wi.jpg",
+              notes: "Dağıtım merkezleri ve trafo binalarında kapsamlı dış cephe yenileme, sıva ve boyama çalışmaları gerçekleştirilmiş, binaların fiziksel dayanımı artırılmıştır."
+            },
+            {
+              title: "Bina Yenileme İşi",
+              beforeUrl: "https://res.cloudinary.com/diol6whsz/image/upload/v1773382034/TCU078_5_o7osla.jpg",
+
+              afterUrl: "https://res.cloudinary.com/diol6whsz/image/upload/v1773381809/TCU078_35_lwhdia.jpg",
               notes: "Dağıtım merkezleri ve trafo binalarında kapsamlı dış cephe yenileme, sıva ve boyama çalışmaları gerçekleştirilmiş, binaların fiziksel dayanımı artırılmıştır."
             }
           ]}
@@ -295,8 +309,8 @@ function App() {
         return <PlanliBakimDegisiklikler />;
       case 'afet':
         return <AfetSlide />;
-      case 'cbs_durumu':
-        return <CBSDurumuSlide />;
+      case 'cbs_kabul':
+        return <CBSKabul />;
       case 'video_kesif':
         return <VideoSlide
           title="Yüklenici Takip: Sistemi Keşif Modülü"
