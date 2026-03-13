@@ -24,6 +24,8 @@ import VideoSlide from './components/slides/VideoSlide';
 import AgacDirekSlide from './components/slides/AgacDirekSlide';
 import BinaIyilestirmeSlide from './components/slides/BinaIyilestirmeSlide';
 import AgacBudamaSlide from './components/slides/AgacBudamaSlide';
+import AgacBudamaSlide26 from './components/slides/AgacBudamaSlide26';
+import ArizaHucreSlide from './components/slides/ArizaHucreSlide';
 import { X, GripHorizontal, Eye } from 'lucide-react';
 
 const TimelineOverlay = ({ slides, activeSlideId }) => {
@@ -338,6 +340,10 @@ function App() {
         return <BinaIyilestirmeSlide />;
       case 'agac_budama_koridor':
         return <AgacBudamaSlide />;
+      case 'agac_budama_koridor_26':
+        return <AgacBudamaSlide26 />;
+      case 'ariza_hucre_bakim_25':
+        return <ArizaHucreSlide />;
       case 'giris':
         return <GirisSlide setActiveSlideId={setActiveSlideId} />;
       default:
