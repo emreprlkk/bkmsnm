@@ -208,44 +208,48 @@ const S1S2DenetlemeSlide = () => {
         });
 
         const createDonutOptions = (labels, colors, centerLabel) => ({
-            chart: { type: 'donut', fontFamily: theme.typography.fontFamily, background: 'transparent' },
+            chart: { 
+                type: 'donut', 
+                fontFamily: theme.typography.fontFamily, 
+                background: 'transparent',
+                toolbar: { show: false }
+            },
             labels: labels,
             colors: colors,
             legend: {
                 position: 'bottom',
                 fontWeight: 600,
-                fontSize: '13px',
+                fontSize: '11px',
                 labels: { colors: theme.palette.text.secondary },
-                markers: { radius: 12 }
+                markers: { radius: 12, width: 10, height: 10 },
+                itemMargin: { horizontal: 5, vertical: 5 }
             },
             stroke: { show: true, colors: ['transparent'], width: 2 },
             dataLabels: {
                 enabled: true,
-                style: { fontSize: '11px', fontWeight: 800, colors: ['#fff'] },
+                style: { fontSize: '10px', fontWeight: 800, colors: ['#fff'] },
                 dropShadow: { enabled: true, top: 1, left: 1, blur: 2, color: '#000', opacity: 0.7 },
                 formatter: (val, opts) => {
                     const seriesValue = opts.w.config.series[opts.seriesIndex];
-                    return [seriesValue, `%${val.toFixed(1)}`];
+                    return [seriesValue, `%${val.toFixed(0)}`];
                 }
             },
             plotOptions: {
                 pie: {
+                    customScale: 0.85,
                     donut: {
                         size: '72%',
                         labels: {
                             show: true,
-                            name: { show: true, fontSize: '13px', color: theme.palette.text.secondary, fontWeight: 700 },
-                            value: { show: true, fontSize: '26px', fontWeight: 900, color: theme.palette.text.primary },
+                            name: { show: true, fontSize: '12px', color: theme.palette.text.secondary, fontWeight: 700, offsetY: -5 },
+                            value: { show: true, fontSize: '22px', fontWeight: 900, color: theme.palette.text.primary, offsetY: 5 },
                             total: {
-                                show: true, showAlways: true, label: centerLabel, fontSize: '12px', color: theme.palette.text.secondary, fontWeight: 700,
+                                show: true, showAlways: true, label: centerLabel, fontSize: '11px', color: theme.palette.text.secondary, fontWeight: 700,
                                 formatter: function (w) {
                                     return w.globals.seriesTotals.reduce((a, b) => a + b, 0);
                                 }
                             }
                         }
-                    },
-                    dataLabels: {
-                        minAngleToShowLabel: 15
                     }
                 }
             },
@@ -263,7 +267,7 @@ const S1S2DenetlemeSlide = () => {
             },
             tooltip: {
                 theme: theme.palette.mode === 'dark' ? 'dark' : 'light',
-                style: { fontSize: '13px', fontWeight: 700 }
+                style: { fontSize: '12px', fontWeight: 700 }
             }
         });
 
@@ -593,40 +597,44 @@ const S1S2DenetlemeSlide = () => {
                         <Paper
                             elevation={0}
                             sx={{
-                                p: 2,
+                                p: 3,
                                 borderRadius: 4,
                                 border: `1px solid ${theme.palette.divider}`,
                                 background: 'linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 100%)',
-                                boxShadow: theme.shadows[2]
+                                boxShadow: theme.shadows[2],
+                                maxWidth: '1400px',
+                                mx: 'auto',
+                                width: '100%'
                             }}
                         >
 
 
-                            <Grid container spacing={3} alignItems="stretch">
+                            <Grid container spacing={4} justifyContent="center" alignItems="stretch">
                                 {/* DOĞRU YANLIŞ */}
                                 <Grid item xs={12} sm={4} sx={{ display: 'flex', flexDirection: 'column' }}>
                                     <Box sx={{
-                                        p: 2.5, borderRadius: 3, backgroundColor: theme.palette.background.paper,
+                                        p: 3, borderRadius: 3, backgroundColor: theme.palette.background.paper,
                                         display: 'flex', flexDirection: 'column', height: '100%',
-                                        border: '1px solid', borderColor: 'rgba(59, 130, 246, 0.2)',
-                                        boxShadow: '0 4px 20px rgba(59, 130, 246, 0.05)'
+                                        border: '1px solid', borderColor: 'rgba(59, 130, 246, 0.15)',
+                                        boxShadow: '0 8px 32px rgba(59, 130, 246, 0.04)',
+                                        transition: 'transform 0.2s',
+                                        '&:hover': { transform: 'translateY(-4px)' }
                                     }}>
-                                        <Typography variant="subtitle2" fontWeight="800" align="center" mb={1} color="#3b82f6" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
-                                            <div style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#3b82f6' }} />
-                                            SAHADAKİ ENVARTERİN DURUMUNUN BAKIM FORMUNA DOĞRU İŞLENMESİ
+                                        <Typography variant="subtitle2" fontWeight="800" align="center" mb={2} color="#3b82f6" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, minHeight: '3em', lineHeight: 1.2 }}>
+                                            SAHADAKİ ENVANTERİN DURUMUNUN BAKIM FORMUNA DOĞRU İŞLENMESİ
                                         </Typography>
-                                        <Box display="flex" justifyContent="center" mb={2} flex={1}>
+                                        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flex: 1, minHeight: 280, width: '100%' }}>
                                             <Chart
                                                 options={aggregateTotals.dogruYanlis.options}
                                                 series={aggregateTotals.dogruYanlis.series}
                                                 type="donut"
-                                                height={240}
+                                                height="100%"
                                                 width="100%"
                                             />
                                         </Box>
-                                        <Box mt="auto" p={1.5} sx={{ backgroundColor: 'rgba(59, 130, 246, 0.08)', borderRadius: 2, borderLeft: '3px solid #3b82f6' }}>
-                                            <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.75rem', fontWeight: 500, lineHeight: 1.2 }}>
-                                                Bakım personelinin işlediği bakım formunun ,sahadaki envarterin mevcut durumu ile tutarlılığını gösterir.
+                                        <Box mt={2} p={1.5} sx={{ backgroundColor: 'rgba(59, 130, 246, 0.05)', borderRadius: 2, borderLeft: '4px solid #3b82f6' }}>
+                                            <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600, lineHeight: 1.3, display: 'block' }}>
+                                                Bakım personelinin işlediği bakım formunun, sahadaki envanterin mevcut durumu ile tutarlılığını gösterir.
                                             </Typography>
                                         </Box>
                                     </Box>
@@ -635,27 +643,28 @@ const S1S2DenetlemeSlide = () => {
                                 {/* UYGUN UYGUNSUZ */}
                                 <Grid item xs={12} sm={4} sx={{ display: 'flex', flexDirection: 'column' }}>
                                     <Box sx={{
-                                        p: 2.5, borderRadius: 3, backgroundColor: theme.palette.background.paper,
+                                        p: 3, borderRadius: 3, backgroundColor: theme.palette.background.paper,
                                         display: 'flex', flexDirection: 'column', height: '100%',
-                                        border: '1px solid', borderColor: 'rgba(16, 185, 129, 0.2)',
-                                        boxShadow: '0 4px 20px rgba(16, 185, 129, 0.05)'
+                                        border: '1px solid', borderColor: 'rgba(16, 185, 129, 0.15)',
+                                        boxShadow: '0 8px 32px rgba(16, 185, 129, 0.04)',
+                                        transition: 'transform 0.2s',
+                                        '&:hover': { transform: 'translateY(-4px)' }
                                     }}>
-                                        <Typography variant="subtitle2" fontWeight="800" align="center" mb={1} color="#10b981" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
-                                            <div style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#10b981' }} />
-                                            BAKIMI YAPILAN ENVARTERİN UYGUNLUK DURUMU
+                                        <Typography variant="subtitle2" fontWeight="800" align="center" mb={2} color="#10b981" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, minHeight: '3em', lineHeight: 1.2 }}>
+                                            BAKIMI YAPILAN ENVANTERİN UYGUNLUK DURUMU
                                         </Typography>
-                                        <Box display="flex" justifyContent="center" mb={2} flex={1}>
+                                        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flex: 1, minHeight: 280, width: '100%' }}>
                                             <Chart
                                                 options={aggregateTotals.uygunUygunsuz.options}
                                                 series={aggregateTotals.uygunUygunsuz.series}
                                                 type="donut"
-                                                height={240}
+                                                height="100%"
                                                 width="100%"
                                             />
                                         </Box>
-                                        <Box mt="auto" p={1.5} sx={{ backgroundColor: 'rgba(16, 185, 129, 0.08)', borderRadius: 2, borderLeft: '3px solid #10b981' }}>
-                                            <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.75rem', fontWeight: 500, lineHeight: 1.2 }}>
-                                                Bakımı yapılan envarterin,ilgili yönetmeliğe/mevzuata uygun bakımının yapılıp yapılmadığını gösterir.
+                                        <Box mt={2} p={1.5} sx={{ backgroundColor: 'rgba(16, 185, 129, 0.05)', borderRadius: 2, borderLeft: '4px solid #10b981' }}>
+                                            <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600, lineHeight: 1.3, display: 'block' }}>
+                                                Bakımı yapılan envanterin, ilgili yönetmeliğe/mevzuata uygun bakımının yapılıp yapılmadığını gösterir.
                                             </Typography>
                                         </Box>
                                     </Box>
@@ -664,27 +673,28 @@ const S1S2DenetlemeSlide = () => {
                                 {/* S2 DURUM */}
                                 <Grid item xs={12} sm={4} sx={{ display: 'flex', flexDirection: 'column' }}>
                                     <Box sx={{
-                                        p: 2.5, borderRadius: 3, backgroundColor: theme.palette.background.paper,
+                                        p: 3, borderRadius: 3, backgroundColor: theme.palette.background.paper,
                                         display: 'flex', flexDirection: 'column', height: '100%',
-                                        border: '1px solid', borderColor: 'rgba(139, 92, 246, 0.2)',
-                                        boxShadow: '0 4px 20px rgba(139, 92, 246, 0.05)'
+                                        border: '1px solid', borderColor: 'rgba(139, 92, 246, 0.15)',
+                                        boxShadow: '0 8px 32px rgba(139, 92, 246, 0.04)',
+                                        transition: 'transform 0.2s',
+                                        '&:hover': { transform: 'translateY(-4px)' }
                                     }}>
-                                        <Typography variant="subtitle2" fontWeight="800" align="center" mb={1} color="#8b5cf6" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
-                                            <div style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#8b5cf6' }} />
-                                            Uygunsuzluk durumunun ,Seviye-2 Kapsamında Yapılabilirliği
+                                        <Typography variant="subtitle2" fontWeight="800" align="center" mb={2} color="#8b5cf6" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, minHeight: '3em', lineHeight: 1.2 }}>
+                                            UYGUNSUZLUK DURUMUNUN SEVİYE-2 KAPSAMINDA YAPILABİLİRLİĞİ
                                         </Typography>
-                                        <Box display="flex" justifyContent="center" mb={2} flex={1}>
+                                        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flex: 1, minHeight: 280, width: '100%' }}>
                                             <Chart
                                                 options={aggregateTotals.s2Durum.options}
                                                 series={aggregateTotals.s2Durum.series}
                                                 type="donut"
-                                                height={240}
+                                                height="100%"
                                                 width="100%"
                                             />
                                         </Box>
-                                        <Box mt="auto" p={1.5} sx={{ backgroundColor: 'rgba(139, 92, 246, 0.08)', borderRadius: 2, borderLeft: '3px solid #8b5cf6' }}>
-                                            <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.75rem', fontWeight: 500, lineHeight: 1.2 }}>
-                                                Bakımı yapılmış ve uygunsuz olan envarterlerin ideal durumda seviye-2 kapsamında yapılabilirliği.
+                                        <Box mt={2} p={1.5} sx={{ backgroundColor: 'rgba(139, 92, 246, 0.05)', borderRadius: 2, borderLeft: '4px solid #8b5cf6' }}>
+                                            <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600, lineHeight: 1.3, display: 'block' }}>
+                                                Bakımı yapılmış ve uygunsuz olan envanterlerin ideal durumda Seviye-2 kapsamında yapılabilirliği.
                                             </Typography>
                                         </Box>
                                     </Box>

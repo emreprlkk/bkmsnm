@@ -75,7 +75,7 @@ export const presentationSlides = [
     { id: 9, title: 'USUL VE ESASLAR DEĞİŞİKLİKLERİ', type: 'usul_esas' },
     { id: 8, title: '2025 YÜKLENİCİ GERÇEKLEŞMELERİ', type: '2025_yuklenici_gerceklesme', full: true },
     { id: 5, title: '2025 YER TESLİMLERİ', type: 'yer_teslimi', full: true },
-    { id: 1, title: '2025 Yılı Seviye-3 İşleri TOROSLAR EDAŞ - BÖLGE MÜDÜRLÜĞÜ-OM KAPSAMINDA', type: 'chart_pie' },
+    { id: 1, title: '2025 Yılı Seviye-3 İşleri', type: 'chart_pie' },
     { id: 4, title: 'S1-S2 ANALİZİ', type: 'chart_s1_s2' },
     { id: 7, title: 'S1-S2 DENETLEME', type: 's1_s2_denetleme', full: true },
     { id: 10, title: '2025 AFET-HAKEDİŞ VERİLERİ', type: 'afet', full: true },

@@ -53,7 +53,8 @@ const GirisSlide = ({ setActiveSlideId }) => {
             's1_s2_denetleme', 
             'agac_budama_koridor', 
             'agac_budama_koridor_26', 
-            'bina_iyilestirme'
+            'bina_iyilestirme',
+            'agac_direk'
         ].includes(type)) return 'seviye12';
 
         if ([
@@ -63,7 +64,8 @@ const GirisSlide = ({ setActiveSlideId }) => {
             'cbs_kabul',
             'kesif_ozeti',
             'yuklenici_bilgileri',
-            'ariza_hucre_bakim_25'
+            'ariza_hucre_bakim_25',
+            'afet'
         ].includes(type)) return 'seviye3';
 
         return 'diger';
@@ -79,7 +81,20 @@ const GirisSlide = ({ setActiveSlideId }) => {
     const groupedSlides = slidesList.reduce((acc, slide) => {
         const cat = getCategory(slide.type);
         if (!acc[cat]) acc[cat] = [];
-        acc[cat].push(slide);
+
+        // Consolidate photos into a single entry
+        if (slide.type?.startsWith('photo_')) {
+            const hasPhotos = acc[cat].find(s => s.isPhotoPlaceholder);
+            if (!hasPhotos) {
+                acc[cat].push({
+                    id: 101, // Bina Yenileme İşi (First photo slide)
+                    title: 'ÖNCESİ VE SONRASI FOTOĞRAFLAR',
+                    isPhotoPlaceholder: true
+                });
+            }
+        } else {
+            acc[cat].push(slide);
+        }
         return acc;
     }, {});
 

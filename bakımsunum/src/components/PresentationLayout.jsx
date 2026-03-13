@@ -139,23 +139,35 @@ export default function PresentationLayout({
                                 const isActiveGroup = groupSlides.some(s => s.id === activeSlideId);
                                 return (
                                     <li key={groupName} className="mb-1 group-item">
-                                        <details open={true}>
-                                            <summary className={`py-3 font-bold opacity-80 ${isActiveGroup ? 'text-primary opacity-100' : 'text-base-content hover:bg-base-200'}`}>
-                                                {groupName}
-                                            </summary>
-                                            <ul className="pl-4 mt-2 border-l border-base-300 ml-2">
-                                                {groupSlides.map((slide) => (
-                                                    <li key={slide.id} className="mb-1">
-                                                        <button
-                                                            className={`py-2 text-sm ${activeSlideId === slide.id ? 'active bg-primary/20 font-bold text-primary outline-none' : 'opacity-70 hover:opacity-100 hover:bg-base-200'}`}
-                                                            onClick={() => setActiveSlideId(slide.id)}
-                                                        >
-                                                            <span className="truncate flex-1">{slide.titleShort || slide.title}</span>
-                                                        </button>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </details>
+                                        {groupName === 'Fotoğraflar' ? (
+                                            <button
+                                                className={`py-3 w-full text-left flex items-center gap-2 ${isActiveGroup ? 'active bg-primary font-bold text-primary-content outline-none' : 'hover:bg-base-200'}`}
+                                                onClick={() => setActiveSlideId(groupSlides[0].id)}
+                                            >
+                                                <span className="opacity-60 text-xs w-4">
+                                                    {(slides.findIndex(s => s.id === groupSlides[0].id) + 1).toString().padStart(2, '0')}
+                                                </span>
+                                                <span className="ml-2 truncate flex-1">{groupName}</span>
+                                            </button>
+                                        ) : (
+                                            <details open={true}>
+                                                <summary className={`py-3 font-bold opacity-80 ${isActiveGroup ? 'text-primary opacity-100' : 'text-base-content hover:bg-base-200'}`}>
+                                                    {groupName}
+                                                </summary>
+                                                <ul className="pl-4 mt-2 border-l border-base-300 ml-2">
+                                                    {groupSlides.map((slide) => (
+                                                        <li key={slide.id} className="mb-1">
+                                                            <button
+                                                                className={`py-2 text-sm ${activeSlideId === slide.id ? 'active bg-primary/20 font-bold text-primary outline-none' : 'opacity-70 hover:opacity-100 hover:bg-base-200'}`}
+                                                                onClick={() => setActiveSlideId(slide.id)}
+                                                            >
+                                                                <span className="truncate flex-1">{slide.titleShort || slide.title}</span>
+                                                            </button>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </details>
+                                        )}
                                     </li>
                                 );
                             }
