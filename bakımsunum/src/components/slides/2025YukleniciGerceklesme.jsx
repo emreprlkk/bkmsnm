@@ -280,7 +280,7 @@ export default function YukleniciGerceklesme2025() {
             ref={containerRef}
             className={`flex flex-col w-full gap-4 transition-all duration-300 ${fs
                 ? 'fixed inset-0 z-50 bg-base-100 overflow-y-auto p-8'
-                : 'h-full'
+                : 'h-full overflow-y-auto p-4'
                 }`}
         >
             {/* ── Başlık + Filtreler ── */}

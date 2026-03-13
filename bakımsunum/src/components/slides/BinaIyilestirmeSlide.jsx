@@ -329,7 +329,7 @@ export default function BinaIyilestirmeSlide() {
         <div
             ref={containerRef}
             className={`flex flex-col overflow-hidden ${isFullscreen
-                ? 'fixed inset-0 z-50 bg-white p-12'
+                ? 'fixed inset-0 z-50 bg-white p-8'
                 : 'h-full w-full p-4'}`}
         >
             {/* Header Area & Quick Stats - FIXED (No scroll) */}

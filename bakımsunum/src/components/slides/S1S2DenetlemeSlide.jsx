@@ -470,7 +470,7 @@ const S1S2DenetlemeSlide = () => {
     const slideContent = (
         <Box
             sx={{
-                p: isFullscreen ? { xs: 2, md: 4 } : 0,
+                p: isFullscreen ? { xs: 2, md: 4 } : 2,
                 height: '100%',
                 display: 'flex',
                 flexDirection: 'column',

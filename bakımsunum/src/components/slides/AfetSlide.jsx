@@ -18,9 +18,9 @@ const isTotal = (row) =>
 // ─── Reusable Table Shell ─────────────────────────────────────────────────────
 function AfetTable({ title, icon: Icon, iconColor, headerColor, children, columns, subtitle, onSort, sortConfig }) {
     return (
-        <div className="flex flex-col rounded-2xl overflow-hidden border border-base-200 shadow-md bg-base-100">
-            {/* Table Header */}
-            <div className={`flex flex-col gap-0.5 px-5 py-3 ${headerColor}`}>
+        <div className="flex flex-col rounded-2xl border border-base-200 shadow-md bg-base-100 h-full min-h-0 overflow-hidden">
+            {/* Table Title - Fixed */}
+            <div className={`shrink-0 flex flex-col gap-0.5 px-5 py-3 ${headerColor}`}>
                 <div className="flex items-center gap-3">
                     <Icon size={18} className={iconColor} />
                     <span className="font-extrabold tracking-wide text-sm uppercase text-base-content">
@@ -30,15 +30,16 @@ function AfetTable({ title, icon: Icon, iconColor, headerColor, children, column
                 {subtitle && <p className="text-[10px] opacity-60 ml-7 font-semibold">{subtitle}</p>}
             </div>
 
-            <div className="overflow-x-auto">
+            {/* Table Scroll Area */}
+            <div className="flex-1 overflow-auto">
                 <table className="w-full text-sm border-collapse">
-                    <thead>
+                    <thead className="sticky top-0 z-20">
                         <tr className="bg-base-200 text-base-content/60 text-xs uppercase tracking-wider">
                             {columns.map((col, i) => (
                                 <th
                                     key={i}
                                     onClick={() => col.key && onSort && onSort(col.key)}
-                                    className={`px-4 py-2.5 font-bold border-b border-base-300 transition-colors 
+                                    className={`px-4 py-2.5 font-bold border-b border-base-300 transition-colors bg-base-200
                                         ${col.key ? 'cursor-pointer hover:bg-base-300/50' : ''} 
                                         ${col.align === 'right' ? 'text-right' : 'text-left'}`}
                                 >
@@ -129,7 +130,7 @@ function SicaklikOrmanTable() {
                         className={`
                             border-b border-base-200 transition-colors duration-150
                             ${total
-                                ? 'bg-amber-50 font-bold text-base-content'
+                                ? 'bg-amber-50 font-bold text-base-content sticky bottom-0 z-10'
                                 : i % 2 === 0
                                     ? 'bg-base-100 hover:bg-amber-50/40'
                                     : 'bg-base-200/30 hover:bg-amber-50/40'
@@ -139,10 +140,10 @@ function SicaklikOrmanTable() {
                         <td className={`px-4 py-2.5 ${total ? 'font-extrabold text-amber-700' : 'font-medium text-base-content'}`}>
                             {row.om}
                         </td>
-                        <td className="px-4 py-2.5 text-right tabular-nums">{fmtNum(row.ort_gun_personel)}</td>
-                        <td className="px-4 py-2.5 text-right tabular-nums">{fmtNum(row.ort_gun_arac)}</td>
-                        <td className="px-4 py-2.5 text-right tabular-nums">{fmtNum(row.ort_gun_vinc)}</td>
-                        <td className="px-4 py-2.5 text-right tabular-nums">{fmtNum(row.ort_gun_kepce)}</td>
+                        <td className={`px-4 py-2.5 text-right tabular-nums ${total ? 'font-bold underline decoration-amber-200' : ''}`}>{fmtNum(row.ort_gun_personel)}</td>
+                        <td className={`px-4 py-2.5 text-right tabular-nums ${total ? 'font-bold underline decoration-amber-200' : ''}`}>{fmtNum(row.ort_gun_arac)}</td>
+                        <td className={`px-4 py-2.5 text-right tabular-nums ${total ? 'font-bold underline decoration-amber-200' : ''}`}>{fmtNum(row.ort_gun_vinc)}</td>
+                        <td className={`px-4 py-2.5 text-right tabular-nums ${total ? 'font-bold underline decoration-amber-200' : ''}`}>{fmtNum(row.ort_gun_kepce)}</td>
                         <td className="px-4 py-2.5 text-right tabular-nums font-mono text-xs">
                             {row.orman_yangini != null
                                 ? <span className="text-green-700 font-semibold">{fmt(row.orman_yangini)}</span>
@@ -194,7 +195,7 @@ function DepremTable() {
                         className={`
                             border-b border-base-200 transition-colors duration-150
                             ${total
-                                ? 'bg-red-50 font-bold text-base-content'
+                                ? 'bg-red-50 font-bold text-base-content sticky bottom-0 z-10'
                                 : i % 2 === 0
                                     ? 'bg-base-100 hover:bg-red-50/40'
                                     : 'bg-base-200/30 hover:bg-red-50/40'
@@ -204,10 +205,10 @@ function DepremTable() {
                         <td className={`px-4 py-2.5 ${total ? 'font-extrabold text-red-700' : 'font-medium text-base-content'}`}>
                             {row.om}
                         </td>
-                        <td className="px-4 py-2.5 text-right tabular-nums">{fmtNum(row.ort_gun_personel)}</td>
-                        <td className="px-4 py-2.5 text-right tabular-nums">{fmtNum(row.ort_gun_arac)}</td>
-                        <td className="px-4 py-2.5 text-right tabular-nums">{fmtNum(row.ort_gun_vinc)}</td>
-                        <td className="px-4 py-2.5 text-right tabular-nums">{fmtNum(row.ort_gun_kepce)}</td>
+                        <td className={`px-4 py-2.5 text-right tabular-nums ${total ? 'font-bold underline decoration-red-200' : ''}`}>{fmtNum(row.ort_gun_personel)}</td>
+                        <td className={`px-4 py-2.5 text-right tabular-nums ${total ? 'font-bold underline decoration-red-200' : ''}`}>{fmtNum(row.ort_gun_arac)}</td>
+                        <td className={`px-4 py-2.5 text-right tabular-nums ${total ? 'font-bold underline decoration-red-200' : ''}`}>{fmtNum(row.ort_gun_vinc)}</td>
+                        <td className={`px-4 py-2.5 text-right tabular-nums ${total ? 'font-bold underline decoration-red-200' : ''}`}>{fmtNum(row.ort_gun_kepce)}</td>
                         <td className={`px-4 py-2.5 text-right tabular-nums font-mono text-xs ${total ? 'text-red-700 font-extrabold' : 'text-red-600 font-semibold'}`}>
                             {fmt(row.deprem_hakedis)}
                         </td>
@@ -264,7 +265,7 @@ function KisAfetTable() {
                 </tr>
             ))}
             {/* Toplam Satırı */}
-            <tr className="bg-blue-600 text-white font-black">
+            <tr className="bg-blue-600 text-white font-black sticky bottom-0 z-10">
                 <td className="px-4 py-3 uppercase tracking-wider">GENEL TOPLAM</td>
                 <td className="px-4 py-3 text-right">{hatayYatirimData.reduce((acc, curr) => acc + (curr.ilaveTR || 0), 0)}</td>
                 <td className="px-4 py-3 text-right">{hatayYatirimData.reduce((acc, curr) => acc + (curr.gucYukseltimi || 0), 0)}</td>
@@ -315,9 +316,9 @@ export default function AfetSlide() {
     return (
         <div
             ref={containerRef}
-            className={`flex flex-col gap-8 ${isFullscreen
-                ? 'fixed inset-0 z-50 bg-white overflow-y-auto p-12'
-                : 'h-full w-full overflow-y-auto p-2'
+            className={`flex flex-col h-full w-full overflow-hidden ${isFullscreen
+                ? 'fixed inset-0 z-50 bg-white p-8'
+                : 'p-4'
                 }`}
         >
 
@@ -379,47 +380,51 @@ export default function AfetSlide() {
             </div>
 
             {/* Content Area */}
-            {viewMode === 'grid' ? (
-                <div className="grid grid-cols-1 gap-8 mb-12 animate-in fade-in duration-500">
-                    <SicaklikOrmanTable />
-                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-                        <DepremTable />
-                        <KisAfetTable />
-                    </div>
-                </div>
-            ) : (
-                <div className="flex-1 flex flex-col gap-6 animate-in slide-in-from-right-4 duration-500">
-                    <div className="flex items-center justify-between px-2">
-                        <div className="flex gap-2">
-                            {tables.map((t, idx) => (
-                                <div
-                                    key={idx}
-                                    className={`h-1.5 w-12 rounded-full transition-all duration-300 ${activeTab === idx ? 'bg-primary w-20' : 'bg-base-300'}`}
-                                />
-                            ))}
+            <div className="flex-1 overflow-hidden flex flex-col min-h-0">
+                {viewMode === 'grid' ? (
+                    <div className="flex-1 grid grid-cols-1 gap-8 mb-6 animate-in fade-in duration-500 overflow-y-auto pr-2">
+                        <div className="h-[400px] shrink-0">
+                            <SicaklikOrmanTable />
                         </div>
-                        <div className="flex gap-2">
-                            <button
-                                onClick={() => setActiveTab(prev => Math.max(0, prev - 1))}
-                                disabled={activeTab === 0}
-                                className="btn btn-circle btn-sm btn-outline btn-primary"
-                            >
-                                <ChevronLeft size={20} />
-                            </button>
-                            <button
-                                onClick={() => setActiveTab(prev => Math.min(tables.length - 1, prev + 1))}
-                                disabled={activeTab === tables.length - 1}
-                                className="btn btn-circle btn-sm btn-outline btn-primary"
-                            >
-                                <ChevronRight size={20} />
-                            </button>
+                        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 min-h-[400px]">
+                            <DepremTable />
+                            <KisAfetTable />
                         </div>
                     </div>
-                    <div className="flex-1 relative min-h-[500px]">
-                        {tables[activeTab].component}
+                ) : (
+                    <div className="flex-1 flex flex-col gap-6 animate-in slide-in-from-right-4 duration-500 min-h-0">
+                        <div className="flex items-center justify-between px-2 shrink-0">
+                            <div className="flex gap-2">
+                                {tables.map((t, idx) => (
+                                    <div
+                                        key={idx}
+                                        className={`h-1.5 w-12 rounded-full transition-all duration-300 ${activeTab === idx ? 'bg-primary w-20' : 'bg-base-300'}`}
+                                    />
+                                ))}
+                            </div>
+                            <div className="flex gap-2">
+                                <button
+                                    onClick={() => setActiveTab(prev => Math.max(0, prev - 1))}
+                                    disabled={activeTab === 0}
+                                    className="btn btn-circle btn-sm btn-outline btn-primary"
+                                >
+                                    <ChevronLeft size={20} />
+                                </button>
+                                <button
+                                    onClick={() => setActiveTab(prev => Math.min(tables.length - 1, prev + 1))}
+                                    disabled={activeTab === tables.length - 1}
+                                    className="btn btn-circle btn-sm btn-outline btn-primary"
+                                >
+                                    <ChevronRight size={20} />
+                                </button>
+                            </div>
+                        </div>
+                        <div className="flex-1 min-h-0 relative">
+                            {tables[activeTab].component}
+                        </div>
                     </div>
-                </div>
-            )}
+                )}
+            </div>
 
             {/* Quick Summary Footer */}
             <div className="flex items-center gap-4 p-4 bg-emerald-50 border border-emerald-100 rounded-2xl mb-6">

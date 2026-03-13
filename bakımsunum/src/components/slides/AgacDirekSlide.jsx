@@ -68,23 +68,20 @@ const AgacDirekSlide = () => {
     const chartOptions = {
         chart: {
             type: 'bar',
-            height: isFullscreen ? 600 : 450,
             toolbar: { show: true },
             fontFamily: theme.typography.fontFamily,
             animations: {
                 enabled: true,
                 easing: 'easeinout',
                 speed: 800,
-                animateGradually: { enabled: true, delay: 150 },
-                dynamicAnimation: { enabled: true, speed: 350 }
             }
         },
         plotOptions: {
             bar: {
-                borderRadius: 6,
+                borderRadius: 4,
                 borderRadiusApplication: 'end',
                 horizontal: false,
-                columnWidth: '55%',
+                columnWidth: '60%',
                 distributed: true,
                 dataLabels: { position: 'top' },
             }
@@ -92,29 +89,25 @@ const AgacDirekSlide = () => {
         dataLabels: {
             enabled: true,
             formatter: (val) => val,
-            offsetY: -25,
+            offsetY: -20,
             style: {
-                fontSize: '12px',
+                fontSize: '10px',
                 fontWeight: 900,
                 colors: [theme.palette.text.primary]
             }
         },
-        colors: [
-            '#059669'/*, '#10b981', '#34d399', '#6ee7b7', '#a7f3d0',
-            '#0d9488', '#14b8a6', '#2dd4bf', '#5eead4', '#99f6e4',
-            '#0891b2', '#06b6d4', '#22d3ee', '#67e8f9', '#a5f3fc'*/
-        ],
+        colors: ['#059669'],
         stroke: { show: true, width: 2, colors: ['transparent'] },
         xaxis: {
             categories: filteredAndSortedData.map(item => item.om),
             labels: {
                 style: {
                     colors: theme.palette.text.secondary,
-                    fontSize: '11px',
+                    fontSize: '9px',
                     fontWeight: 700
                 },
                 rotate: -45,
-                rotateAlways: filteredAndSortedData.length > 10,
+                rotateAlways: filteredAndSortedData.length > 8,
             },
             axisBorder: { show: false },
             axisTicks: { show: false }
@@ -122,10 +115,10 @@ const AgacDirekSlide = () => {
         yaxis: {
             title: {
                 text: 'Ağaç Direk Sayısı',
-                style: { color: theme.palette.text.secondary, fontWeight: 700 }
+                style: { color: theme.palette.text.secondary, fontWeight: 700, fontSize: '10px' }
             },
             labels: {
-                style: { colors: theme.palette.text.secondary, fontWeight: 600 }
+                style: { colors: theme.palette.text.secondary, fontWeight: 600, fontSize: '10px' }
             }
         },
         fill: {
@@ -133,8 +126,6 @@ const AgacDirekSlide = () => {
             gradient: {
                 shade: 'light',
                 type: "vertical",
-                shadeIntensity: 0.25,
-                inverseColors: true,
                 opacityFrom: 0.85,
                 opacityTo: 1,
                 stops: [0, 100]
@@ -143,7 +134,6 @@ const AgacDirekSlide = () => {
         tooltip: {
             theme: theme.palette.mode === 'dark' ? 'dark' : 'light',
             y: { formatter: (val) => val + " Adet" },
-            marker: { show: true },
         },
         grid: {
             borderColor: theme.palette.divider,
@@ -152,12 +142,12 @@ const AgacDirekSlide = () => {
         },
         legend: { show: false },
         title: {
-            text: `${selectedBolge === 'HEPSİ' ? 'Tüm' : selectedBolge} Bölgeler — OM Bazlı Dikilen Ağaç Direk`,
+            text: `${selectedBolge === 'HEPSİ' ? 'Tüm' : selectedBolge} Bölgeler — OM Bazlı Dağılım`,
             align: 'left',
             style: {
-                fontSize: isFullscreen ? '22px' : '18px',
+                fontSize: '14px',
                 fontWeight: 900,
-                color: theme.palette.primary.main
+                color: theme.palette.text.primary
             }
         }
     };
@@ -170,220 +160,156 @@ const AgacDirekSlide = () => {
     return (
         <Box
             sx={{
-                p: isFullscreen ? { xs: 2, md: 4 } : 4,
+                p: 2,
                 height: '100%',
                 display: 'flex',
                 flexDirection: 'column',
-                backgroundColor: theme.palette.background.default,
-                overflowY: 'auto'
+                backgroundColor: '#f8fafc', // Hafif gri arka plan (slate-50)
+                overflow: 'hidden'
             }}
         >
-            {/* Header */}
-            <Box display="flex" justifyContent="space-between" alignItems="center" mb={isFullscreen ? 3 : 4}>
-                <Box display="flex" alignItems="center" gap={2}>
+            {/* Header - Daha Sıkışık */}
+            <Box display="flex" justifyContent="space-between" alignItems="center" mb={1.5}>
+                <Box display="flex" alignItems="center" gap={1.5}>
                     <Box
                         sx={{
-                            p: 1.5,
-                            borderRadius: 3,
+                            p: 1,
+                            borderRadius: 2,
                             background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
                             color: '#fff',
-                            boxShadow: '0 4px 20px rgba(16, 185, 129, 0.3)'
+                            boxShadow: '0 2px 10px rgba(16, 185, 129, 0.2)'
                         }}
                     >
-                        <TreePine size={isFullscreen ? 40 : 32} />
+                        <TreePine size={isFullscreen ? 32 : 24} />
                     </Box>
                     <Box>
-                        <Typography variant={isFullscreen ? "h3" : "h4"} fontWeight="900" color="primary">
-                            2025 Yılı- SEVİYE 2 AĞAÇ DİREK MONTAJI
+                        <Typography variant={isFullscreen ? "h4" : "h6"} fontWeight="900" color="primary" sx={{ lineHeight: 1.2 }}>
+                            2025 YILI SEVİYE-2 AĞAÇ DİREK MONTAJI
                         </Typography>
-                        <Typography variant={isFullscreen ? "h6" : "subtitle1"} color="text.secondary" fontWeight="600">
-                            Bölge ve OM Bazlı Montaj Edilen Ağaç Direk Sayıları
+                        <Typography variant="caption" color="text.secondary" fontWeight="700" sx={{ textTransform: 'uppercase', letterSpacing: 0.5 }}>
+                            Bölge ve OM Bazlı Montaj Analizi
                         </Typography>
                     </Box>
                 </Box>
 
-                <IconButton
-                    onClick={toggleFullscreen}
-                    color="primary"
-                    sx={{
-                        p: 1.5,
-                        backgroundColor: 'primary.main',
-                        color: 'primary.contrastText',
-                        '&:hover': { backgroundColor: 'primary.dark' },
-                        borderRadius: 3,
-                        boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
-                    }}
-                >
-                    {isFullscreen ? <Minimize size={24} /> : <Maximize size={24} />}
-                </IconButton>
+                <Box display="flex" gap={1}>
+                    <IconButton
+                        onClick={toggleFullscreen}
+                        size="small"
+                        sx={{
+                            backgroundColor: 'primary.main',
+                            color: 'primary.contrastText',
+                            '&:hover': { backgroundColor: 'primary.dark' },
+                            borderRadius: 1.5,
+                        }}
+                    >
+                        {isFullscreen ? <Minimize size={18} /> : <Maximize size={18} />}
+                    </IconButton>
+                </Box>
             </Box>
 
-            {/* Bölge Seçimi ve Özet */}
+            {/* Bölge Seçimi - Daha Sıkışık */}
+            <Paper
+                elevation={0}
+                sx={{
+                    p: 1.5,
+                    mb: 1.5,
+                    borderRadius: 3,
+                    border: '1px solid',
+                    borderColor: 'divider',
+                    background: '#fff'
+                }}
+            >
+                <Box display="flex" alignItems="center" gap={3}>
+                    <Tabs
+                        value={selectedBolge}
+                        onChange={handleBolgeChange}
+                        variant="scrollable"
+                        scrollButtons="auto"
+                        sx={{
+                            minHeight: 40,
+                            '& .MuiTabs-indicator': { height: 3, borderRadius: '3px' },
+                            '& .MuiTab-root': { fontWeight: 800, fontSize: '0.75rem', minHeight: 40, py: 0 }
+                        }}
+                    >
+                        <Tab label="TÜM BÖLGELER" value="HEPSİ" />
+                        {agacDirekBolgeData.map(b => (
+                            <Tab key={b.bolge} label={b.bolge} value={b.bolge} />
+                        ))}
+                    </Tabs>
+
+                    <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
+                        {agacDirekBolgeData.map(b => (
+                            <Chip
+                                key={b.bolge}
+                                label={b.dikilen}
+                                size="small"
+                                color={selectedBolge === b.bolge ? "primary" : "default"}
+                                variant={selectedBolge === b.bolge ? "filled" : "outlined"}
+                                sx={{ fontWeight: 900, fontSize: '0.7rem', height: 24, borderRadius: 1 }}
+                            />
+                        ))}
+                    </Box>
+                </Box>
+            </Paper>
+
+            {/* KPI Cards - Daha Sıkışık */}
+            <Grid container spacing={1.5} mb={1.5}>
+                {[
+                    { label: 'TOROSLAR Toplam Direk', value: companyTotal, color: '#059669', bg: 'rgba(5, 150, 105, 0.05)', icon: TreePine },
+                    { label: `${selectedBolge === 'HEPSİ' ? 'Seçili' : selectedBolge} Toplam`, value: totalCount, color: '#10b981', bg: 'rgba(16, 185, 129, 0.03)', icon: TrendingUp },
+                    { label: 'Genel Oran', value: `%${regionPercentage}`, color: '#8b5cf6', bg: 'rgba(139, 92, 246, 0.03)', icon: BarChart3 },
+                    { label: 'OM Başın Dikilen Ort. Direk', value: averageCount, color: '#3b82f6', bg: 'rgba(59, 130, 246, 0.03)', icon: BarChart3 },
+                    { label: 'OM Sayısı', value: filteredAndSortedData.length, color: '#f59e0b', bg: 'rgba(245, 158, 11, 0.03)', icon: Map }
+                ].map((item, idx) => (
+                    <Grid item xs={12} sm={6} md={2.4} key={idx}>
+                        <Card sx={{ borderRadius: 2, border: '1px solid', borderColor: 'divider', boxShadow: 'none', background: item.bg }}>
+                            <Box sx={{ p: 1.5, display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                                <Box sx={{ p: 0.8, borderRadius: 1.5, bgcolor: '#fff', color: item.color, border: '1px solid', borderColor: 'divider' }}>
+                                    <item.icon size={16} />
+                                </Box>
+                                <Box>
+                                    <Typography variant="caption" fontWeight="800" color="text.secondary" sx={{ textTransform: 'uppercase', fontSize: '0.6rem', display: 'block', mb: -0.5 }}>
+                                        {item.label}
+                                    </Typography>
+                                    <Typography variant="subtitle1" fontWeight="900" color={item.color}>{item.value}</Typography>
+                                </Box>
+                            </Box>
+                        </Card>
+                    </Grid>
+                ))}
+            </Grid>
+
+            {/* Main Chart Container - Kalan Boşluğu Kaplar */}
             <Paper
                 elevation={0}
                 sx={{
                     p: 2,
-                    mb: 3,
-                    borderRadius: 4,
+                    borderRadius: 3,
                     border: '1px solid',
                     borderColor: 'divider',
-                    background: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.01)'
-                }}
-            >
-                <Grid container spacing={2} alignItems="center">
-                    <Grid item xs={12} lg={7}>
-                        <Box display="flex" alignItems="center" gap={2} mb={1}>
-                            <Filter size={18} color={theme.palette.primary.main} />
-                            <Typography variant="subtitle2" fontWeight="800" color="text.secondary" sx={{ textTransform: 'uppercase' }}>Bölge Filtresi</Typography>
-                        </Box>
-                        <Tabs
-                            value={selectedBolge}
-                            onChange={handleBolgeChange}
-                            variant="scrollable"
-                            scrollButtons="auto"
-                            sx={{
-                                '& .MuiTabs-indicator': { height: 3, borderRadius: '3px' },
-                                '& .MuiTab-root': { fontWeight: 800, fontSize: '0.85rem', minHeight: 48 }
-                            }}
-                        >
-                            <Tab label="TOROSLAR EDAŞ" value="HEPSİ" />
-                            {agacDirekBolgeData.map(b => (
-                                <Tab key={b.bolge} label={b.bolge} value={b.bolge} />
-                            ))}
-                        </Tabs>
-                    </Grid>
-                    <Grid item xs={12} lg={5}>
-                        <Box display="flex" flexWrap="wrap" justifyContent={{ xs: 'center', lg: 'flex-end' }} gap={1}>
-                            {agacDirekBolgeData.map(b => (
-                                <Tooltip key={b.bolge} title={`${b.bolge} Bölgesi Toplam`}>
-                                    <Chip
-                                        label={`${b.bolge}: ${b.dikilen}`}
-                                        onClick={() => setSelectedBolge(b.bolge)}
-                                        color={selectedBolge === b.bolge ? "primary" : "default"}
-                                        variant={selectedBolge === b.bolge ? "filled" : "outlined"}
-                                        sx={{
-                                            fontWeight: 700,
-                                            borderRadius: 2,
-                                            height: 32,
-                                            cursor: 'pointer',
-                                            transition: 'all 0.2s',
-                                            '&:hover': { transform: 'translateY(-2px)', boxShadow: 2 }
-                                        }}
-                                    />
-                                </Tooltip>
-                            ))}
-                        </Box>
-                    </Grid>
-                </Grid>
-            </Paper>
-
-            {/* KPI Cards */}
-            <Grid container spacing={1} mb={isFullscreen ? 2 : 2}>
-                <Grid item xs={12} sm={6} md={4} lg={2.4} sx={{ display: 'flex' }}>
-                    <Card sx={{ flex: 1, borderRadius: 3, border: '1px solid', borderColor: 'divider', boxShadow: 'none', background: 'rgba(5, 150, 105, 0.05)' }}>
-                        <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: isFullscreen ? 2 : 1.5 }}>
-                            <Box sx={{ p: 1, borderRadius: 2, bgcolor: 'rgba(5, 150, 105, 0.1)', color: '#059669' }}>
-                                <TreePine size={isFullscreen ? 24 : 18} />
-                            </Box>
-                            <Box>
-                                <Typography variant="caption" fontWeight="800" color="text.secondary" sx={{ textTransform: 'uppercase', fontSize: '0.65rem', lineHeight: 1.2 }}>
-                                    TOROSLAR Toplamı
-                                </Typography>
-                                <Typography variant={isFullscreen ? "h5" : "h6"} fontWeight="900" color="#059669" sx={{ lineHeight: 1.2 }}>{companyTotal} Adet</Typography>
-                            </Box>
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item xs={12} sm={6} md={4} lg={2.4} sx={{ display: 'flex' }}>
-                    <Card sx={{ flex: 1, borderRadius: 3, border: '1px solid', borderColor: 'divider', boxShadow: 'none', background: 'rgba(16, 185, 129, 0.03)' }}>
-                        <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: isFullscreen ? 2 : 1.5 }}>
-                            <Box sx={{ p: 1, borderRadius: 2, bgcolor: 'rgba(16, 185, 129, 0.1)', color: '#10b981' }}>
-                                <TrendingUp size={isFullscreen ? 24 : 18} />
-                            </Box>
-                            <Box>
-                                <Typography variant="caption" fontWeight="800" color="text.secondary" sx={{ textTransform: 'uppercase', fontSize: '0.65rem', lineHeight: 1.2 }}>
-                                    {selectedBolge === 'HEPSİ' ? 'Bölge' : selectedBolge} Toplam
-                                </Typography>
-                                <Typography variant={isFullscreen ? "h5" : "h6"} fontWeight="900" color="#10b981" sx={{ lineHeight: 1.2 }}>{totalCount} Adet</Typography>
-                            </Box>
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item xs={12} sm={6} md={4} lg={2.4} sx={{ display: 'flex' }}>
-                    <Card sx={{ flex: 1, borderRadius: 3, border: '1px solid', borderColor: 'divider', boxShadow: 'none', background: 'rgba(139, 92, 246, 0.03)' }}>
-                        <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: isFullscreen ? 2 : 1.5 }}>
-                            <Box sx={{ p: 1, borderRadius: 2, bgcolor: 'rgba(139, 92, 246, 0.1)', color: '#8b5cf6' }}>
-                                <BarChart3 size={isFullscreen ? 24 : 18} />
-                            </Box>
-                            <Box>
-                                <Typography variant="caption" fontWeight="800" color="text.secondary" sx={{ textTransform: 'uppercase', fontSize: '0.65rem', lineHeight: 1.2 }}>
-                                    TOROSLAR Oranı
-                                </Typography>
-                                <Typography variant={isFullscreen ? "h5" : "h6"} fontWeight="900" color="#8b5cf6" sx={{ lineHeight: 1.2 }}>%{regionPercentage}</Typography>
-                            </Box>
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item xs={12} sm={6} md={6} lg={2.4} sx={{ display: 'flex' }}>
-                    <Card sx={{ flex: 1, borderRadius: 3, border: '1px solid', borderColor: 'divider', boxShadow: 'none', background: 'rgba(59, 130, 246, 0.03)' }}>
-                        <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: isFullscreen ? 2 : 1.5 }}>
-                            <Box sx={{ p: 1, borderRadius: 2, bgcolor: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6' }}>
-                                <BarChart3 size={isFullscreen ? 24 : 18} />
-                            </Box>
-                            <Box>
-                                <Typography variant="caption" fontWeight="800" color="text.secondary" sx={{ textTransform: 'uppercase', fontSize: '0.65rem', lineHeight: 1.2 }}>
-                                    OM Başına Ağaç Direk
-                                </Typography>
-                                <Typography variant={isFullscreen ? "h5" : "h6"} fontWeight="900" color="#3b82f6" sx={{ lineHeight: 1.2 }}>{averageCount} Adet</Typography>
-                            </Box>
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item xs={12} sm={6} md={6} lg={2.4} sx={{ display: 'flex' }}>
-                    <Card sx={{ flex: 1, borderRadius: 3, border: '1px solid', borderColor: 'divider', boxShadow: 'none', background: 'rgba(245, 158, 11, 0.03)' }}>
-                        <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: isFullscreen ? 2 : 1.5 }}>
-                            <Box sx={{ p: 1, borderRadius: 2, bgcolor: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b' }}>
-                                <Map size={isFullscreen ? 24 : 18} />
-                            </Box>
-                            <Box>
-                                <Typography variant="caption" fontWeight="800" color="text.secondary" sx={{ textTransform: 'uppercase', fontSize: '0.65rem', lineHeight: 1.2 }}>
-                                    OM Sayısı
-                                </Typography>
-                                <Typography variant={isFullscreen ? "h5" : "h6"} fontWeight="900" color="#f59e0b" sx={{ lineHeight: 1.2 }}>{filteredAndSortedData.length} Adet</Typography>
-                            </Box>
-                        </CardContent>
-                    </Card>
-                </Grid>
-            </Grid>
-
-            {/* Main Chart */}
-            <Paper
-                elevation={0}
-                sx={{
-                    p: 4,
-                    borderRadius: 5,
-                    border: '1px solid',
-                    borderColor: 'divider',
-                    background: 'linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 100%)',
-                    position: 'relative',
                     flex: 1,
-                    minHeight: 500,
                     display: 'flex',
-                    flexDirection: 'column'
+                    flexDirection: 'column',
+                    minHeight: 0, // Flex child'ın küçülmesine izin verir
+                    background: '#fff'
                 }}
             >
-                <Chart
-                    options={chartOptions}
-                    series={chartSeries}
-                    type="bar"
-                    height="100%"
-                />
+                <Box sx={{ flex: 1, minHeight: 0 }}>
+                    <Chart
+                        options={chartOptions}
+                        series={chartSeries}
+                        type="bar"
+                        height="100%"
+                    />
+                </Box>
             </Paper>
 
+            {/* Footer - Sadece Fullscreen Değilken ve Yer Varsa */}
             {!isFullscreen && (
-                <Box mt={3} p={2} sx={{ bgcolor: 'rgba(0,0,0,0.02)', borderRadius: 3, border: '1px dashed', borderColor: 'divider' }}>
-                    <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic', fontWeight: 500, display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <Map size={14} /> 2025 Yılı Seviye-2 Denetimleri Kapsamında Montajı Tamamlanan Ağaç Direklerin Dağılımıdır.
+                <Box mt={1.5} display="flex" justifyContent="center">
+                    <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600, opacity: 0.7 }}>
+                        2025 Yılı Seviye-2 Denetimleri Kapsamında Montajı Tamamlanan Ağaç Direklerin Dağılım Analizidir.
                     </Typography>
                 </Box>
             )}

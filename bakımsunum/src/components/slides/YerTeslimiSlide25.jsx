@@ -686,7 +686,9 @@ export default function YerTeslimiSlide() {
     return (
         <div
             ref={containerRef}
-            className={`flex w-full flex-1 flex-col overflow-y-auto ${isFullscreen ? 'fixed inset-0 z-50 bg-base-100' : ''
+            className={`flex w-full flex-1 flex-col overflow-y-auto ${isFullscreen 
+                ? 'fixed inset-0 z-50 bg-base-100 p-8' 
+                : 'p-4'
                 }`}
         >
             <div

@@ -23,6 +23,7 @@ import GirisSlide from './components/slides/GirisSlide';
 import VideoSlide from './components/slides/VideoSlide';
 import AgacDirekSlide from './components/slides/AgacDirekSlide';
 import BinaIyilestirmeSlide from './components/slides/BinaIyilestirmeSlide';
+import AgacBudamaSlide from './components/slides/AgacBudamaSlide';
 import { X, GripHorizontal, Eye } from 'lucide-react';
 
 const TimelineOverlay = ({ slides, activeSlideId }) => {
@@ -335,6 +336,8 @@ function App() {
         return <AgacDirekSlide />;
       case 'bina_iyilestirme':
         return <BinaIyilestirmeSlide />;
+      case 'agac_budama_koridor':
+        return <AgacBudamaSlide />;
       case 'giris':
         return <GirisSlide setActiveSlideId={setActiveSlideId} />;
       default:

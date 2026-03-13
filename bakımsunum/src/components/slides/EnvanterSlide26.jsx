@@ -188,7 +188,7 @@ export default function EnvanterSlide() {
             data-theme={isFullscreen ? 'light' : undefined}
             className={outerClass}
         >
-            <div className="flex flex-col gap-5 p-8 h-full">
+            <div className="flex flex-col gap-5 p-5 h-full">
 
                 {/* ── Header ── */}
                 <div className="flex flex-wrap items-start justify-between gap-4">
