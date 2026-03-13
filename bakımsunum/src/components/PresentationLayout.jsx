@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Menu, Play } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ChevronLeft, ChevronRight, Menu, Play, Home } from 'lucide-react';
 
 export default function PresentationLayout({
     children,
@@ -10,6 +10,17 @@ export default function PresentationLayout({
     onPrev
 }) {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+    // Keyboard shortcut for Home (Giriş)
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'Home' || (e.altKey && e.key === 'h')) {
+                setActiveSlideId(0);
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [setActiveSlideId]);
 
     return (
         <div className="drawer lg:drawer-open bg-base-200 min-h-screen !transition-all !duration-500">
@@ -47,6 +58,16 @@ export default function PresentationLayout({
                         <div className="badge badge-primary badge-outline font-semibold py-3 px-4">
                             {(slides.findIndex(s => s.id === activeSlideId) + 1)} / {slides.length}
                         </div>
+                        
+                        {/* Return to Home Shortcut */}
+                        <button 
+                            className="btn btn-ghost btn-circle text-primary hover:bg-primary/10"
+                            onClick={() => setActiveSlideId(0)}
+                            title="Giriş Sayfasına Dön (Home veya Alt+H)"
+                        >
+                            <Home size={20} />
+                        </button>
+
                         {/* Fullscreen simulation or play mode */}
                         <button className="btn btn-ghost btn-circle">
                             <Play fill="currentColor" size={18} />

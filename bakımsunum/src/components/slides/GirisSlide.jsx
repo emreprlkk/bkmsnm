@@ -49,10 +49,10 @@ const GirisSlide = ({ setActiveSlideId }) => {
     // Categorize slides based on context
     const getCategory = (type) => {
         if ([
-            'chart_s1_s2', 
-            's1_s2_denetleme', 
-            'agac_budama_koridor', 
-            'agac_budama_koridor_26', 
+            'chart_s1_s2',
+            's1_s2_denetleme',
+            'agac_budama_koridor',
+            'agac_budama_koridor_26',
             'bina_iyilestirme',
             'agac_direk'
         ].includes(type)) return 'seviye12';
@@ -73,8 +73,8 @@ const GirisSlide = ({ setActiveSlideId }) => {
 
     const categories = {
         seviye12: { title: "SEVİYE 1-2 PLANLI BAKIM", color: "text-rose-500", bg: "bg-rose-500/10", border: 'border-rose-500/20', icon: <Activity size={20} /> },
-        seviye3: { title: "SEVİYE-3", color: "text-blue-500", bg: "bg-blue-500/10", border: 'border-blue-500/20', icon: <Briefcase size={20} /> },
-        diger: { title: "DİĞER İŞLER", color: "text-emerald-500", bg: "bg-emerald-500/10", border: 'border-emerald-500/20', icon: <Map size={20} /> }
+        seviye3: { title: "SEVİYE-3 PLANLI BAKIM", color: "text-blue-500", bg: "bg-blue-500/10", border: 'border-blue-500/20', icon: <Briefcase size={20} /> },
+        diger: { title: "DİĞER SÜREÇLER", color: "text-emerald-500", bg: "bg-emerald-500/10", border: 'border-emerald-500/20', icon: <Map size={20} /> }
     };
 
     // Grouping the slides

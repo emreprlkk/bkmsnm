@@ -26,7 +26,7 @@ import BinaIyilestirmeSlide from './components/slides/BinaIyilestirmeSlide';
 import AgacBudamaSlide from './components/slides/AgacBudamaSlide';
 import AgacBudamaSlide26 from './components/slides/AgacBudamaSlide26';
 import ArizaHucreSlide from './components/slides/ArizaHucreSlide';
-import { X, GripHorizontal, Eye } from 'lucide-react';
+import { X, GripHorizontal, Eye, Home } from 'lucide-react';
 
 const TimelineOverlay = ({ slides, activeSlideId }) => {
   const [isVisible, setIsVisible] = useState(true);
@@ -359,7 +359,16 @@ function App() {
       onNext={handleNext}
       onPrev={handlePrev}
     >
-      <div id="presentation-fullscreen-wrapper" className="w-full h-full flex flex-col bg-base-100/0 relative overflow-hidden">
+      <div id="presentation-fullscreen-wrapper" className="w-full h-full flex flex-col bg-base-100/0 relative overflow-hidden group/fs">
+        {/* Floating Home Button for Fullscreen/Overlay */}
+        <button
+          onClick={() => setActiveSlideId(0)}
+          className="absolute top-4 left-4 z-[9999] btn btn-circle btn-primary btn-sm opacity-0 group-hover/fs:opacity-100 transition-opacity shadow-lg md:flex hidden items-center justify-center"
+          title="Giriş Sayfasına Dön"
+        >
+          <Home size={18} />
+        </button>
+
         <TimelineOverlay slides={presentationSlides} activeSlideId={activeSlideId} />
 
         <AnimatePresence mode="wait">
