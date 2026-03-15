@@ -609,9 +609,9 @@ const S1S2DenetlemeSlide = () => {
                         >
 
 
-                            <Grid container spacing={4} justifyContent="center" alignItems="stretch">
+                            <Grid container spacing={2} justifyContent="center" alignItems="stretch" wrap="nowrap">
                                 {/* DOĞRU YANLIŞ */}
-                                <Grid item xs={12} sm={4} sx={{ display: 'flex', flexDirection: 'column' }}>
+                                <Grid item xs={4} sx={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
                                     <Box sx={{
                                         p: 3, borderRadius: 3, backgroundColor: theme.palette.background.paper,
                                         display: 'flex', flexDirection: 'column', height: '100%',
@@ -623,12 +623,12 @@ const S1S2DenetlemeSlide = () => {
                                         <Typography variant="subtitle2" fontWeight="800" align="center" mb={2} color="#3b82f6" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, minHeight: '3em', lineHeight: 1.2 }}>
                                             SAHADAKİ ENVANTERİN DURUMUNUN BAKIM FORMUNA DOĞRU İŞLENMESİ
                                         </Typography>
-                                        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flex: 1, minHeight: 280, width: '100%' }}>
+                                        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flex: 1, width: '100%' }}>
                                             <Chart
                                                 options={aggregateTotals.dogruYanlis.options}
                                                 series={aggregateTotals.dogruYanlis.series}
                                                 type="donut"
-                                                height="100%"
+                                                height={260}
                                                 width="100%"
                                             />
                                         </Box>
@@ -641,7 +641,7 @@ const S1S2DenetlemeSlide = () => {
                                 </Grid>
 
                                 {/* UYGUN UYGUNSUZ */}
-                                <Grid item xs={12} sm={4} sx={{ display: 'flex', flexDirection: 'column' }}>
+                                <Grid item xs={4} sx={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
                                     <Box sx={{
                                         p: 3, borderRadius: 3, backgroundColor: theme.palette.background.paper,
                                         display: 'flex', flexDirection: 'column', height: '100%',
@@ -653,12 +653,12 @@ const S1S2DenetlemeSlide = () => {
                                         <Typography variant="subtitle2" fontWeight="800" align="center" mb={2} color="#10b981" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, minHeight: '3em', lineHeight: 1.2 }}>
                                             BAKIMI YAPILAN ENVANTERİN UYGUNLUK DURUMU
                                         </Typography>
-                                        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flex: 1, minHeight: 280, width: '100%' }}>
+                                        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flex: 1, width: '100%' }}>
                                             <Chart
                                                 options={aggregateTotals.uygunUygunsuz.options}
                                                 series={aggregateTotals.uygunUygunsuz.series}
                                                 type="donut"
-                                                height="100%"
+                                                height={260}
                                                 width="100%"
                                             />
                                         </Box>
@@ -671,7 +671,7 @@ const S1S2DenetlemeSlide = () => {
                                 </Grid>
 
                                 {/* S2 DURUM */}
-                                <Grid item xs={12} sm={4} sx={{ display: 'flex', flexDirection: 'column' }}>
+                                <Grid item xs={4} sx={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
                                     <Box sx={{
                                         p: 3, borderRadius: 3, backgroundColor: theme.palette.background.paper,
                                         display: 'flex', flexDirection: 'column', height: '100%',
@@ -683,12 +683,12 @@ const S1S2DenetlemeSlide = () => {
                                         <Typography variant="subtitle2" fontWeight="800" align="center" mb={2} color="#8b5cf6" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, minHeight: '3em', lineHeight: 1.2 }}>
                                             UYGUNSUZLUK DURUMUNUN SEVİYE-2 KAPSAMINDA YAPILABİLİRLİĞİ
                                         </Typography>
-                                        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flex: 1, minHeight: 280, width: '100%' }}>
+                                        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flex: 1, width: '100%' }}>
                                             <Chart
                                                 options={aggregateTotals.s2Durum.options}
                                                 series={aggregateTotals.s2Durum.series}
                                                 type="donut"
-                                                height="100%"
+                                                height={260}
                                                 width="100%"
                                             />
                                         </Box>

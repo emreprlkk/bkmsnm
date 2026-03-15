@@ -13,6 +13,9 @@ import {
     Coins,
     RotateCcw,
     LayoutGrid,
+    ArrowUpDown,
+    ChevronUp,
+    ChevronDown,
 } from 'lucide-react';
 import { yerTeslimiData } from '../../data/mockData';
 import ExportExcelButton from '../ExportExcelButton';
@@ -118,6 +121,7 @@ export default function YerTeslimiSlide() {
     const [bolgeFilter, setBolgeFilter] = useState('Tümü');
     const [omFilter, setOmFilter] = useState('Tümü');
     const [yukleniciFilter, setYukleniciFilter] = useState('Tümü');
+    const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
 
     useEffect(() => {
         const handler = () => setIsFullscreen(!!document.fullscreenElement);
@@ -139,6 +143,7 @@ export default function YerTeslimiSlide() {
         setOmFilter('Tümü');
         setYukleniciFilter('Tümü');
         setKirilimFilter('Toplam');
+        setSortConfig({ key: null, direction: 'asc' });
     };
 
     const bolgeler = useMemo(() => {
@@ -178,7 +183,6 @@ export default function YerTeslimiSlide() {
         setOmFilter(e.target.value);
         setYukleniciFilter('Tümü');
     };
-
     const filteredData = useMemo(() => {
         return yerTeslimiData.filter((d) => {
             if (bolgeFilter !== 'Tümü' && d.bolge !== bolgeFilter) return false;
@@ -187,6 +191,45 @@ export default function YerTeslimiSlide() {
             return true;
         });
     }, [bolgeFilter, omFilter, yukleniciFilter]);
+
+    const sortedData = useMemo(() => {
+        const data = [...filteredData];
+        if (sortConfig.key) {
+            data.sort((a, b) => {
+                let aValue = a[sortConfig.key];
+                let bValue = b[sortConfig.key];
+
+                // Numeric conversion if needed
+                if (['yerTeslimSayisi', 'tedas', 'edas', 'gerceklesenProje', 'gerceklesmeTutari'].includes(sortConfig.key)) {
+                    aValue = safeNumber(aValue);
+                    bValue = safeNumber(bValue);
+                } else {
+                    aValue = String(aValue || '').toLowerCase();
+                    bValue = String(bValue || '').toLowerCase();
+                }
+
+                if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1;
+                if (aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1;
+                return 0;
+            });
+        }
+        return data;
+    }, [filteredData, sortConfig]);
+
+    const handleSort = (key) => {
+        let direction = 'asc';
+        if (sortConfig.key === key && sortConfig.direction === 'asc') {
+            direction = 'desc';
+        }
+        setSortConfig({ key, direction });
+    };
+
+    const getSortIcon = (key) => {
+        if (sortConfig.key !== key) return <ArrowUpDown size={12} className="opacity-30" />;
+        return sortConfig.direction === 'asc'
+            ? <ChevronUp size={12} className="text-primary" />
+            : <ChevronDown size={12} className="text-primary" />;
+    };
 
     const totals = useMemo(() => {
         const totalYerTeslim = filteredData.reduce(
@@ -686,13 +729,13 @@ export default function YerTeslimiSlide() {
     return (
         <div
             ref={containerRef}
-            className={`flex w-full flex-1 flex-col overflow-y-auto ${isFullscreen 
-                ? 'fixed inset-0 z-50 bg-base-100 p-8' 
+            className={`flex w-full h-full flex-1 flex-col overflow-hidden ${isFullscreen
+                ? 'fixed inset-0 z-50 bg-base-100 p-8'
                 : 'p-4'
                 }`}
         >
             <div
-                className={`sticky top-0 z-40 bg-base-100/95 backdrop-blur-md border-b border-base-200 shadow-sm pb-3 ${isFullscreen ? 'pt-4 px-6 md:pt-6 md:px-8' : 'pt-1'
+                className={`flex-none bg-base-100/95 backdrop-blur-md border-b border-base-200 shadow-sm pb-3 z-40 ${isFullscreen ? 'pt-4 px-6 md:pt-6 md:px-8' : 'pt-1'
                     }`}
             >
                 <div className="mb-3 flex flex-col gap-2 px-1 md:flex-row md:items-end md:justify-between">
@@ -776,8 +819,8 @@ export default function YerTeslimiSlide() {
                 </div>
             </div>
 
-            <div className={`flex flex-1 flex-col gap-4 ${isFullscreen ? 'p-4 md:p-6' : 'pt-3'}`}>
-                <div className="rounded-2xl border border-base-200 bg-base-200/50 p-3 md:p-4">
+            <div className={`flex flex-1 flex-col gap-4 overflow-hidden ${isFullscreen ? 'p-4 md:p-6' : 'pt-3'}`}>
+                <div className="shrink-0 rounded-2xl border border-base-200 bg-base-200/50 p-3 md:p-4 z-30">
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
                         <FilterSelect
                             label="Bölge Müdürlüğü"
@@ -817,7 +860,7 @@ export default function YerTeslimiSlide() {
                     </div>
                 </div>
 
-                <div className="rounded-2xl border border-base-200 bg-base-100 p-3 shadow-sm">
+                <div className="shrink-0 rounded-2xl border border-base-200 bg-base-100 p-3 shadow-sm z-20">
                     <div className="mb-1.5 flex items-center justify-between gap-3">
                         <div className="text-[11px] font-bold text-base-content opacity-70">
                             {getDynamicFilterText('İlerlemesi')}
@@ -833,9 +876,9 @@ export default function YerTeslimiSlide() {
                     />
                 </div>
 
-                <div className="overflow-hidden rounded-2xl border border-base-200 bg-base-100 shadow-sm">
+                <div className="flex-1 min-h-0 overflow-hidden rounded-2xl border border-base-200 bg-base-100 shadow-sm flex flex-col">
                     {viewMode === 'chart' ? (
-                        <div className="w-full">
+                        <div className="w-full h-full overflow-y-auto">
                             <style>{`
                                 .yerteslimi-custom-chart .apexcharts-legend {
                                     flex-direction: row-reverse !important;
@@ -864,33 +907,63 @@ export default function YerTeslimiSlide() {
                             </div>
                         </div>
                     ) : (
-                        <div className="w-full overflow-auto">
-                            <table className="table table-md table-pin-rows w-full">
+                        <div className="w-full h-full overflow-auto relative">
+                            <table className="table table-md table-pin-rows w-full relative">
                                 <thead>
                                     <tr>
-                                        <th className="bg-base-200/80 text-base-content/70 backdrop-blur">İL</th>
-                                        <th className="bg-base-200/80 text-base-content/70 backdrop-blur">OM</th>
-                                        <th className="bg-base-200/80 text-base-content/70 backdrop-blur">Yüklenici</th>
-                                        <th className="bg-base-200/80 text-right text-base-content/70 backdrop-blur">
-                                            Yer Teslimi
+                                        <th
+                                            className="bg-base-200/80 text-base-content/70 backdrop-blur cursor-pointer hover:bg-base-300 transition-colors sticky top-0 z-20"
+                                            onClick={() => handleSort('bolge')}
+                                        >
+                                            <div className="flex items-center gap-1">İL {getSortIcon('bolge')}</div>
                                         </th>
-                                        <th className="bg-base-200/80 text-right text-base-content/70 backdrop-blur">
-                                            TEDAŞ
+                                        <th
+                                            className="bg-base-200/80 text-base-content/70 backdrop-blur cursor-pointer hover:bg-base-300 transition-colors sticky top-0 z-20"
+                                            onClick={() => handleSort('om')}
+                                        >
+                                            <div className="flex items-center gap-1">OM {getSortIcon('om')}</div>
                                         </th>
-                                        <th className="bg-base-200/80 text-right text-base-content/70 backdrop-blur">
-                                            EDAŞ
+                                        <th
+                                            className="bg-base-200/80 text-base-content/70 backdrop-blur cursor-pointer hover:bg-base-300 transition-colors sticky top-0 z-20"
+                                            onClick={() => handleSort('yuklenici')}
+                                        >
+                                            <div className="flex items-center gap-1">Yüklenici {getSortIcon('yuklenici')}</div>
                                         </th>
-                                        <th className="bg-base-200/80 text-right text-base-content/70 backdrop-blur">
-                                            Gerçekleşen
+                                        <th
+                                            className="bg-base-200/80 text-right text-base-content/70 backdrop-blur cursor-pointer hover:bg-base-300 transition-colors sticky top-0 z-20"
+                                            onClick={() => handleSort('yerTeslimSayisi')}
+                                        >
+                                            <div className="flex items-center justify-end gap-1">Yer Teslimi {getSortIcon('yerTeslimSayisi')}</div>
                                         </th>
-                                        <th className="bg-base-200/80 text-right text-base-content/70 backdrop-blur">
-                                            Maliyet (₺)
+                                        <th
+                                            className="bg-base-200/80 text-right text-base-content/70 backdrop-blur cursor-pointer hover:bg-base-300 transition-colors sticky top-0 z-20"
+                                            onClick={() => handleSort('tedas')}
+                                        >
+                                            <div className="flex items-center justify-end gap-1">TEDAŞ {getSortIcon('tedas')}</div>
+                                        </th>
+                                        <th
+                                            className="bg-base-200/80 text-right text-base-content/70 backdrop-blur cursor-pointer hover:bg-base-300 transition-colors sticky top-0 z-20"
+                                            onClick={() => handleSort('edas')}
+                                        >
+                                            <div className="flex items-center justify-end gap-1">EDAŞ {getSortIcon('edas')}</div>
+                                        </th>
+                                        <th
+                                            className="bg-base-200/80 text-right text-base-content/70 backdrop-blur cursor-pointer hover:bg-base-300 transition-colors sticky top-0 z-20"
+                                            onClick={() => handleSort('gerceklesenProje')}
+                                        >
+                                            <div className="flex items-center justify-end gap-1">Gerçekleşen {getSortIcon('gerceklesenProje')}</div>
+                                        </th>
+                                        <th
+                                            className="bg-base-200/80 text-right text-base-content/70 backdrop-blur cursor-pointer hover:bg-base-300 transition-colors sticky top-0 z-20"
+                                            onClick={() => handleSort('gerceklesmeTutari')}
+                                        >
+                                            <div className="flex items-center justify-end gap-1">Maliyet (₺) {getSortIcon('gerceklesmeTutari')}</div>
                                         </th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    {filteredData.map((row, index) => (
+                                    {sortedData.map((row, index) => (
                                         <tr key={`${row.bolge}-${row.om}-${row.yuklenici}-${index}`} className="hover">
                                             <td className="font-bold">{row.bolge}</td>
                                             <td className="font-medium text-base-content/80">{row.om}</td>
